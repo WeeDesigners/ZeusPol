@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.data_structures;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Notification extends Rule {
