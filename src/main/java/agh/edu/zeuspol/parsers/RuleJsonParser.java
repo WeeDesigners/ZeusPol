@@ -6,6 +6,7 @@ import agh.edu.zeuspol.data_structures.Rule;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RuleJsonParser {
@@ -16,6 +17,8 @@ public class RuleJsonParser {
 
     public RuleJsonParser(String jsonString){
         this.jsonString = jsonString;
+        this.rules = new ArrayList<>();
+        this.notificationRules = new ArrayList<>();
     }
 
     public void parseJson(){

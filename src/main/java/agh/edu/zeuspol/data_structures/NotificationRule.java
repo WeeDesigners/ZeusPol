@@ -11,4 +11,10 @@ public class NotificationRule extends Rule {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        //TODO -> better concat
+        return "{ " + email + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
+    }
+
 }

@@ -16,4 +16,10 @@ public class Rule {
         this.unit = unit;
         this.action = action;
     }
+
+    @Override
+    public String toString() {
+        //TODO -> better concat
+        return "{ " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
+    }
 }
