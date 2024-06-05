@@ -2,35 +2,37 @@ package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.datastructures.NotificationRule;
 import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.iofile.JSONLoader;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootApplication
 public class ZeuspolApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//TODO -> correct startup
 //		SpringApplication.run(ZeuspolApplication.class, args);
 
-		String jsonString = "[" +
-				"{\"attribute\": UPTIME, \"subject\": CPU, \"value\": [3, 5], \"unit\": NUMBER, \"action\": BT}, " +
-				"{\"attribute\": RESOURCE, \"subject\": STORAGE, \"value\": [3], \"unit\": PERCENT, \"action\": LT, \"email\": filip@filip.com}, " +
-				"{\"attribute\": RESOURCE, \"subject\": RAM, \"value\": [3], \"unit\": KILOBYTE, \"action\": EQ}" +
-				"]";
 
-		RuleJsonParser parser = new RuleJsonParser(jsonString);
-		parser = parser.parseJson();
-		List<Rule> rules = parser.getRules();
-		List<NotificationRule> notificationRules = parser.getNotificationRules();
+		String path = "src/main/resources/SlaFile.json";
+		JSONLoader jsonLoader = new JSONLoader(path);
 
-		System.out.println("=============================================");
-		System.out.println("RULES:");
-		System.out.println(rules);
-		System.out.println("=============================================");
-		System.out.println("NOTIFICATION RULES:");
-		System.out.println(notificationRules);
+		System.out.println("=================================================================================");
+		System.out.println("Loading rules from " + path + " . . .");
+		System.out.println("=================================================================================");
+		System.out.println("Loaded file:");
+		System.out.println(jsonLoader.getJsonString());
+		System.out.println("=================================================================================");
+		System.out.println("Loaded rules:");
+		System.out.println(jsonLoader.getRules());
+		System.out.println("=================================================================================");
+		System.out.println("Loaded notification rules:");
+		System.out.println(jsonLoader.getNotificationRules());
+		System.out.println("=================================================================================");
+
 
 	}
 

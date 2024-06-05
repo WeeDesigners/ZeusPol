@@ -1,7 +1,7 @@
 package agh.edu.zeuspol.datastructures;
 
 public enum RuleAttribute {
-    TIMESPAN,
+    TIMESPAN,               // TODO -> actually unused
     RESOURCE,
     UPTIME,
     //etc
