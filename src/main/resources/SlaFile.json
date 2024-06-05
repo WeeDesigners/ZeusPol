@@ -1,0 +1,90 @@
+[
+  {
+    "attribute": "UPTIME",
+    "subject": "CPU",
+    "value": [3, 5],
+    "unit": "NUMBER",
+    "action": "BT"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "STORAGE",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "LT",
+    "email": "filip@filip.com"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "RAM",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "EQ"
+  },
+  {
+    "attribute": "UPTIME",
+    "subject": "CPU",
+    "value": [3, 5],
+    "unit": "NUMBER",
+    "action": "BT"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "STORAGE",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "LT",
+    "email": "filipss@filip.com"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "RAM",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "EQ"
+  },
+  {
+    "attribute": "UPTIME",
+    "subject": "CPU",
+    "value": [3, 5],
+    "unit": "NUMBER",
+    "action": "BT"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "STORAGE",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "LT",
+    "email": "filips@filip.com"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "RAM",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "EQ"
+  },
+  {
+    "attribute": "UPTIME",
+    "subject": "CPU",
+    "value": [3, 5],
+    "unit": "NUMBER",
+    "action": "BT"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "STORAGE",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "LT",
+    "email": "filipsss@filip.com"
+  },
+  {
+    "attribute": "RESOURCE",
+    "subject": "RAM",
+    "value": [3],
+    "unit": "BYTE",
+    "action": "EQ"
+  }
+]

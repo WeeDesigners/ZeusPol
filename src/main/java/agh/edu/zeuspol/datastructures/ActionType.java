@@ -31,9 +31,17 @@ public enum ActionType {
     BT{
         @Override
         public boolean apply(List<Number> list, Number n2){
-            Number a = list.get(0);
-            Number b = list.get(1);
-            return (n2.doubleValue() > a.doubleValue()) && (n2.doubleValue() < b.doubleValue());
+            double a = list.get(0).doubleValue();
+            double b = list.get(1).doubleValue();
+
+            //swap
+            if(a > b){
+                //I hope it works...
+                a = a + b;
+                b = a - b;
+                a = a - b;
+            }
+            return (n2.doubleValue() > a) && (n2.doubleValue() < b);
         }
     },
     ;
