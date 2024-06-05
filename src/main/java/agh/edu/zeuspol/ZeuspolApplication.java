@@ -21,7 +21,7 @@ public class ZeuspolApplication {
 				"]";
 
 		RuleJsonParser parser = new RuleJsonParser(jsonString);
-		parser.parseJson();
+		parser = parser.parseJson();
 		List<Rule> rules = parser.getRules();
 		List<NotificationRule> notificationRules = parser.getNotificationRules();
 
