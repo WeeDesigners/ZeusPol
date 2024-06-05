@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.data_structures;
+package agh.edu.zeuspol.datastructures;
 
 import java.util.List;
 
@@ -15,5 +15,11 @@ public class Rule {
         this.value = value;
         this.unit = unit;
         this.action = action;
+    }
+
+    @Override
+    public String toString() {
+        //TODO -> better concat
+        return "{ " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
     }
 }
