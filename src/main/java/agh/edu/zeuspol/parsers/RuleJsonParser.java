@@ -21,7 +21,7 @@ public class RuleJsonParser {
         this.notificationRules = new ArrayList<>();
     }
 
-    public void parseJson(){
+    public RuleJsonParser parseJson(){
         Gson gson = new Gson();
 
         JsonObject[] jsonObjects = gson.fromJson(jsonString, JsonObject[].class);
@@ -34,6 +34,8 @@ public class RuleJsonParser {
                 rules.add(gson.fromJson(jsonObject, Rule.class));
             }
         }
+
+        return this;
     }
 
     public List<Rule> getRules() {

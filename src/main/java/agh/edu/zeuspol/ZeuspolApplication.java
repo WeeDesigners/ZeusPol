@@ -17,7 +17,7 @@ public class ZeuspolApplication {
 		String jsonString = "[" +
 				"{\"attribute\": UPTIME, \"subject\": CPU, \"value\": [3, 5], \"unit\": NUMBER, \"action\": BT}, " +
 				"{\"attribute\": RESOURCE, \"subject\": STORAGE, \"value\": [3], \"unit\": PERCENT, \"action\": LT, \"email\": filip@filip.com}, " +
-				"{\"attribute\": RESOURCE, \"subject\": RAM, \"value\": [3], \"unit\": KILOBYTES, \"action\": EQ}" +
+				"{\"attribute\": RESOURCE, \"subject\": RAM, \"value\": [3], \"unit\": KILOBYTE, \"action\": EQ}" +
 				"]";
 
 		RuleJsonParser parser = new RuleJsonParser(jsonString);
