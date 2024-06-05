@@ -1,8 +1,11 @@
 package agh.edu.zeuspol.datastructures;
 
+import agh.edu.zeuspol.generators.IdGenerator;
+
 import java.util.List;
 
 public class Rule {
+    public final long id;
     public final RuleAttribute attribute;
     public final RuleSubject subject;
     public final List<Number> value;
@@ -10,6 +13,7 @@ public class Rule {
     public final ActionType action;
 
     public Rule(RuleAttribute attribute, RuleSubject subject, List<Number> value, UnitType unit, ActionType action) {
+        this.id = IdGenerator.getRuleId();
         this.attribute = attribute;
         this.subject = subject;
         this.value = value;
@@ -20,6 +24,6 @@ public class Rule {
     @Override
     public String toString() {
         //TODO -> better concat
-        return "{ " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
+        return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
     }
 }

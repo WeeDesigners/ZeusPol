@@ -34,19 +34,43 @@ public class Sla {
         this.notificationRules.add(notificationRule);
     }
 
+    public Rule removeRule(long id){
+        for(Rule rule : rules){
+            if(rule.id == id){
+                rules.remove(rule);
+                return rule;
+            }
+        }
+        return null;
+    }
+
+    public NotificationRule removeNotificationRule(long id){
+        for(NotificationRule notificationRule : notificationRules){
+            if(notificationRule.id == id){
+                notificationRules.remove(notificationRule);
+                return notificationRule;
+            }
+        }
+        return null;
+    }
+
     public List<Rule> getRules() {
-        return rules;
+        return new ArrayList<>(rules);
     }
 
     public List<NotificationRule> getNotificationRules() {
-        return notificationRules;
+        return new ArrayList<>(notificationRules);
     }
 
 
 
     @Override
     public String toString() {
-
+        //TODO -> better concat
+        return "\n====================================\n Rules:\n"
+                + rules + "\n Notification Rules:\n"
+                + notificationRules
+                + "\n====================================\n";
     }
 
 

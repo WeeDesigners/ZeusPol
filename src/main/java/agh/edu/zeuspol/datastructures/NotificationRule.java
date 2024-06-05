@@ -14,7 +14,7 @@ public class NotificationRule extends Rule {
     @Override
     public String toString() {
         //TODO -> better concat
-        return "{ " + email + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
+        return "{ " + id + ", " + email + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
     }
 
 }
