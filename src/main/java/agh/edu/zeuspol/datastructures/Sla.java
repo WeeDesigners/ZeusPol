@@ -34,11 +34,6 @@ public class Sla {
         this.notificationRules.add(notificationRule);
     }
 
-    public boolean checkIfPolicyIsNotDirectlyInconsistentWithSLA(Rule rule){
-        // TODO -> eventually change the name or sth...
-        return true;
-    }
-
     public List<Rule> getRules() {
         return rules;
     }
@@ -48,7 +43,13 @@ public class Sla {
     }
 
 
-    
+
+    @Override
+    public String toString() {
+
+    }
+
+
 
 
 
