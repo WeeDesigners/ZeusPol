@@ -12,8 +12,8 @@ import java.util.List;
 public class RuleJsonParser {
 
     private final String jsonString;
-    private List<Rule> rules;
-    private List<NotificationRule> notificationRules;
+    private final List<Rule> rules;
+    private final List<NotificationRule> notificationRules;
 
     public RuleJsonParser(String jsonString){
         this.jsonString = jsonString;
@@ -22,9 +22,7 @@ public class RuleJsonParser {
     }
 
     public void parseJson(){
-
         Gson gson = new Gson();
-
 
         JsonObject[] jsonObjects = gson.fromJson(jsonString, JsonObject[].class);
 
