@@ -1,8 +1,8 @@
 package agh.edu.zeuspol.parsers;
 
 
-import agh.edu.zeuspol.data_structures.NotificationRule;
-import agh.edu.zeuspol.data_structures.Rule;
+import agh.edu.zeuspol.datastructures.NotificationRule;
+import agh.edu.zeuspol.datastructures.Rule;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 

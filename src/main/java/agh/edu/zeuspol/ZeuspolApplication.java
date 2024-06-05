@@ -1,12 +1,10 @@
 package agh.edu.zeuspol;
 
-import agh.edu.zeuspol.data_structures.NotificationRule;
-import agh.edu.zeuspol.data_structures.Rule;
+import agh.edu.zeuspol.datastructures.NotificationRule;
+import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.management.Notification;
 import java.util.List;
 
 @SpringBootApplication

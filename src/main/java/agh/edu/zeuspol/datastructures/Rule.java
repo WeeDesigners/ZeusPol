@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.data_structures;
+package agh.edu.zeuspol.datastructures;
 
 import java.util.List;
 
