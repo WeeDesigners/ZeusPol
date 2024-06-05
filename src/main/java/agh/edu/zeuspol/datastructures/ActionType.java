@@ -11,14 +11,14 @@ public enum ActionType {
         @Override
         public boolean apply(List<Number> list, Number n2){
             Number n1 = list.get(0);
-            return (n1.doubleValue() > n2.doubleValue());
+            return (n2.doubleValue() > n1.doubleValue());
         }
     },
     LT{
         @Override
         public boolean apply(List<Number> list, Number n2){
             Number n1 = list.get(0);
-            return (n1.doubleValue() < n2.doubleValue());
+            return (n2.doubleValue() < n1.doubleValue());
         }
     },
     EQ{
