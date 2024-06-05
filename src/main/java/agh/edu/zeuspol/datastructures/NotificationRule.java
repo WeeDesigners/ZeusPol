@@ -1,6 +1,7 @@
 package agh.edu.zeuspol.datastructures;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NotificationRule extends Rule {
 
@@ -12,9 +13,23 @@ public class NotificationRule extends Rule {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        NotificationRule that = (NotificationRule) o;
+        return Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), email);
+    }
+
+    @Override
     public String toString() {
         //TODO -> better concat
-        return "{ " + email + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
+        return "{ " + id + ", " + email + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", " + action + " }";
     }
 
 }
