@@ -1,9 +1,6 @@
 package agh.edu.zeuspol;
 
-import agh.edu.zeuspol.datastructures.NotificationRule;
-import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.iofile.JSONLoader;
-import agh.edu.zeuspol.parsers.RuleJsonParser;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.springframework.boot.SpringApplication;
