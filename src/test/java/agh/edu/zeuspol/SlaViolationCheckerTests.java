@@ -25,7 +25,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.EQ);
 
-        assertFalse(SlaViolationChecker.checkRule(sla, rule));
+        assertFalse(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
 
     }
 
@@ -39,7 +42,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.NUMBER, ActionType.EQ);
 
-        assertThrows(IllegalArgumentException.class, () -> SlaViolationChecker.checkRule(sla, rule));
+        assertThrows(IllegalArgumentException.class, () -> SlaViolationChecker.checkRule(rule));
+
+        sla.clearSla();
+
     }
 
     @Test
@@ -52,7 +58,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(11), UnitType.BYTE, ActionType.GT);
 
-        assertTrue(SlaViolationChecker.checkRule(sla, rule));
+        assertTrue(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -65,7 +74,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(6, 14), UnitType.BYTE, ActionType.BT);
 
-        assertFalse(SlaViolationChecker.checkRule(sla, rule));
+        assertFalse(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -78,7 +90,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(16, 20), UnitType.BYTE, ActionType.BT);
 
-        assertTrue(SlaViolationChecker.checkRule(sla, rule));
+        assertTrue(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -91,7 +106,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(11, 20), UnitType.BYTE, ActionType.BT);
 
-        assertFalse(SlaViolationChecker.checkRule(sla, rule));
+        assertFalse(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -104,7 +122,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(5, 8), UnitType.BYTE, ActionType.BT);
 
-        assertTrue(SlaViolationChecker.checkRule(sla, rule));
+        assertTrue(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -117,7 +138,10 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, ActionType.GT);
 
-        assertFalse(SlaViolationChecker.checkRule(sla, rule));
+        assertFalse(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 
     @Test
@@ -130,6 +154,9 @@ public class SlaViolationCheckerTests {
 
         Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, ActionType.GT);
 
-        assertTrue(SlaViolationChecker.checkRule(sla, rule));
+        assertTrue(SlaViolationChecker.checkRule(rule));
+
+
+        sla.clearSla();
     }
 }

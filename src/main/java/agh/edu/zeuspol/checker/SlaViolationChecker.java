@@ -8,16 +8,17 @@ import java.util.List;
 
 public class SlaViolationChecker {
 
-    public static boolean checkRules(Sla sla, List<Rule> rules) {
+    public static boolean checkRules(List<Rule> rules) {
         for (Rule rule : rules) {
-            if (!checkRule(sla, rule)) {
+            if (!checkRule(rule)) {
                 return false;
             }
         }
         return true;
     }
 
-    public static boolean checkRule(Sla sla, Rule rule){
+    public static boolean checkRule(Rule rule){
+        Sla sla = Sla.getInstance();
         for (Rule slaRule: sla.getRules()){
             if (slaRule.subject == rule.subject && slaRule.attribute == rule.attribute){
                 if (slaRule.unit != rule.unit){

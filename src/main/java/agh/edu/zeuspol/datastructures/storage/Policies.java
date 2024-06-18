@@ -25,8 +25,8 @@ public class Policies {
     }
 
     public boolean addRulesSecure(List<Rule> rules){
-        if(!SlaViolationChecker.checkRules(Sla.getInstance(), rules)){
-            this.rules.addAll(rules);
+        if(!SlaViolationChecker.checkRules(rules)){
+            this.addRules(rules);
             return true;
         }
         return false;
