@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/policies")
-public class PoliciesEndpoint {
+public class PoliciesEndpoints {
 
     @PostMapping("/addPolicies")
     public String addPolicies(@RequestBody String policiesString){

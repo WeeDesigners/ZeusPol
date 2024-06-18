@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sla")
-public class SlaEndpoint {
+public class SlaEndpoints {
 
     @PostMapping("/addSla")
     public String addSla(@RequestBody String slaString){
