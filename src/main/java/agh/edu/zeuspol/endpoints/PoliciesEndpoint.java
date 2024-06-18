@@ -1,9 +1,8 @@
 package agh.edu.zeuspol.endpoints;
 
 
-import agh.edu.zeuspol.datastructures.NotificationRule;
 import agh.edu.zeuspol.datastructures.Rule;
-import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,27 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sla")
-public class SlaEndpoint {
+@RequestMapping("/policies")
+public class PoliciesEndpoint {
 
-    @PostMapping("/addSla")
-    public String addSla(@RequestBody String slaString){
+    @PostMapping("/addPolicies")
+    public String addPolicies(@RequestBody String policiesString){
         //parse given JSON rules
-        RuleJsonParser rjp = new RuleJsonParser(slaString);
+        RuleJsonParser rjp = new RuleJsonParser(policiesString);
 
         rjp = rjp.parseJson();
 
         List<Rule> rules = rjp.getRules();
-        List<NotificationRule> notificationRules = rjp.getNotificationRules();
 
-        //add rules to SLA
-        Sla sla = Sla.getInstance();
-        sla.addRules(rules);
-        sla.addNotificationRules(notificationRules);
+        //add policies to storage class
+        Policies policies = Policies.getInstance();
+        policies.addRules(rules);
 
         //string response
-        return "Sla:\n" + sla;
+        return "Policies:\n" + policies;
     }
-
 
 }

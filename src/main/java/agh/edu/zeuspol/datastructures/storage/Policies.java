@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.datastructures.storages;
+package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.Rule;
 

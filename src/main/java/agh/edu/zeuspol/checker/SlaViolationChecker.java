@@ -2,7 +2,7 @@ package agh.edu.zeuspol.checker;
 
 import agh.edu.zeuspol.datastructures.ActionType;
 import agh.edu.zeuspol.datastructures.Rule;
-import agh.edu.zeuspol.datastructures.storages.Sla;
+import agh.edu.zeuspol.datastructures.storage.Sla;
 
 import java.util.List;
 
