@@ -42,6 +42,17 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-ci</artifactId>
+			<version>9.44.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+			<version>9.44.0.Final</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-bom</artifactId>
 			<type>pom</type>

@@ -1,0 +1,11 @@
+import agh.edu.zeuspol.datastructures.Rule;
+
+
+dialect  "mvel"
+
+rule "Suggest Manager Role"
+    when
+        Rule()
+    then
+        System.out.println("Rule fired");
+end
