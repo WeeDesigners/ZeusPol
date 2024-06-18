@@ -1,21 +1,25 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.storage;
+
+import agh.edu.zeuspol.datastructures.NotificationRule;
+import agh.edu.zeuspol.datastructures.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sla {
 
+    private static final Sla instance = new Sla();
+
     private final List<Rule> rules;
     private final List<NotificationRule> notificationRules;
 
-    public Sla(){
+    private Sla(){
         this.rules = new ArrayList<>();
         this.notificationRules = new ArrayList<>();
     }
 
-    public Sla(List<Rule> rules, List<NotificationRule> notificationRules){
-        this.rules = rules;
-        this.notificationRules = notificationRules;
+    public static Sla getInstance(){
+        return instance;
     }
 
     public void addRules(List<Rule> rules){
@@ -72,12 +76,5 @@ public class Sla {
                 + notificationRules
                 + "\n====================================\n";
     }
-
-
-
-
-
-
-
 
 }

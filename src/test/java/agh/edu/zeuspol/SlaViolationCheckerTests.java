@@ -2,9 +2,9 @@ package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.checker.SlaViolationChecker;
 import agh.edu.zeuspol.datastructures.*;
+import agh.edu.zeuspol.datastructures.storage.Sla;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

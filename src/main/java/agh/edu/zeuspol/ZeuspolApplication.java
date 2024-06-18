@@ -14,9 +14,8 @@ import java.util.List;
 public class ZeuspolApplication {
 
 	public static void main(String[] args) throws IOException {
-		//TODO -> correct startup
-		ConfigurableApplicationContext context = SpringApplication.run(ZeuspolApplication.class, args);
 
+		ConfigurableApplicationContext context = SpringApplication.run(ZeuspolApplication.class, args);
 
 		String path = "src/main/resources/SlaFile.json";
 		JSONLoader jsonLoader = new JSONLoader(path);
