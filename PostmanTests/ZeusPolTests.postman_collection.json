@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "c3144803-2ab6-4e65-aacf-ca8c20c449b3",
+		"name": "ZeusPolTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28535700"
+	},
+	"item": [
+		{
+			"name": "Sla",
+			"item": [
+				{
+					"name": "addSla",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filip@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filipss@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filips@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filipsss@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/sla/addSla",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"sla",
+								"addSla"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSla",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8080/sla/getSla",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"sla",
+								"getSla"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Policies",
+			"item": [
+				{
+					"name": "addPolicies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filip@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filipss@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filips@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  },\n  {\n    \"attribute\": \"UPTIME\",\n    \"subject\": \"CPU\",\n    \"value\": [3, 5],\n    \"unit\": \"NUMBER\",\n    \"action\": \"BT\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"STORAGE\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"LT\",\n    \"email\": \"filipsss@filip.com\"\n  },\n  {\n    \"attribute\": \"RESOURCE\",\n    \"subject\": \"RAM\",\n    \"value\": [3],\n    \"unit\": \"BYTE\",\n    \"action\": \"EQ\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/policies/addPolicies",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"policies",
+								"addPolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPolicies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8080/policies/getPolicies",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"policies",
+								"getPolicies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
