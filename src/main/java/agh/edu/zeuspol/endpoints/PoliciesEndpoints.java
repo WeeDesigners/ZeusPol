@@ -26,7 +26,7 @@ public class PoliciesEndpoints {
         policies.addRules(rules);
 
         //string response
-        return policies.toString();
+        return "Policies updated successfully";
     }
 
     @GetMapping("getPolicies")

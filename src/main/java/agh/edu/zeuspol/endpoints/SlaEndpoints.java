@@ -29,7 +29,7 @@ public class SlaEndpoints {
         sla.addNotificationRules(notificationRules);
 
         //string response
-        return sla.toString();
+        return "SLA updated successfully";
     }
 
     @GetMapping("/getSla")
