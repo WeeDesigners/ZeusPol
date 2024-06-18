@@ -31,10 +31,9 @@ public class SlaEndpoint {
         sla.addRules(rules);
         sla.addNotificationRules(notificationRules);
 
-
-        return "Sla:\n" + sla.toString();
+        //string response
+        return "Sla:\n" + sla;
     }
-
 
 
 }
