@@ -4,10 +4,7 @@ package agh.edu.zeuspol.endpoints;
 import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,12 @@ public class PoliciesEndpoints {
         policies.addRules(rules);
 
         //string response
+        return policies.toString();
+    }
+
+    @GetMapping("getPolicies")
+    public String getPolicies(){
+        Policies policies = Policies.getInstance();
         return policies.toString();
     }
 

@@ -5,10 +5,7 @@ import agh.edu.zeuspol.datastructures.NotificationRule;
 import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,12 @@ public class SlaEndpoints {
         sla.addNotificationRules(notificationRules);
 
         //string response
+        return sla.toString();
+    }
+
+    @GetMapping("/getSla")
+    public String getSla(){
+        Sla sla = Sla.getInstance();
         return sla.toString();
     }
 
