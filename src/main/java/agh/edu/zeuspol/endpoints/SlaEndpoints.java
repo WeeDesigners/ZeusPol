@@ -32,7 +32,7 @@ public class SlaEndpoints {
         sla.addNotificationRules(notificationRules);
 
         //string response
-        return "Sla:\n" + sla;
+        return sla.toString();
     }
 
 

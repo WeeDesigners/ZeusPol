@@ -29,7 +29,7 @@ public class PoliciesEndpoints {
         policies.addRules(rules);
 
         //string response
-        return "Policies:\n" + policies;
+        return policies.toString();
     }
 
 }
