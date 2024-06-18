@@ -1,5 +1,6 @@
 package agh.edu.zeuspol.datastructures.storage;
 
+import agh.edu.zeuspol.checker.SlaViolationChecker;
 import agh.edu.zeuspol.datastructures.Rule;
 
 import java.util.ArrayList;
@@ -23,6 +24,14 @@ public class Policies {
         this.rules.addAll(rules);
     }
 
+    public boolean addRulesSecure(List<Rule> rules){
+        if(!SlaViolationChecker.checkRules(rules)){
+            this.addRules(rules);
+            return true;
+        }
+        return false;
+    }
+
     public void addRule(Rule rule){
         this.rules.add(rule);
     }
@@ -41,8 +50,6 @@ public class Policies {
     public List<Rule> getRules() {
         return new ArrayList<>(rules);
     }
-
-
 
 
     @Override

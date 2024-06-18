@@ -29,12 +29,13 @@ public class SlaEndpoints {
         sla.addNotificationRules(notificationRules);
 
         //string response
-        return "SLA updated successfully";
+        return "SLA updated successfully!";
     }
 
     @GetMapping("/getSla")
     public String getSla(){
         Sla sla = Sla.getInstance();
+        //TODO -> return JSON
         return sla.toString();
     }
 

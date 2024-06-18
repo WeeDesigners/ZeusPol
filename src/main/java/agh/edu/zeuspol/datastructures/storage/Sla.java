@@ -48,6 +48,10 @@ public class Sla {
         return null;
     }
 
+    public void removeRules(){
+        this.rules.clear();
+    }
+
     public NotificationRule removeNotificationRule(long id){
         for(NotificationRule notificationRule : notificationRules){
             if(notificationRule.id == id){
@@ -56,6 +60,15 @@ public class Sla {
             }
         }
         return null;
+    }
+
+    public void removeNotificationRules(){
+        this.notificationRules.clear();
+    }
+
+    public void clearSla(){
+        removeRules();
+        removeNotificationRules();
     }
 
     public List<Rule> getRules() {
