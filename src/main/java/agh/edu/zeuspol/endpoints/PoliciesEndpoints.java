@@ -23,15 +23,19 @@ public class PoliciesEndpoints {
 
         //add policies to storage class
         Policies policies = Policies.getInstance();
-        policies.addRules(rules);
-
-        //string response
-        return "Policies updated successfully";
+        //INSECURE !!!!
+//        policies.addRules(rules);
+        //SECURE c:
+        if(policies.addRulesSecure(rules)){
+            return "Policies updated successfully!";
+        }
+        return "Policies updated unsuccessfully! One or more rules are not violent with SLA!";
     }
 
     @GetMapping("getPolicies")
     public String getPolicies(){
         Policies policies = Policies.getInstance();
+        //TODO -> return JSON
         return policies.toString();
     }
 
