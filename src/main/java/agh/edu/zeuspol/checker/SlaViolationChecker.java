@@ -8,7 +8,16 @@ import java.util.List;
 
 public class SlaViolationChecker {
 
-    public boolean check(Sla sla, Rule rule){
+    public static boolean checkRules(Sla sla, List<Rule> rules) {
+        for (Rule rule : rules) {
+            if (!checkRule(sla, rule)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkRule(Sla sla, Rule rule){
         for (Rule slaRule: sla.getRules()){
             if (slaRule.subject == rule.subject && slaRule.attribute == rule.attribute){
                 if (slaRule.unit != rule.unit){
@@ -26,7 +35,7 @@ public class SlaViolationChecker {
                     }
                 }
                 else if (slaRule.action == ActionType.BT && rule.action == ActionType.BT){
-                    if (!this.isBetween(slaRule.value, rule.value)){
+                    if (!isBetween(slaRule.value, rule.value)){
                         return true;
                     }
                 }
@@ -60,7 +69,7 @@ public class SlaViolationChecker {
         return false;
     }
 
-    private boolean isBetween(List<Number> span1, List<Number> span2){
+    private static boolean isBetween(List<Number> span1, List<Number> span2){
         if (span1.size() != 2 || span2.size() != 2){
             throw new RuntimeException("Wrong argument number in lists!");
         }
