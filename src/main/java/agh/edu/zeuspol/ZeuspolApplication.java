@@ -13,9 +13,15 @@ import java.util.List;
 @SpringBootApplication
 public class ZeuspolApplication {
 
+	private static ConfigurableApplicationContext context;
+	private static boolean isRunning = false;
+
 	public static void main(String[] args) throws IOException {
 
-		ConfigurableApplicationContext context = SpringApplication.run(ZeuspolApplication.class, args);
+		context = SpringApplication.run(ZeuspolApplication.class, args);
+
+
+		//TEST RULES
 
 		String path = "src/main/resources/SlaFile.json";
 		JSONLoader jsonLoader = new JSONLoader(path);
@@ -33,9 +39,16 @@ public class ZeuspolApplication {
 		System.out.println(jsonLoader.getNotificationRules());
 		System.out.println("=================================================================================");
 
+	}
+
+	public static boolean isRunning(){
+		return isRunning;
+	}
 
 
+	public static void mainLoop(){
 		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
+		isRunning = true;
 		while(true) {
 			List<Metric> metrics = metricsService.getMetrics();
 			System.out.println("=============================================");
@@ -44,13 +57,13 @@ public class ZeuspolApplication {
 				System.out.println("name: " + metric.name + ", value: " + metric.value);
 			}
 			System.out.println("=============================================");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				isRunning = false;
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 }
