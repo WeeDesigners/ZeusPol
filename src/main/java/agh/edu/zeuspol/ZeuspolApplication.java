@@ -91,25 +91,18 @@ public class ZeuspolApplication {
 				continue;
 			}
 
-//			List<Metric> metrics = metricsService.getMetrics();
+			List<Metric> metrics = metricsService.getMetrics();
 			System.out.println("=============================================");
 			System.out.println("METRICS:");
-//			for(Metric metric : metrics) {
-//				System.out.println("name: " + metric.name + ", value: " + metric.value);
-//			}
-			System.out.println("=============================================");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				isRunning = false;
-				throw new RuntimeException(e);
+			for(Metric metric : metrics) {
+				System.out.println("name: " + metric.name + ", value: " + metric.value);
 			}
+			System.out.println("=============================================");
 
 			//wait some time
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				isRunning = false;
 				throw new RuntimeException(e);
 			}
 		}
