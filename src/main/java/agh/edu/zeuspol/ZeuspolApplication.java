@@ -9,13 +9,24 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @SpringBootApplication
 public class ZeuspolApplication {
 
+	private static ConfigurableApplicationContext context;
+	private static boolean isRunning = false;
+	private static final Lock lock = new ReentrantLock();
+	private static final Condition condition = lock.newCondition();
+
 	public static void main(String[] args) throws IOException {
 
-		ConfigurableApplicationContext context = SpringApplication.run(ZeuspolApplication.class, args);
+		context = SpringApplication.run(ZeuspolApplication.class, args);
+
+
+		//TEST RULES
 
 		String path = "src/main/resources/SlaFile.json";
 		JSONLoader jsonLoader = new JSONLoader(path);
@@ -34,9 +45,52 @@ public class ZeuspolApplication {
 		System.out.println("=================================================================================");
 
 
+		//run loop of main loops
+		mainLoop();
 
+	}
+
+	public static boolean isRunning(){
+		return isRunning;
+	}
+
+	public static void startApp(){
+		lock.lock();
+		isRunning = true;
+		condition.signalAll();
+		lock.unlock();
+	}
+
+	public static void stopApp(){
+		lock.lock();
+		isRunning = false;
+		condition.signalAll();
+		lock.unlock();
+	}
+
+	private static void waitForCondition() throws InterruptedException {
+		lock.lock();
+		try {
+			while (!isRunning) {
+				condition.await();
+			}
+			// Proceed when conditionMet becomes true
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	private static void mainLoop() {
 		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
-		while(true) {
+		//infinite loop of mainLoops
+		while(true){
+		//if app should be running, then run main loop
+			try {
+				waitForCondition();
+			} catch (InterruptedException e){
+				continue;
+			}
+
 			List<Metric> metrics = metricsService.getMetrics();
 			System.out.println("=============================================");
 			System.out.println("METRICS:");
@@ -44,13 +98,16 @@ public class ZeuspolApplication {
 				System.out.println("name: " + metric.name + ", value: " + metric.value);
 			}
 			System.out.println("=============================================");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+			//wait some time
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 	}
+
 
 }
