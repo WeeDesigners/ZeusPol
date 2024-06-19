@@ -10,18 +10,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/app")
 public class ControlEndpoints {
 
-    @PostMapping("/run")
-    public String runApp() {
+    @PostMapping("/start")
+    public String startApp() {
         if(ZeuspolApplication.isRunning()){
             return "App is already running";
         }
 
-        //run main loop
-        Thread thread = new Thread(ZeuspolApplication::mainLoop);
-        thread.start();
+        //start app
+        ZeuspolApplication.startApp();
 
         return "ZeusPol started!";
     }
+
+
+    @PostMapping("/stop")
+    public String stopApp() {
+        if(!ZeuspolApplication.isRunning()){
+            return "App is already not running";
+        }
+
+        //stop app
+        ZeuspolApplication.stopApp();
+
+        return "ZeusPol stopped!";
+    }
+
+
+
+
 
 
 }

@@ -39,24 +39,46 @@ public class ZeuspolApplication {
 		System.out.println(jsonLoader.getNotificationRules());
 		System.out.println("=================================================================================");
 
+
+		//run loop of main loops
+		mainLoop();
+
 	}
 
 	public static boolean isRunning(){
 		return isRunning;
 	}
 
-
-	public static void mainLoop(){
-		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
+	public static void startApp(){
 		isRunning = true;
-		while(true) {
-			List<Metric> metrics = metricsService.getMetrics();
-			System.out.println("=============================================");
-			System.out.println("METRICS:");
-			for(Metric metric : metrics) {
-				System.out.println("name: " + metric.name + ", value: " + metric.value);
+	}
+
+	public static void stopApp(){
+		isRunning = false;
+	}
+
+	private static void mainLoop() {
+		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
+		//infinite loop of mainLoops
+		while(true){
+			//if app should be running, then run main loop
+			while(isRunning) {
+				List<Metric> metrics = metricsService.getMetrics();
+				System.out.println("=============================================");
+				System.out.println("METRICS:");
+				for(Metric metric : metrics) {
+					System.out.println("name: " + metric.name + ", value: " + metric.value);
+				}
+				System.out.println("=============================================");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					isRunning = false;
+					throw new RuntimeException(e);
+				}
 			}
-			System.out.println("=============================================");
+
+			//wait some time
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -64,6 +86,8 @@ public class ZeuspolApplication {
 				throw new RuntimeException(e);
 			}
 		}
+
 	}
+
 
 }
