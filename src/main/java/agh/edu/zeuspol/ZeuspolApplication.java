@@ -1,5 +1,6 @@
 package agh.edu.zeuspol;
 
+import agh.edu.zeuspol.drools.DroolsClass;
 import agh.edu.zeuspol.iofile.JSONLoader;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
@@ -82,6 +83,7 @@ public class ZeuspolApplication {
 
 	private static void mainLoop() {
 		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
+		DroolsClass drools = new DroolsClass("src/main/resources/drools");
 		//infinite loop of mainLoops
 		while(true){
 		//if app should be running, then run main loop
@@ -96,6 +98,7 @@ public class ZeuspolApplication {
 			System.out.println("METRICS:");
 			for(Metric metric : metrics) {
 				System.out.println("name: " + metric.name + ", value: " + metric.value);
+				drools.fire(metric);
 			}
 			System.out.println("=============================================");
 

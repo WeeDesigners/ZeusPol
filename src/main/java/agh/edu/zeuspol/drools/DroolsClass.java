@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.drools;
-
-import agh.edu.zeuspol.datastructures.Rule;
+import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -9,13 +8,12 @@ import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
-
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+
 
 public class DroolsClass {
     private final KieServices kieServices = KieServices.Factory.get();
@@ -28,13 +26,9 @@ public class DroolsClass {
 
     private KieFileSystem getKieFileSystem() {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        List<String> rules = List.of(this.rulesDirectory);
-        for (String rule : rules) {
-            kieFileSystem.write(ResourceFactory.newClassPathResource(rule));
-        }
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(this.rulesDirectory))) {
             for (Path path : stream) {
-                kieFileSystem.write(ResourceFactory.newClassPathResource(path.toString()));
+                kieFileSystem.write(ResourceFactory.newClassPathResource("drools/" + path.getFileName().toString()));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -53,9 +47,10 @@ public class DroolsClass {
         return kieContainer.newKieSession();
     }
 
-    public void fire(Rule rule){
+    public void fire(Metric metric){
         KieSession kieSession = this.getKieSession();
-        kieSession.insert(rule);
+        kieSession.insert(metric);
         kieSession.fireAllRules();
+        kieSession.dispose();
     }
 }
