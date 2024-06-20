@@ -6,7 +6,7 @@ dialect  "mvel"
 
 rule "metric1"
     when
-        Metric(name="xd", value>0)
+        Metric(name="container_cpu_usage_seconds_total", value>0.5)
     then
         System.out.println("Rule fired");
 end
