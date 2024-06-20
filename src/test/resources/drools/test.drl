@@ -1,11 +1,13 @@
 package drools;
 import agh.edu.zeuspol.datastructures.Rule;
 
+import io.github.hephaestusmetrics.model.metrics.Metric;
+
 dialect  "mvel"
 
 rule "Suggest Manager Role"
     when
-        Rule()
+        Metric()
     then
         System.out.println("Rule fired");
 end

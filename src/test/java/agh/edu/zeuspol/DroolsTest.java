@@ -10,7 +10,7 @@ public class DroolsTest {
 
     @Test
     public void droolsTest(){
-        DroolsClass droolsClass = new DroolsClass("drools");
+        DroolsClass droolsClass = new DroolsClass("src/test/resources/drools");
 
         droolsClass.fire(Mockito.mock(Metric.class));
     }
