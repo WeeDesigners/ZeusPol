@@ -1,6 +1,7 @@
 package agh.edu.zeuspol.drools;
 
 import agh.edu.zeuspol.datastructures.Rule;
+import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -28,12 +29,10 @@ public class DroolsClass {
 
     private KieFileSystem getKieFileSystem() {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        List<String> rules = List.of(this.rulesDirectory);
-        for (String rule : rules) {
-            kieFileSystem.write(ResourceFactory.newClassPathResource(rule));
-        }
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(this.rulesDirectory))) {
+            System.out.println(stream);
             for (Path path : stream) {
+                System.out.println(path);
                 kieFileSystem.write(ResourceFactory.newClassPathResource(path.toString()));
             }
         } catch (IOException e) {
@@ -53,9 +52,9 @@ public class DroolsClass {
         return kieContainer.newKieSession();
     }
 
-    public void fire(Rule rule){
+    public void fire(Metric metric){
         KieSession kieSession = this.getKieSession();
-        kieSession.insert(rule);
+        kieSession.insert(metric);
         kieSession.fireAllRules();
     }
 }

@@ -1,3 +1,4 @@
+package drools;
 import agh.edu.zeuspol.datastructures.Rule;
 
 dialect  "mvel"
