@@ -1,5 +1,6 @@
 
 docker-build-local:
+	eval $(minikube docker-env)
 	mvn clean install
 	docker build --no-cache -t zeuspol .
 
