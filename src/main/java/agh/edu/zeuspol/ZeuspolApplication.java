@@ -3,12 +3,15 @@ package agh.edu.zeuspol;
 import agh.edu.zeuspol.drools.DroolsClass;
 import agh.edu.zeuspol.iofile.JSONLoader;
 import agh.edu.zeuspol.services.HephaestusQueryService;
+import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -29,7 +32,7 @@ public class ZeuspolApplication {
 
 		//TEST RULES
 
-		String path = "src/main/resources/SlaFile.json";
+		String path = "SlaFile.json";
 		JSONLoader jsonLoader = new JSONLoader(path);
 
 		System.out.println("=================================================================================");
@@ -83,7 +86,8 @@ public class ZeuspolApplication {
 
 	private static void mainLoop() {
 		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
-		DroolsClass drools = new DroolsClass("src/main/resources/drools");
+		ThemisService themisService = context.getBean(ThemisService.class);
+//		DroolsClass drools = new DroolsClass("drools");
 		//infinite loop of mainLoops
 		while(true){
 		//if app should be running, then run main loop
@@ -98,10 +102,13 @@ public class ZeuspolApplication {
 			System.out.println("METRICS:");
 			for(Metric metric : metrics) {
 				System.out.println("name: " + metric.name + ", value: " + metric.value);
-				drools.fire(metric);
+//				drools.fire(metric);
 			}
 			System.out.println("=============================================");
 
+//			System.out.println("ACTIONS:");
+			System.out.println(themisService.getActions());
+			System.out.println("=============================================");
 			//wait some time
 			try {
 				Thread.sleep(2000);

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zeuspol
+  namespace: zeuspol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zeuspol
+  template:
+    metadata:
+      labels:
+        app: zeuspol
+    spec:
+      containers:
+        - name: zeuspol
+          image: zeuspol:latest
+          env:
+            - name: ZEUS_ADDRESS
+              value: "0.0.0.0"
+            - name: ZEUS_PORT
+              value: "8080"
+            - name: HEPHAESTUS_URL
+              value: http://hephaestus-gui.hephaestus:8080
+            - name: THEMIS_URL
+              value: http://themis-executor.themis-executor:8080
+            - name: kubernetes-management
+              value: http://kubernetes-management.kubernetes-management:8097
+
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 900m
+              memory: 900Mi
+            requests:
+              cpu: 900m
+              memory: 900Mi
