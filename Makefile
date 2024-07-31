@@ -4,6 +4,11 @@ docker-build-local:
 	mvn clean install
 	docker build --no-cache -t zeuspol .
 
+docker-build-local-windows:
+	minikube -p minikube docker-env --shell powershell | Invoke-Expression
+	mvn clean install
+	docker build --no-cache -t zeuspol .
+
 docker-build-and-push:
 	mvn clean install
 	docker build --no-cache -t socz3qqq/zeuspol .
@@ -24,10 +29,17 @@ deploy-themis:
 	kubectl apply -f deployment/themis
 
 deploy-hephaestus:
-	kubectl apply -f deployment/hephaestus
+	kubectl apply -f deployment/hephaestus/manifests
+	kubectl apply -f deployment/hephaestus/volume-creation
 
 deploy-microservices-demo:
+	make deploy-monitoring
+	make deploy-sock-shop
+
+deploy-sock-shop:
 	kubectl apply -f deployment/microservices-demo/manifests
+
+deploy-monitoring:
 	kubectl apply -f deployment/microservices-demo/manifests-monitoring
 
 deploy-local:
@@ -55,6 +67,7 @@ undeploy-themis:
 
 undeploy-hephaestus:
 	kubectl delete namespaces hephaestus --ignore-not-found=true
+	kubectl delete -f deployment/hephaestus/volume-creation
 
 undeploy-microservices-demo:
 	kubectl delete namespaces sock-shop --ignore-not-found=true
