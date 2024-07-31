@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: themis-executor
+  namespace: themis-executor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: themis-executor
+  template:
+    metadata:
+      labels:
+        app: themis-executor
+    spec:
+#      serviceAccountName: themis-executor
+      containers:
+        - name: themis
+          image: k8loud/themis-executor:0.0.4.4
+          imagePullPolicy: "IfNotPresent"
+#          imagePullPolicy: "Always"
+          env:
+            - name: DATA_STORAGE_ROOT_PATH
+              value: /tmp
+            - name: DATA_STORAGE_REMOVAL_PERMITTED
+              value: "true"
+            - name: DROOLS_RULES_PATH
+              value: /rules/rules.drl
+          resources:
+            limits:
+              cpu: 900m
+              memory: 900Mi
+            requests:
+              cpu: 900m
+              memory: 900Mi
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: rules-volume
+              mountPath: /rules
+      volumes:
+        - name: rules-volume
+          configMap:
+            name: rules
