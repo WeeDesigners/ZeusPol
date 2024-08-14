@@ -4,9 +4,9 @@ import io.github.hephaestusmetrics.model.metrics.Metric;
 
 dialect  "mvel"
 
-rule "Metric1 test"
+rule "Metric2 test"
     when
         Metric(getName()=="container_cpu_usage_seconds_total", getValue() > 0.5)
     then
-        System.out.println("Metric1 rule fired");
+        System.out.println("Test resources Metric2 rule fired");
 end
