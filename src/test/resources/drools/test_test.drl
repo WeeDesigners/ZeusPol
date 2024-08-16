@@ -9,5 +9,5 @@ rule "Suggest Manager Role"
     when
         Metric()
     then
-        System.out.println("Rule fired");
+        System.out.println("Test resources test rule fired");
 end

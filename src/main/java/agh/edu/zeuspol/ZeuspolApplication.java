@@ -1,5 +1,4 @@
 package agh.edu.zeuspol;
-
 import agh.edu.zeuspol.drools.DroolsClass;
 import agh.edu.zeuspol.iofile.JSONLoader;
 import agh.edu.zeuspol.services.HephaestusQueryService;
@@ -8,14 +7,12 @@ import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.io.ResourceLoader;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 
 @SpringBootApplication
 public class ZeuspolApplication {
@@ -87,7 +84,9 @@ public class ZeuspolApplication {
 	private static void mainLoop() {
 		HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
 		ThemisService themisService = context.getBean(ThemisService.class);
-//		DroolsClass drools = new DroolsClass("drools");
+		DroolsClass drools = new DroolsClass("ZeusSession");
+
+		drools.fire(null);
 		//infinite loop of mainLoops
 		while(true){
 		//if app should be running, then run main loop

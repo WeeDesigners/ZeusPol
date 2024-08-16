@@ -1,11 +1,13 @@
+package drools;
+
+
 import agh.edu.zeuspol.datastructures.Rule;
 
 
 dialect  "mvel"
 
-rule "Suggest Manager Role"
+rule "Test rule"
     when
-        Rule()
     then
-        System.out.println("Rule fired");
+        System.out.println("Test rule fired");
 end
