@@ -1,52 +1,25 @@
 package agh.edu.zeuspol.drools;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.KieRepository;
-import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.internal.io.ResourceFactory;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class DroolsClass {
-    private final KieServices kieServices = KieServices.Factory.get();
+    private final KieServices kieServices = KieServices.get();
+    private String sessionName;
 
-    private String rulesDirectory;
-
-    public DroolsClass(String rulesDirectory){
-        this.rulesDirectory = rulesDirectory;
-    }
-
-    private KieFileSystem getKieFileSystem() {
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(this.rulesDirectory))) {
-            for (Path path : stream) {
-                kieFileSystem.write(ResourceFactory.newClassPathResource("drools/" + path.getFileName().toString()));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return kieFileSystem;
+    /**
+     * @param  sessionName  can be found in resource/META-INF/kmodule.xml
+     */
+    public DroolsClass(String sessionName){
+        this.sessionName = sessionName;
     }
 
     public KieSession getKieSession() {
-        KieBuilder kb = kieServices.newKieBuilder(getKieFileSystem());
-        kb.buildAll();
-
-        KieRepository kieRepository = kieServices.getRepository();
-        ReleaseId krDefaultReleaseId = kieRepository.getDefaultReleaseId();
-        KieContainer kieContainer = kieServices.newKieContainer(krDefaultReleaseId);
-
-        return kieContainer.newKieSession();
+        KieContainer kc = this.kieServices.getKieClasspathContainer();
+        return kc.newKieSession(this.sessionName);
     }
-
     public void fire(Metric metric){
         KieSession kieSession = this.getKieSession();
         kieSession.insert(metric);
