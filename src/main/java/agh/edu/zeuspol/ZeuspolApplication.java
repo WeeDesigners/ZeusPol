@@ -103,6 +103,7 @@ public class ZeuspolApplication {
 				System.out.println("name: " + metric.name + ", value: " + metric.value);
 //				drools.fire(metric);
 			}
+
 			System.out.println("=============================================");
 
 //			System.out.println("ACTIONS:");

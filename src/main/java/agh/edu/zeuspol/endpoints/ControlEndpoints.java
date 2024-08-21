@@ -35,6 +35,11 @@ public class ControlEndpoints {
         return "ZeusPol stopped!";
     }
 
+    @PostMapping("/execute")
+    public String executeThemis(){
+        return "Execution";
+    }
+
 
 
 
