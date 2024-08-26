@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: zeuspol
-          image: socz3qqq/zeuspol:latest
+          image: weedesigners/zeuspol:latest
           env:
             - name: ZEUS_ADDRESS
               value: "0.0.0.0"

@@ -3,6 +3,7 @@ docker-build-local:
 	eval $(minikube docker-env)
 	mvn clean install
 	docker build --no-cache -t zeuspol .
+	minikube image load zeuspol:latest
 
 docker-build-local-windows:
 	powershell -Command "minikube -p minikube docker-env --shell powershell | Invoke-Expression"
@@ -11,8 +12,8 @@ docker-build-local-windows:
 
 docker-build-and-push:
 	mvn clean install
-	docker build --no-cache -t socz3qqq/zeuspol .
-	docker push socz3qqq/zeuspol:latest
+	docker build --no-cache -t weedesigners/zeuspol .
+	docker push weedesigners/zeuspol:latest
 
 deploy:
 	make deploy-zeuspol
