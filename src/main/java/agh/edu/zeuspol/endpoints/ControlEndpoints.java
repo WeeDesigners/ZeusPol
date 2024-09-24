@@ -2,6 +2,7 @@ package agh.edu.zeuspol.endpoints;
 
 
 import agh.edu.zeuspol.ZeuspolApplication;
+import agh.edu.zeuspol.endpoints.requests.ExecuteRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,49 +15,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-
-
-//TODO
-class Request{
-    private String collectionName;
-    private String actionName;
-    private HashMap<String, String> params;
-
-    public Request() {
-        collectionName = "";
-        actionName = "";
-        params = new HashMap<>();
-    }
-
-    public String getCollectionName() {
-        return collectionName;
-    }
-
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
-    }
-
-    public String getActionName() {
-        return actionName;
-    }
-
-    public void setActionName(String actionName) {
-        this.actionName = actionName;
-    }
-
-    public HashMap<String, String> getParams() {
-        return params;
-    }
-
-}
-
-
-
-
-
-
-
-
 
 
 @RestController
@@ -102,8 +60,8 @@ public class ControlEndpoints {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         //TODO
-        Request myJSON = new Request();   //talk about it!!!
-        HttpEntity<Request> request = new HttpEntity<Request>(myJSON, headers);
+        ExecuteRequest myJSON = new ExecuteRequest();
+        HttpEntity<ExecuteRequest> request = new HttpEntity<ExecuteRequest>(myJSON, headers);
 
         try{
             String result = restTemplate.postForObject(fullURL, request, String.class);
