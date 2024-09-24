@@ -59,7 +59,7 @@ public class ControlEndpoints {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        //TODO
+        //create a request (TODO in future!)
         ExecuteRequest myJSON = new ExecuteRequest();
         HttpEntity<ExecuteRequest> request = new HttpEntity<ExecuteRequest>(myJSON, headers);
 

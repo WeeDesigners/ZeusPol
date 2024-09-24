@@ -8,8 +8,8 @@ public class ExecuteRequest {
     private HashMap<String, String> params;
 
     public ExecuteRequest() {
-        collectionName = "";
-        actionName = "";
+        collectionName = "default_collection_name";
+        actionName = "default_action_name";
         params = new HashMap<>();
     }
 
