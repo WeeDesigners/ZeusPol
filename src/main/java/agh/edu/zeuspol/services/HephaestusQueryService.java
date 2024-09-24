@@ -17,8 +17,10 @@ import java.util.stream.Collectors;
 public class HephaestusQueryService {
     private final Translator translator;
     private final RestTemplate restTemplate;
+
     @Value("${hephaestus.url}")
     private String url;
+
     public HephaestusQueryService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
         this.translator = new Translator();

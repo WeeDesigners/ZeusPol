@@ -3,6 +3,8 @@ package agh.edu.zeuspol.endpoints;
 
 import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.endpoints.requests.ExecuteRequest;
+import agh.edu.zeuspol.services.ThemisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +23,12 @@ import java.util.HashMap;
 @RequestMapping("/app")
 public class ControlEndpoints {
 
-    @Value("${themis.url}")
-    String themisUrl;
+    private final ThemisService themisService;
+
+    @Autowired
+    public ControlEndpoints(ThemisService themisService) {
+        this.themisService = themisService;
+    }
 
     @PostMapping("/start")
     public String startApp() {
@@ -51,31 +57,11 @@ public class ControlEndpoints {
 
     @PostMapping("/execute-action")
     public String executeThemis(){
-        String fullURL = "http://"+themisUrl+"/execute";
-
-        RestTemplate restTemplate = new RestTemplate();
-
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
         //create a request (TODO in future!)
-        ExecuteRequest myJSON = new ExecuteRequest();
-        HttpEntity<ExecuteRequest> request = new HttpEntity<ExecuteRequest>(myJSON, headers);
+        ExecuteRequest request = new ExecuteRequest();
 
-        try{
-            String result = restTemplate.postForObject(fullURL, request, String.class);
-            //to sth with response
-            return "Themis response: " + result;
-        } catch (HttpClientErrorException e) {
-            return "Themis response: " + e.getResponseBodyAsString();
-        }
-
+        String response = this.themisService.executeAction(request);
+        return "Themis response: " + response;
     }
-
-
-
-
-
 
 }

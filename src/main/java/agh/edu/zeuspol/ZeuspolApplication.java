@@ -109,6 +109,7 @@ public class ZeuspolApplication {
 //			System.out.println("ACTIONS:");
 			System.out.println(themisService.getActions());
 			System.out.println("=============================================");
+
 			//wait some time
 			try {
 				Thread.sleep(2000);

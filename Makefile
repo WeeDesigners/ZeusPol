@@ -49,7 +49,6 @@ deploy-local:
 	make deploy-microservices-demo
 
 deploy-zeuspol-local:
-	#idk here?
 	minikube image load zeuspol:latest
 	kubectl apply -f deployment/zeuspol/00-zeuspol-ns.yaml
 	kubectl apply -f deployment/zeuspol/01-zeuspol-dep-local.yaml
