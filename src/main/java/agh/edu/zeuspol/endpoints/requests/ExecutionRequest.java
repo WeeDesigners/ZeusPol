@@ -2,18 +2,18 @@ package agh.edu.zeuspol.endpoints.requests;
 
 import java.util.HashMap;
 
-public class ExecuteRequest {
+public class ExecutionRequest {
     private String collectionName;
     private String actionName;
     private HashMap<String, String> params;
 
-    public ExecuteRequest() {
+    public ExecutionRequest() {
         collectionName = "default_collection_name";
         actionName = "default_action_name";
         params = new HashMap<>();
     }
 
-    public ExecuteRequest(String collectionName, String actionName, HashMap<String, String> params) {
+    public ExecutionRequest(String collectionName, String actionName, HashMap<String, String> params) {
         this.collectionName = collectionName;
         this.actionName = actionName;
         this.params = params;

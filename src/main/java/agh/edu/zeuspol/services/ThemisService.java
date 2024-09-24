@@ -1,10 +1,7 @@
 package agh.edu.zeuspol.services;
 
-import agh.edu.zeuspol.endpoints.requests.ExecuteRequest;
-import io.github.hephaestusmetrics.model.metrics.Metric;
+import agh.edu.zeuspol.endpoints.requests.ExecutionRequest;
 import io.github.hephaestusmetrics.model.queryresults.RawQueryResult;
-import io.github.hephaestusmetrics.serialization.Translator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -15,9 +12,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class ThemisService {
@@ -38,11 +32,11 @@ public class ThemisService {
         return "";
     }
 
-    public String executeAction(ExecuteRequest request) {
+    public String executeAction(ExecutionRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ExecuteRequest> requestEntity = new HttpEntity<ExecuteRequest>(request, headers);
+        HttpEntity<ExecutionRequest> requestEntity = new HttpEntity<ExecutionRequest>(request, headers);
 
         try{
             return this.restTemplate.postForObject(themisUrl+"/execute", requestEntity, String.class);
