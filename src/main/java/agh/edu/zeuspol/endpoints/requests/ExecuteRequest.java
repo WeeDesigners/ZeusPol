@@ -13,10 +13,10 @@ public class ExecuteRequest {
         params = new HashMap<>();
     }
 
-    public ExecuteRequest(String collectionName, String actionName, HashMap<String, String> parameters) {
+    public ExecuteRequest(String collectionName, String actionName, HashMap<String, String> params) {
         this.collectionName = collectionName;
         this.actionName = actionName;
-        this.params = parameters;
+        this.params = params;
     }
 
     public String getCollectionName() {
@@ -35,11 +35,11 @@ public class ExecuteRequest {
         this.actionName = actionName;
     }
 
-    public HashMap<String, String> getParameters() {
+    public HashMap<String, String> getParams() {
         return params;
     }
 
-    public void addParameter(String key, String value) {
+    public void addParam(String key, String value) {
         this.params.put(key, value);
     }
 

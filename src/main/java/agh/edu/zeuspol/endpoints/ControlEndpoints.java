@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
@@ -56,10 +57,7 @@ public class ControlEndpoints {
     }
 
     @PostMapping("/execute-action")
-    public String executeThemis(){
-        //create a request (TODO in future!)
-        ExecuteRequest request = new ExecuteRequest();
-
+    public String executeThemis(@RequestBody ExecuteRequest request) {
         String response = this.themisService.executeAction(request);
         return "Themis response: " + response;
     }
