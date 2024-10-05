@@ -105,11 +105,13 @@ public class ZeuspolApplication {
         System.out.println("name: " + metric.name + ", value: " + metric.value);
         //				drools.fire(metric);
       }
+
       System.out.println("=============================================");
 
       //			System.out.println("ACTIONS:");
       System.out.println(themisService.getActions());
       System.out.println("=============================================");
+
       // wait some time
       try {
         Thread.sleep(2000);
