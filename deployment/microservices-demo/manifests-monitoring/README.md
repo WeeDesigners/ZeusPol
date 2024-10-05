@@ -4,7 +4,6 @@ First create the monitoring namespace using the `00-monitoring-ns.yaml` file:
 
 `$ kubectl create -f 00-monitoring-ns.yaml`
 
-
 ## Prometheus
 
 To deploy simply apply all the prometheus manifests (01-10) in any order:
@@ -23,4 +22,4 @@ Once the grafana pod is in the Running state apply the `23-grafana-import-dash-b
 
 `kubectl apply -f 23-grafana-import-dash-batch.yaml`
 
-Grafana will be exposed on the NodePort `31300` 
+Grafana will be exposed on the NodePort `31300`
