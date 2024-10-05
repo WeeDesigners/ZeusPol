@@ -8,6 +8,6 @@ spec:
   capacity:
     storage: 25Mi
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   hostPath:
     path: "/mnt/hephaestus-gui-pv"

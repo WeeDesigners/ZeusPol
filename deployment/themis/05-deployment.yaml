@@ -13,12 +13,12 @@ spec:
       labels:
         app: themis-executor
     spec:
-#      serviceAccountName: themis-executor
+      #      serviceAccountName: themis-executor
       containers:
         - name: themis
           image: k8loud/themis-executor:0.0.4.4
           imagePullPolicy: "IfNotPresent"
-#          imagePullPolicy: "Always"
+          #          imagePullPolicy: "Always"
           env:
             - name: DATA_STORAGE_ROOT_PATH
               value: /tmp

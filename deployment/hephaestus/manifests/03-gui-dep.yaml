@@ -17,14 +17,14 @@ spec:
         - name: hephaestus-gui
           image: hephaestusmetrics/gui:latest
           env:
-          - name: prometheus.address
-            value: prometheus.monitoring:9090
-          - name: saved.path
-            value: /../storage/metrics/savedMetrics/metrics.json
-          - name: config.path
-            value: /../storage/metrics/configMetrics/metrics.json
-          - name: logs.path
-            value: /../storage/logs
+            - name: prometheus.address
+              value: prometheus.monitoring:9090
+            - name: saved.path
+              value: /../storage/metrics/savedMetrics/metrics.json
+            - name: config.path
+              value: /../storage/metrics/configMetrics/metrics.json
+            - name: logs.path
+              value: /../storage/logs
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -41,5 +41,5 @@ spec:
           configMap:
             name: gui-configmap
             items:
-            - key: metrics.json
-              path: metrics.json 
+              - key: metrics.json
+                path: metrics.json

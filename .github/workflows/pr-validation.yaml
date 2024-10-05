@@ -7,7 +7,6 @@ on:
       - opened
       - closed
     branches: [main]
-        
 
 jobs:
   ci:
@@ -30,8 +29,8 @@ jobs:
         if: github.event.pull_request.merged == true
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
           cache: maven
 
       - name: Maven test and build
