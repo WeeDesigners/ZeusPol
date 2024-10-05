@@ -1,162 +1,247 @@
 package agh.edu.zeuspol;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import agh.edu.zeuspol.checker.SlaViolationChecker;
 import agh.edu.zeuspol.datastructures.*;
 import agh.edu.zeuspol.datastructures.storage.Sla;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class SlaViolationCheckerTests {
 
+  @Test
+  public void testCheck_NoViolation() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.EQ);
 
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-    @Test
-    public void testCheck_NoViolation() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.EQ);
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.EQ);
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+    assertFalse(SlaViolationChecker.checkRule(rule));
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.EQ);
+    sla.clearSla();
+  }
 
-        assertFalse(SlaViolationChecker.checkRule(rule));
+  @Test
+  public void testCheck_ViolationDifferentUnits() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.EQ);
 
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        sla.clearSla();
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.NUMBER,
+            ActionType.EQ);
 
-    }
+    assertThrows(IllegalArgumentException.class, () -> SlaViolationChecker.checkRule(rule));
 
-    @Test
-    public void testCheck_ViolationDifferentUnits() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.EQ);
+    sla.clearSla();
+  }
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+  @Test
+  public void testCheck_ViolationDifferentActionTypes() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.LT);
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.NUMBER, ActionType.EQ);
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        assertThrows(IllegalArgumentException.class, () -> SlaViolationChecker.checkRule(rule));
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(11),
+            UnitType.BYTE,
+            ActionType.GT);
 
-        sla.clearSla();
+    assertTrue(SlaViolationChecker.checkRule(rule));
 
-    }
+    sla.clearSla();
+  }
 
-    @Test
-    public void testCheck_ViolationDifferentActionTypes() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.LT);
+  @Test
+  public void testCheck_BetweenNoViolation() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(5, 15),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(11), UnitType.BYTE, ActionType.GT);
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(6, 14),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        assertTrue(SlaViolationChecker.checkRule(rule));
+    assertFalse(SlaViolationChecker.checkRule(rule));
 
+    sla.clearSla();
+  }
 
-        sla.clearSla();
-    }
+  @Test
+  public void testCheck_BetweenViolation() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(5, 15),
+            UnitType.BYTE,
+            ActionType.BT);
 
-    @Test
-    public void testCheck_BetweenNoViolation() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(5, 15), UnitType.BYTE, ActionType.BT);
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(16, 20),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(6, 14), UnitType.BYTE, ActionType.BT);
+    assertTrue(SlaViolationChecker.checkRule(rule));
 
-        assertFalse(SlaViolationChecker.checkRule(rule));
+    sla.clearSla();
+  }
 
+  @Test
+  public void testCheck_MixedActionsNoViolation() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.GT);
 
-        sla.clearSla();
-    }
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-    @Test
-    public void testCheck_BetweenViolation() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(5, 15), UnitType.BYTE, ActionType.BT);
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(11, 20),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+    assertFalse(SlaViolationChecker.checkRule(rule));
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(16, 20), UnitType.BYTE, ActionType.BT);
+    sla.clearSla();
+  }
 
-        assertTrue(SlaViolationChecker.checkRule(rule));
+  @Test
+  public void testCheck_MixedActionsViolation() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Collections.singletonList(10),
+            UnitType.BYTE,
+            ActionType.GT);
 
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        sla.clearSla();
-    }
+    Rule rule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(5, 8),
+            UnitType.BYTE,
+            ActionType.BT);
 
-    @Test
-    public void testCheck_MixedActionsNoViolation() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.GT);
+    assertTrue(SlaViolationChecker.checkRule(rule));
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+    sla.clearSla();
+  }
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(11, 20), UnitType.BYTE, ActionType.BT);
+  @Test
+  public void testCheck_MixedActionsNoViolation2() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(10, 15),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        assertFalse(SlaViolationChecker.checkRule(rule));
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
+    Rule rule =
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, ActionType.GT);
 
-        sla.clearSla();
-    }
+    assertFalse(SlaViolationChecker.checkRule(rule));
 
-    @Test
-    public void testCheck_MixedActionsViolation() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Collections.singletonList(10), UnitType.BYTE, ActionType.GT);
+    sla.clearSla();
+  }
 
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
+  @Test
+  public void testCheck_MixedActionsViolation2() {
+    Rule slaRule =
+        new Rule(
+            RuleAttribute.UPTIME,
+            RuleSubject.CPU,
+            Arrays.asList(10, 15),
+            UnitType.BYTE,
+            ActionType.BT);
 
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(5, 8), UnitType.BYTE, ActionType.BT);
+    Sla sla = Sla.getInstance();
+    sla.clearSla();
+    sla.addRule(slaRule);
 
-        assertTrue(SlaViolationChecker.checkRule(rule));
+    Rule rule =
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, ActionType.GT);
 
+    assertTrue(SlaViolationChecker.checkRule(rule));
 
-        sla.clearSla();
-    }
-
-    @Test
-    public void testCheck_MixedActionsNoViolation2() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(10, 15), UnitType.BYTE, ActionType.BT);
-
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
-
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, ActionType.GT);
-
-        assertFalse(SlaViolationChecker.checkRule(rule));
-
-
-        sla.clearSla();
-    }
-
-    @Test
-    public void testCheck_MixedActionsViolation2() {
-        Rule slaRule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, Arrays.asList(10, 15), UnitType.BYTE, ActionType.BT);
-
-        Sla sla = Sla.getInstance();
-        sla.clearSla();
-        sla.addRule(slaRule);
-
-        Rule rule = new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, ActionType.GT);
-
-        assertTrue(SlaViolationChecker.checkRule(rule));
-
-
-        sla.clearSla();
-    }
+    sla.clearSla();
+  }
 }
