@@ -26,6 +26,7 @@ deploy-zeuspol:
 	kubectl apply -f deployment/zeuspol/02-zeuspol-svc.yaml
 
 deploy-themis:
+	./deployment/scripts/configure_k8s_secrets.sh
 	kubectl apply -f deployment/themis
 
 deploy-hephaestus:
@@ -64,6 +65,7 @@ undeploy-zeuspol:
 	kubectl delete -f deployment/zeuspol/00-zeuspol-ns.yaml --ignore-not-found=true
 
 undeploy-themis:
+	kubectl delete secret --namespace=themis-executor themis-secrets-k8s --ignore-not-found=true
 	kubectl delete namespaces themis-executor --ignore-not-found=true
 
 undeploy-hephaestus:
