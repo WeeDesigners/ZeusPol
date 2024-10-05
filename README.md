@@ -15,4 +15,4 @@ Next clone the [Zeuspol](https://github.com/WeeDesigners/ZeusPol) repo and deplo
 
 For now is possible to inspect the output of the applications for example by using [k9s](https://k9scli.io/)
 
-just run k9s and hit enter 2 times on the zeuspol pod.
+just run k9s and hit enter 2 times on the zeuspol pod
