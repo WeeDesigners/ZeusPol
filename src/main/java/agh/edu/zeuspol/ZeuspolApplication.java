@@ -1,7 +1,10 @@
 package agh.edu.zeuspol;
 
+import agh.edu.zeuspol.datastructures.storage.Policies;
+import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.drools.DroolsClass;
 import agh.edu.zeuspol.services.HephaestusQueryService;
+import agh.edu.zeuspol.services.HermesService;
 import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.IOException;
@@ -25,28 +28,10 @@ public class ZeuspolApplication {
 
     context = SpringApplication.run(ZeuspolApplication.class, args);
 
-    // TEST RULES
-
-    String path = "SlaFile.json";
-    JSONLoader jsonLoader = new JSONLoader(path);
-
-    System.out.println(
-        "=================================================================================");
-    System.out.println("Loading rules from " + path + " . . .");
-    System.out.println(
-        "=================================================================================");
-    System.out.println("Loaded file:");
-    System.out.println(jsonLoader.getJsonString());
-    System.out.println(
-        "=================================================================================");
-    System.out.println("Loaded rules:");
-    System.out.println(jsonLoader.getRules());
-    System.out.println(
-        "=================================================================================");
-    System.out.println("Loaded notification rules:");
-    System.out.println(jsonLoader.getNotificationRules());
-    System.out.println(
-        "=================================================================================");
+    //load Sla and Policies from Hermes
+    HermesService hermesService = context.getBean(HermesService.class);
+    Policies.setInstance(hermesService.getPolicies());
+    Sla.setInstance(hermesService.getSla());
 
     // run loop of main loops
     mainLoop();
