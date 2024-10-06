@@ -28,12 +28,12 @@ public class ZeuspolApplication {
 
     context = SpringApplication.run(ZeuspolApplication.class, args);
 
-    //load Sla and Policies from Hermes
+    // load Sla and Policies from Hermes
     HermesService hermesService = context.getBean(HermesService.class);
     Policies.setInstance(hermesService.getPolicies());
     Sla.setInstance(hermesService.getSla());
 
-    //check if SLA and Policies are imported properly
+    // check if SLA and Policies are imported properly
     System.out.println(Sla.getInstance());
     System.out.println(Policies.getInstance());
 

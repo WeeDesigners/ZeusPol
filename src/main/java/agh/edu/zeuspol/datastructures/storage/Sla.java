@@ -17,7 +17,7 @@ public class Sla {
     this.notificationRules = new ArrayList<>();
   }
 
-  public static void setInstance(Sla sla){
+  public static void setInstance(Sla sla) {
     instance = sla;
   }
 
@@ -86,12 +86,12 @@ public class Sla {
   public String toString() {
     // TODO -> better concat
     return "\n====================================\n"
-            + "SLA:\n"
-            + "------------------------------------\n"
-            + "Rules:\n"
-            + rules
-            + "\n Notification Rules:\n"
-            + notificationRules
-            + "\n====================================\n";
+        + "SLA:\n"
+        + "------------------------------------\n"
+        + "Rules:\n"
+        + rules
+        + "\n Notification Rules:\n"
+        + notificationRules
+        + "\n====================================\n";
   }
 }
