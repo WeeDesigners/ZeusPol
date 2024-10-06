@@ -1,7 +1,6 @@
 package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.drools.DroolsClass;
-import agh.edu.zeuspol.iofile.JSONLoader;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
