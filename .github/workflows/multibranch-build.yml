@@ -4,7 +4,8 @@ name: Lint and build
 on:
   push:
     branches: ["*"]
-  pull_request: null
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]    
 
 jobs:
   fix-lint-issues:
@@ -38,6 +39,7 @@ jobs:
 
       - name: Commit and push linting fixes
         if: >
+          github.event.pull_request.draft == false && 
           github.event_name == 'pull_request' &&
           github.ref_name != github.event.repository.default_branch
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -49,7 +51,7 @@ jobs:
 
   build:
     needs: [fix-lint-issues]
-    name: build and push docker image
+    name: Build with java 17
     runs-on: ubuntu-latest
     permissions:
       contents: write
