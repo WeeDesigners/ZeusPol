@@ -33,6 +33,10 @@ public class ZeuspolApplication {
     Policies.setInstance(hermesService.getPolicies());
     Sla.setInstance(hermesService.getSla());
 
+    //check if SLA and Policies are imported properly
+    System.out.println(Sla.getInstance());
+    System.out.println(Policies.getInstance());
+
     // run loop of main loops
     mainLoop();
   }

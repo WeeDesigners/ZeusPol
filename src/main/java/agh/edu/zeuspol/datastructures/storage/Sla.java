@@ -85,10 +85,13 @@ public class Sla {
   @Override
   public String toString() {
     // TODO -> better concat
-    return "\n====================================\n Rules:\n"
-        + rules
-        + "\n Notification Rules:\n"
-        + notificationRules
-        + "\n====================================\n";
+    return "\n====================================\n"
+            + "SLA:\n"
+            + "------------------------------------\n"
+            + "Rules:\n"
+            + rules
+            + "\n Notification Rules:\n"
+            + notificationRules
+            + "\n====================================\n";
   }
 }
