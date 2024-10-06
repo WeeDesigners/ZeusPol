@@ -51,8 +51,9 @@ public class PoliciesEndpoints {
     for(Rule rule : rules){
       String hermesResponse = hermesService.addRuleObject(rule);
       if(hermesResponse != null){
+        System.out.println(hermesResponse);
         //these '+=' are really cute c:
-        if(response.equals("Rule added successfully")){
+        if(hermesResponse.equals("Rule added successfully")){
           response += "Rule id="+rule.id+" exported succesfully!\n";
         }
         else{
