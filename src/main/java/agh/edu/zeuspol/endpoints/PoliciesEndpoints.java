@@ -59,15 +59,15 @@ public class PoliciesEndpoints {
   }
 
   @PostMapping("/importRule")
-  public String importRuleFromHermes(@RequestBody long id){
+  public String importRuleFromHermes(@RequestBody long id) {
     Policies policies = Policies.getInstance();
 
     Rule rule = hermesService.getRuleObject(id);
-    if(rule != null){
+    if (rule != null) {
       policies.addRule(rule);
-      return "Successfully imported rule: "+rule;
+      return "Successfully imported rule: " + rule;
     }
-    return "Error occurred while importing rule id="+id;
+    return "Error occurred while importing rule id=" + id;
   }
 
   @GetMapping("getPolicies")
