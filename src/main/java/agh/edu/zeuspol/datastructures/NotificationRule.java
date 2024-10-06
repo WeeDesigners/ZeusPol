@@ -1,7 +1,5 @@
 package agh.edu.zeuspol.datastructures;
 
-import agh.edu.zeuspol.generators.IdGenerator;
-
 import java.util.List;
 import java.util.Objects;
 
