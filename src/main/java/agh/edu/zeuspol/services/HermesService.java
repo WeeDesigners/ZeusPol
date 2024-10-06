@@ -50,7 +50,7 @@ public class HermesService {
     }
 
     public Rule getRuleObject(long id) {
-        Rule rule = restTemplate.getForObject(hermesUrl + "/rules/getRuleObject", Rule.class);
+        Rule rule = restTemplate.getForObject(hermesUrl + "/rules/getRuleObject/{id}", Rule.class, id);
         if(rule == null) {
             //TODO -> some error or sth... idk....
         }
@@ -58,7 +58,7 @@ public class HermesService {
     }
 
     public String getRuleString(long id) {
-        String ruleString = restTemplate.getForObject(hermesUrl + "/rules/getRuleString", String.class);
+        String ruleString = restTemplate.getForObject(hermesUrl + "/rules/getRuleString/{id}", String.class, id);
         if(ruleString == null || ruleString.isEmpty()) {
             //TODO -> some error or sth... idk....
         }
