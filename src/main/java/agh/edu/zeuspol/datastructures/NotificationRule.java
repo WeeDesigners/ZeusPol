@@ -1,11 +1,18 @@
 package agh.edu.zeuspol.datastructures;
 
+import agh.edu.zeuspol.generators.IdGenerator;
+
 import java.util.List;
 import java.util.Objects;
 
 public class NotificationRule extends Rule {
 
   public final String email;
+
+  public NotificationRule() {
+    super();
+    this.email = null;
+  }
 
   public NotificationRule(
       RuleAttribute attribute,
