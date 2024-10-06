@@ -15,7 +15,7 @@ public class HermesService {
   private final RestTemplate restTemplate;
 
   @Value("${hermes.url}")
-  private String hermesUrl = "http://127.0.0.2:8080";
+  private String hermesUrl;
 
   public HermesService(RestTemplateBuilder restTemplateBuilder) {
     this.restTemplate = restTemplateBuilder.build();
