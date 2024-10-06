@@ -12,7 +12,7 @@ public class Rule {
   public final UnitType unit;
   public final ActionType action;
 
-  public Rule(){
+  public Rule() {
     this.id = IdGenerator.getRuleId();
     this.attribute = null;
     this.subject = null;
