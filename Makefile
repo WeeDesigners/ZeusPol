@@ -15,6 +15,7 @@ docker-build-and-push:
 	docker push socz3qqq/zeuspol:latest
 
 deploy:
+	make deploy-hermes
 	make deploy-zeuspol
 	make deploy-themis
 	make deploy-hephaestus
@@ -43,11 +44,15 @@ deploy-sock-shop:
 deploy-monitoring:
 	kubectl apply -f deployment/microservices-demo/manifests-monitoring
 
+deploy-hermes:
+	kubectl apply -f deployment/hermes
+
 deploy-local:
 	make deploy-zeuspol-local
 	make deploy-themis
 	make deploy-hephaestus
 	make deploy-microservices-demo
+	make deploy-local
 
 deploy-zeuspol-local:
 	minikube image load zeuspol:latest
@@ -60,6 +65,7 @@ undeploy:
 	make undeploy-themis
 	make undeploy-hephaestus
 	make undeploy-microservices-demo
+	make undeploy-hermes
 
 undeploy-zeuspol:
 	kubectl delete -f deployment/zeuspol/00-zeuspol-ns.yaml --ignore-not-found=true
@@ -76,11 +82,15 @@ undeploy-microservices-demo:
 	kubectl delete namespaces sock-shop --ignore-not-found=true
 	kubectl delete namespaces monitoring --ignore-not-found=true
 
+undeploy-hermes:
+	kubectl delete namespaces hermes --ignore-not-found=true
+
 undeploy-local:
 	make undeploy-zeuspol-local
 	make undeploy-themis
 	make undeploy-hephaestus
 	make undeploy-microservices-demo
+	make undeploy-hermes
 
 undeploy-zeuspol-local:
 	kubectl delete -f deployment/zeuspol/00-zeuspol-ns.yaml --ignore-not-found=true
