@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class HermesService {
     private final RestTemplate restTemplate;
 
-//    @Value("${themis.url}")
+//    @Value("${hermes.url}")
     private String hermesUrl = "127.0.0.2:8080";
 
     public HermesService(RestTemplateBuilder restTemplateBuilder) {
@@ -62,7 +62,7 @@ public class HermesService {
     }
 
     public String getRuleString(long id) {
-        String ruleString = restTemplate.getForObject(hermesUrl + "/rules/getRuleObject", String.class);
+        String ruleString = restTemplate.getForObject(hermesUrl + "/rules/getRuleString", String.class);
         if(ruleString == null || ruleString.isEmpty()) {
             //TODO -> some error or sth... idk....
         }
