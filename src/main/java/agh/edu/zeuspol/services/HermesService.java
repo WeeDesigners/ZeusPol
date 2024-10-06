@@ -1,6 +1,7 @@
 package agh.edu.zeuspol.services;
 
 import agh.edu.zeuspol.datastructures.Rule;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class HermesService {
     private final RestTemplate restTemplate;
 
-//    @Value("${hermes.url}")
+    @Value("${hermes.url}")
     private String hermesUrl = "http://127.0.0.2:8080";
 
     public HermesService(RestTemplateBuilder restTemplateBuilder) {
