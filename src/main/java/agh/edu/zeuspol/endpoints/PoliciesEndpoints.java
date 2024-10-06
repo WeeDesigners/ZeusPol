@@ -4,11 +4,22 @@ import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.parsers.RuleJsonParser;
 import java.util.List;
+
+import agh.edu.zeuspol.services.HermesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/policies")
 public class PoliciesEndpoints {
+
+  private final HermesService hermesService;
+
+  @Autowired
+  public PoliciesEndpoints(HermesService hermesService) {
+    this.hermesService = hermesService;
+  }
+
 
   @PostMapping("/addPolicies")
   public String addPolicies(@RequestBody String policiesString) {
@@ -28,6 +39,32 @@ public class PoliciesEndpoints {
       return "Policies updated successfully!";
     }
     return "Policies updated unsuccessfully! One or more rules are not violent with SLA!";
+  }
+
+  @PostMapping("/exportAll")
+  public String exportAllToHermes(){
+    Policies policies = Policies.getInstance();
+    List<Rule> rules = policies.getRules();
+
+    String response = "";
+
+    for(Rule rule : rules){
+      String hermesResponse = hermesService.addRuleObject(rule);
+      if(hermesResponse != null){
+        //these '+=' are really cute c:
+        if(response.equals("Rule added successfully")){
+          response += "Rule id="+rule.id+" exported succesfully!\n";
+        }
+        else{
+          response += "Rule id="+rule.id+" not exported\n";
+        }
+      }
+      else{
+        //TODO -> stupid ifs and elses
+        response += "Rule id="+rule.id+" not exported\n";
+      }
+    }
+    return response;
   }
 
   @GetMapping("getPolicies")

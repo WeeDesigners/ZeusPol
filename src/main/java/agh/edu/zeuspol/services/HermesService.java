@@ -1,9 +1,6 @@
 package agh.edu.zeuspol.services;
 
 import agh.edu.zeuspol.datastructures.Rule;
-import agh.edu.zeuspol.endpoints.requests.ExecutionRequest;
-import io.github.hephaestusmetrics.model.queryresults.RawQueryResult;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,14 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 
 @Service
 public class HermesService {
     private final RestTemplate restTemplate;
 
 //    @Value("${hermes.url}")
-    private String hermesUrl = "127.0.0.2:8080";
+    private String hermesUrl = "http://127.0.0.2:8080";
 
     public HermesService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
