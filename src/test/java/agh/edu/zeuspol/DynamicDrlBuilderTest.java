@@ -2,146 +2,148 @@ package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.drools.DrlRuleExecutor;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
-import org.junit.jupiter.api.Test;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class DynamicDrlBuilderTest {
 
-    @Test
-    public void dynamicLoaderTest() {
-        String s1 = """
-                    package com.example;
-                    
-                    import java.util.List;
-                    
-                    rule "Add element if list has more than one item"
-                        when
-                            $list : List(size > 1)
-                        then
-                            $list.add("NewElement");
-                    end
-                """;
+  @Test
+  public void dynamicLoaderTest() {
+    String s1 =
+        """
+            package com.example;
 
-        DynamicDrlBuilder builder = new DynamicDrlBuilder();
+            import java.util.List;
 
-        builder.addFile("test/testModify.drl", s1);
-        DrlRuleExecutor executor = builder.build();
+            rule "Add element if list has more than one item"
+                when
+                    $list : List(size > 1)
+                then
+                    $list.add("NewElement");
+            end
+        """;
 
-        List<String> fact = new ArrayList<>();
-        fact.add("hey");
-        fact.add("hello");
+    DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
-        executor.fireRules(List.of(fact));
-        assert fact.size() == 3;
-    }
-    @Test
-    public void multipleBuildsTest() {
-        DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
-        DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
+    builder.addFile("test/testModify.drl", s1);
+    DrlRuleExecutor executor = builder.build();
 
-        String drlFileContent =  """
-                    package com.example;
-                    
-                    import java.util.List;
-                    
-                    rule "Add element if list has more than one item"
-                        when
-                            $list : List(size > 1)
-                        then
-                            $list.add("NewElement");
-                    end
-                """;
+    List<String> fact = new ArrayList<>();
+    fact.add("hey");
+    fact.add("hello");
 
-        List<String> fact1 = new ArrayList<>();
-        fact1.add("hey");
-        fact1.add("hello");
+    executor.fireRules(List.of(fact));
+    assert fact.size() == 3;
+  }
 
-        List<String> fact2 = new ArrayList<>();
-        fact2.add("hey");
-        fact2.add("hello");
-        fact2.add("hello1");
+  @Test
+  public void multipleBuildsTest() {
+    DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
+    DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
 
-        loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        DrlRuleExecutor executor1 = loader1.build();
+    String drlFileContent =
+        """
+            package com.example;
 
-        loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        DrlRuleExecutor executor2 = loader2.build();
+            import java.util.List;
 
+            rule "Add element if list has more than one item"
+                when
+                    $list : List(size > 1)
+                then
+                    $list.add("NewElement");
+            end
+        """;
 
-        executor2.fireRules(List.of(fact2));
-        executor1.fireRules(List.of(fact1));
+    List<String> fact1 = new ArrayList<>();
+    fact1.add("hey");
+    fact1.add("hello");
 
-        assert fact1.size() == 3;
-        assert fact2.size() == 4;
-    }
+    List<String> fact2 = new ArrayList<>();
+    fact2.add("hey");
+    fact2.add("hello");
+    fact2.add("hello1");
 
-    @Test
-    public void removeFileTest() {
-        DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
-        DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
+    loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    DrlRuleExecutor executor1 = loader1.build();
 
-        String drlFileContent =  """
-                    package com.example;
-                    
-                    import java.util.List;
-                    
-                    rule "Add element if list has more than one item"
-                        when
-                            $list : List(size > 1)
-                        then
-                            $list.add("NewElement");
-                    end
-                """;
+    loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    DrlRuleExecutor executor2 = loader2.build();
 
-        List<String> fact1 = new ArrayList<>();
-        fact1.add("hey");
-        fact1.add("hello");
+    executor2.fireRules(List.of(fact2));
+    executor1.fireRules(List.of(fact1));
 
-        List<String> fact2 = new ArrayList<>();
-        fact2.add("hey");
-        fact2.add("hello");
-        fact2.add("hello1");
+    assert fact1.size() == 3;
+    assert fact2.size() == 4;
+  }
 
-        loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        loader1.removeFile("test/test.drl");
-        DrlRuleExecutor executor1 = loader1.build();
+  @Test
+  public void removeFileTest() {
+    DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
+    DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
 
-        loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        loader2.removeFile("test/test.drl");
-        DrlRuleExecutor executor2 = loader2.build();
+    String drlFileContent =
+        """
+            package com.example;
 
+            import java.util.List;
 
-        executor2.fireRules(List.of(fact2));
-        executor1.fireRules(List.of(fact1));
+            rule "Add element if list has more than one item"
+                when
+                    $list : List(size > 1)
+                then
+                    $list.add("NewElement");
+            end
+        """;
 
-        assert fact1.size() == 2;
-        assert fact2.size() == 3;
-    }
+    List<String> fact1 = new ArrayList<>();
+    fact1.add("hey");
+    fact1.add("hello");
 
-    @Test
-    public void getFileTest() {
-        DynamicDrlBuilder loader = new DynamicDrlBuilder();
+    List<String> fact2 = new ArrayList<>();
+    fact2.add("hey");
+    fact2.add("hello");
+    fact2.add("hello1");
 
-        String drlFileContentPassed =  """
-                    package com.example;
-                    
-                    import java.util.List;
-                    
-                    rule "Add element if list has more than one item"
-                        when
-                            $list : List(size > 1)
-                        then
-                            $list.add("NewElement");
-                    end
-                """;
+    loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    loader1.removeFile("test/test.drl");
+    DrlRuleExecutor executor1 = loader1.build();
 
-        loader.addFile("test/test.drl", drlFileContentPassed.getBytes(StandardCharsets.UTF_8));
+    loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    loader2.removeFile("test/test.drl");
+    DrlRuleExecutor executor2 = loader2.build();
 
-        String drlFileContentReceived = loader.getFile("test/test.drl");
+    executor2.fireRules(List.of(fact2));
+    executor1.fireRules(List.of(fact1));
 
-        assert drlFileContentPassed.equals(drlFileContentReceived);
-    }
+    assert fact1.size() == 2;
+    assert fact2.size() == 3;
+  }
+
+  @Test
+  public void getFileTest() {
+    DynamicDrlBuilder loader = new DynamicDrlBuilder();
+
+    String drlFileContentPassed =
+        """
+            package com.example;
+
+            import java.util.List;
+
+            rule "Add element if list has more than one item"
+                when
+                    $list : List(size > 1)
+                then
+                    $list.add("NewElement");
+            end
+        """;
+
+    loader.addFile("test/test.drl", drlFileContentPassed.getBytes(StandardCharsets.UTF_8));
+
+    String drlFileContentReceived = loader.getFile("test/test.drl");
+
+    assert drlFileContentPassed.equals(drlFileContentReceived);
+  }
 }
-
