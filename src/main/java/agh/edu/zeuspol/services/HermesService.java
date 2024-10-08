@@ -1,6 +1,8 @@
 package agh.edu.zeuspol.services;
 
 import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.storage.Policies;
+import agh.edu.zeuspol.datastructures.storage.Sla;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -64,5 +66,21 @@ public class HermesService {
       // TODO -> some error or sth... idk....
     }
     return ruleString;
+  }
+
+  public Sla getSla() {
+    Sla sla = restTemplate.getForObject(hermesUrl + "/sla/get", Sla.class);
+    if (sla == null) {
+      // TODO -> some error or sth... idk....
+    }
+    return sla;
+  }
+
+  public Policies getPolicies() {
+    Policies policies = restTemplate.getForObject(hermesUrl + "/policies/get", Policies.class);
+    if (policies == null) {
+      // TODO -> some error or sth... idk....
+    }
+    return policies;
   }
 }

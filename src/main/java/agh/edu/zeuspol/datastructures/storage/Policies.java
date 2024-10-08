@@ -7,12 +7,16 @@ import java.util.List;
 
 public class Policies {
 
-  private static final Policies instance = new Policies();
+  private static Policies instance = new Policies();
 
   private final List<Rule> rules;
 
   private Policies() {
     this.rules = new ArrayList<>();
+  }
+
+  public static void setInstance(Policies policies) {
+    instance = policies;
   }
 
   public static Policies getInstance() {

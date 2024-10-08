@@ -7,11 +7,6 @@ public class NotificationRule extends Rule {
 
   public final String email;
 
-  public NotificationRule() {
-    super();
-    this.email = null;
-  }
-
   public NotificationRule(
       RuleAttribute attribute,
       RuleSubject subject,

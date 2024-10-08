@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Sla {
 
-  private static final Sla instance = new Sla();
+  private static Sla instance = new Sla();
 
   private final List<Rule> rules;
   private final List<NotificationRule> notificationRules;
@@ -15,6 +15,10 @@ public class Sla {
   private Sla() {
     this.rules = new ArrayList<>();
     this.notificationRules = new ArrayList<>();
+  }
+
+  public static void setInstance(Sla sla) {
+    instance = sla;
   }
 
   public static Sla getInstance() {
@@ -81,7 +85,10 @@ public class Sla {
   @Override
   public String toString() {
     // TODO -> better concat
-    return "\n====================================\n Rules:\n"
+    return "\n====================================\n"
+        + "SLA:\n"
+        + "------------------------------------\n"
+        + "Rules:\n"
         + rules
         + "\n Notification Rules:\n"
         + notificationRules
