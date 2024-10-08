@@ -8,15 +8,18 @@ public class DrlProvider {
 
     private String testRule =
             """
+            import io.github.hephaestusmetrics.model.metrics.Metric;
+//            Add import here
+            
             rule "memory-usage-above-20pr"
                 when
-                    clusterMemoryUsage : Metric(
+                    Metric(
                         queryTag == "cluster-memory-usage",
-                        clusterMemoryUsageValue : value
+                        value > 20
                     )
-                    eval((clusterMemoryUsageValue > 20))
                 then
                     System.out.println("Processing 'memory-usage-above-70pr'...");
+//                    add code here
             end
             """;
 
