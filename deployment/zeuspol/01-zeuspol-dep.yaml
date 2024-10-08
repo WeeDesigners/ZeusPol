@@ -28,7 +28,7 @@ spec:
             - name: kubernetes-management
               value: http://kubernetes-management.kubernetes-management:8097
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:

@@ -30,6 +30,21 @@ public class FastDrlTest {
     }
 
     @Test
+    public void testAppScaling() {
+        DrlProvider provider = new DrlProvider();
+        DynamicDrlBuilder builder = new DynamicDrlBuilder();
+        for (DrlStringFile f: provider.getDrlFiles()) {
+            builder.addFile(f.getPath(), f.getFileContent());
+        }
+
+        DrlRuleExecutor executor = builder.build();
+
+
+        Metric m = new Metric("test-app_cpu_usage", ResultType.SCALAR ,new HashMap<String, String>(), 10, "60.1");
+        executor.fireRules(List.of(m));
+    }
+
+    @Test
     public void test2() {
         DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
