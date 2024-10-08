@@ -99,7 +99,7 @@ public class ZeuspolApplication {
       System.out.println("=============================================");
       System.out.println("METRICS:");
       for (Metric metric : metrics) {
-        System.out.println("name: " + metric.name + ", value: " + metric.value);
+        System.out.println("name: " + metric.getQueryTag() + ", value: " + metric.value);
         objs.add(metric);
       }
       executor.fireRules(objs);

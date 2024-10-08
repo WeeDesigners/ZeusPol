@@ -28,7 +28,7 @@ public class DrlProvider {
                         value > 60
                     )
                 then
-                    String curlCommand = "curl -X POST http://themis-executor.themis-executor/execute " +
+                    String curlCommand = "curl -X POST http://themis-executor.themis-executor:8080/execute " +
                             "-H \\"Content-Type: application/json\\" " +
                             "-d '{\\"collectionName\\": \\"kubernetes\\"," +
                             "\\"actionName\\": \\"ChangeResourcesOfContainerWithinDeploymentAction\\"," +
@@ -41,20 +41,7 @@ public class DrlProvider {
                             "\\"requestsMemory\\": \\"800Mi\\"}}'";
     
                     try {
-                      ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", curlCommand);
-                      processBuilder.redirectErrorStream(true); // Capture both stdout and stderr
-                      Process process = processBuilder.start();
-
-                      // Read the output of the command
-                      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                      String line;
-                      while ((line = reader.readLine()) != null) {
-                          System.out.println(line);
-                      }
-
-                      // Wait for the process to finish and get the exit code
-                      int exitCode = process.waitFor();
-                      System.out.println("Exited with code: " + exitCode);
+                        Process process = Runtime.getRuntime().exec(new String[]{"bash", "-c", curlCommand});
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
