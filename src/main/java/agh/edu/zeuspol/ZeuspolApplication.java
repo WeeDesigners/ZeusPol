@@ -9,7 +9,6 @@ import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -79,7 +78,7 @@ public class ZeuspolApplication {
 
     DrlProvider drlProvider = new DrlProvider();
     DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
-    for (DrlStringFile f: drlProvider.getDrlFiles()) {
+    for (DrlStringFile f : drlProvider.getDrlFiles()) {
       dynamicDrlBuilder.addFile(f.getPath(), f.getFileContent());
     }
 
