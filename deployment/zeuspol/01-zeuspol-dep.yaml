@@ -15,20 +15,20 @@ spec:
     spec:
       containers:
         - name: zeuspol
-          image: weedesigners/zeuspol:latest
+          image: weedesigners/zeuspol:main
           env:
             - name: ZEUS_ADDRESS
               value: "0.0.0.0"
             - name: ZEUS_PORT
               value: "8080"
             - name: HEPHAESTUS_URL
-              value: http://hephaestus-gui.hephaestus:8080
+              value: http://hephaestus-gui.hephaestus.svc.cluster.local:8080
             - name: THEMIS_URL
-              value: http://themis-executor.themis-executor:8080
+              value: http://themis-executor.themis-executor.svc.cluster.local:8080
             - name: HERMES_URL
-              value: http://hermes.hermes:8080
+              value: http://hermes.hermes.svc.cluster.local:8080
             - name: kubernetes-management
-              value: http://kubernetes-management.kubernetes-management:8097
+              value: http://kubernetes-management.kubernetes-management.svc.cluster.local:8097
 
           imagePullPolicy: Always
           ports:

@@ -17,8 +17,8 @@ spec:
       containers:
         - name: themis
           image: k8loud/themis-executor:0.0.4.4
-          imagePullPolicy: "IfNotPresent"
-          #          imagePullPolicy: "Always"
+          # imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           env:
             - name: DROOLS_RULES_PATH
               value: /rules/rules.drl
@@ -29,7 +29,10 @@ spec:
             - name: HEPHAESTUS_SELECTED_ENDPOINT
               value: /hephaestus/metrics/selected
             - name: KUBERNETES_MASTER
-              value: https://192.168.49.2:8443
+              valueFrom:
+                secretKeyRef:
+                  name: themis-secrets-k8s
+                  key: KUBERNETES_MASTER
             - name: KUBERNETES_CA_CERT_DATA
               valueFrom:
                 secretKeyRef:
@@ -56,7 +59,15 @@ spec:
             - name: MAIL_ADDRESS
               value: listonoszpat@int.pl
             - name: OPENSTACK_USERNAME
-              value: plgppycia
+              valueFrom:
+                secretKeyRef:
+                  name: themis-secrets-openstack
+                  key: OPENSTACK_USERNAME
+            - name: OPENSTACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: themis-secrets-openstack
+                  key: OPENSTACK_PASSWORD
             - name: OPENSTACK_ENDPOINT
               value: https://api.cloud.cyfronet.pl:5000/v3
             - name: OPENSTACK_DOMAIN_NAME
@@ -64,21 +75,13 @@ spec:
             - name: OPENSTACK_DOMAIN_I_D
               value: default
             - name: OPENSTACK_PROJECT_I_D
-              value: f3f4f2456fa54ec4836b6e5317480372
+              value: 795986d75bae4609aec541f073213917
             - name: OPENSTACK_OPENSTACK_AUTH
               value: PROJECT_SCOPED
             - name: SERVICE_ENABLED_HEPHAESTUS
               value: "true"
             - name: SERVICE_ENABLED_DROOLS
-              value: "true"
-            - name: SOCKSHOP_LOGIN_USER_URL_SUPPLEMENT
-              value: login
-            - name: SOCKSHOP_REGISTER_USER_URL_SUPPLEMENT
-              value: register
-            - name: SOCKSHOP_CUSTOMERS_URL_SUPPLEMENT
-              value: customers
-            - name: SOCKSHOP_ADDRESSES_URL_SUPPLEMENT
-              value: addresses
+              value: "false"
           resources:
             limits:
               cpu: 900m
