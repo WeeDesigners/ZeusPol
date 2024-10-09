@@ -1,15 +1,11 @@
 package agh.edu.zeuspol;
 
-import agh.edu.zeuspol.datastructures.storage.Policies;
-import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.drools.*;
 import agh.edu.zeuspol.services.HephaestusQueryService;
-import agh.edu.zeuspol.services.HermesService;
 import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -30,14 +26,14 @@ public class ZeuspolApplication {
 
     context = SpringApplication.run(ZeuspolApplication.class, args);
 
-//    // load Sla and Policies from Hermes
-//    HermesService hermesService = context.getBean(HermesService.class);
-//    Policies.setInstance(hermesService.getPolicies());
-//    Sla.setInstance(hermesService.getSla());
-//
-//    // check if SLA and Policies are imported properly
-//    System.out.println(Sla.getInstance());
-//    System.out.println(Policies.getInstance());
+    //    // load Sla and Policies from Hermes
+    //    HermesService hermesService = context.getBean(HermesService.class);
+    //    Policies.setInstance(hermesService.getPolicies());
+    //    Sla.setInstance(hermesService.getSla());
+    //
+    //    // check if SLA and Policies are imported properly
+    //    System.out.println(Sla.getInstance());
+    //    System.out.println(Policies.getInstance());
 
     // run loop of main loops
     mainLoop();
@@ -79,7 +75,7 @@ public class ZeuspolApplication {
 
     DrlProvider drlProvider = new DrlProvider();
     DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
-    for (DrlStringFile f: drlProvider.getDrlFiles()) {
+    for (DrlStringFile f : drlProvider.getDrlFiles()) {
       dynamicDrlBuilder.addFile(f.getPath(), f.getFileContent());
     }
 
