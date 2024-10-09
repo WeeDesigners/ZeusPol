@@ -34,7 +34,7 @@ deploy-hephaestus:
 
 deploy-microservices-demo:
 	make deploy-monitoring
-	make deploy-sock-shop
+	#make deploy-sock-shop
 
 deploy-sock-shop:
 	kubectl apply -f deployment/microservices-demo/manifests
@@ -46,11 +46,11 @@ deploy-hermes:
 	kubectl apply -f deployment/hermes
 
 deploy-local:
+	make deploy-hermes
 	make deploy-zeuspol-local
 	make deploy-themis
 	make deploy-hephaestus
 	make deploy-microservices-demo
-	make deploy-local
 
 deploy-zeuspol-local:
 	minikube image load zeuspol:latest
@@ -74,7 +74,7 @@ undeploy-themis:
 
 undeploy-hephaestus:
 	kubectl delete namespaces hephaestus --ignore-not-found=true
-	kubectl delete -f deployment/hephaestus/volume-creation
+	kubectl delete -f deployment/hephaestus/volume-creation --ignore-not-found=true
 
 undeploy-microservices-demo:
 	kubectl delete namespaces sock-shop --ignore-not-found=true
@@ -101,3 +101,10 @@ reset-minikube:
 
 get-minikube-info:
 	minikube service list
+
+
+deploy-test-app:
+	kubectl apply -f deployment/TestApp
+
+undeploy-test-app:
+	kubectl delete -f deployment/TestApp --ignore-not-found=true
