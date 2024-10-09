@@ -25,6 +25,8 @@ spec:
               value: http://hephaestus-gui.hephaestus:8080
             - name: THEMIS_URL
               value: http://themis-executor.themis-executor:8080
+            - name: HERMES_URL
+              value: http://hermes.hermes:8080
             - name: kubernetes-management
               value: http://kubernetes-management.kubernetes-management:8097
 
