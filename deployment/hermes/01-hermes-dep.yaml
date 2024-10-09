@@ -24,7 +24,7 @@ spec:
             - name: ZEUS_URL
               value: http://zeuspol.zeuspol:8080
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:
