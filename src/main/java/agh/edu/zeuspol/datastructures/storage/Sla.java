@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.storage;
 
-import agh.edu.zeuspol.datastructures.NotificationRule;
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.SlaRule;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +8,10 @@ public class Sla {
 
   private static Sla instance = new Sla();
 
-  private final List<Rule> rules;
-  private final List<NotificationRule> notificationRules;
+  private final List<SlaRule> rules;
 
   private Sla() {
     this.rules = new ArrayList<>();
-    this.notificationRules = new ArrayList<>();
   }
 
   public static void setInstance(Sla sla) {
@@ -25,24 +22,16 @@ public class Sla {
     return instance;
   }
 
-  public void addRules(List<Rule> rules) {
+  public void addRules(List<SlaRule> rules) {
     this.rules.addAll(rules);
   }
 
-  public void addNotificationRules(List<NotificationRule> notificationRules) {
-    this.notificationRules.addAll(notificationRules);
-  }
-
-  public void addRule(Rule rule) {
+  public void addRule(SlaRule rule) {
     this.rules.add(rule);
   }
 
-  public void addNotificationRule(NotificationRule notificationRule) {
-    this.notificationRules.add(notificationRule);
-  }
-
-  public Rule removeRule(long id) {
-    for (Rule rule : rules) {
+  public SlaRule removeRule(long id) {
+    for (SlaRule rule : rules) {
       if (rule.id == id) {
         rules.remove(rule);
         return rule;
@@ -55,31 +44,12 @@ public class Sla {
     this.rules.clear();
   }
 
-  public NotificationRule removeNotificationRule(long id) {
-    for (NotificationRule notificationRule : notificationRules) {
-      if (notificationRule.id == id) {
-        notificationRules.remove(notificationRule);
-        return notificationRule;
-      }
-    }
-    return null;
-  }
-
-  public void removeNotificationRules() {
-    this.notificationRules.clear();
-  }
-
   public void clearSla() {
     removeRules();
-    removeNotificationRules();
   }
 
-  public List<Rule> getRules() {
+  public List<SlaRule> getRules() {
     return new ArrayList<>(rules);
-  }
-
-  public List<NotificationRule> getNotificationRules() {
-    return new ArrayList<>(notificationRules);
   }
 
   @Override
@@ -90,8 +60,6 @@ public class Sla {
         + "------------------------------------\n"
         + "Rules:\n"
         + rules
-        + "\n Notification Rules:\n"
-        + notificationRules
         + "\n====================================\n";
   }
 }

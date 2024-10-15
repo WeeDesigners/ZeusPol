@@ -1,7 +1,8 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.checker.SlaViolationChecker;
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Policies {
 
   private static Policies instance = new Policies();
 
-  private final List<Rule> rules;
+  private final List<PolicyRule> rules;
 
   private Policies() {
     this.rules = new ArrayList<>();
@@ -23,24 +24,27 @@ public class Policies {
     return instance;
   }
 
-  public void addRules(List<Rule> rules) {
+  public void addRules(List<PolicyRule> rules) {
     this.rules.addAll(rules);
   }
 
-  public boolean addRulesSecure(List<Rule> rules) {
-    if (!SlaViolationChecker.checkRules(rules)) {
+  public boolean addRulesSecure(List<PolicyRule> rules) {
+    // I have imagined how it would sound if person with "reranie" disorder tried to say "ruleRules"
+    // C:
+    List<Rule> ruleRules = new ArrayList<>(rules);
+    if (!SlaViolationChecker.checkRules(ruleRules)) {
       this.addRules(rules);
       return true;
     }
     return false;
   }
 
-  public void addRule(Rule rule) {
+  public void addRule(PolicyRule rule) {
     this.rules.add(rule);
   }
 
-  public Rule removeRule(long id) {
-    for (Rule rule : rules) {
+  public PolicyRule removeRule(long id) {
+    for (PolicyRule rule : rules) {
       if (rule.id == id) {
         rules.remove(rule);
         return rule;
@@ -49,7 +53,7 @@ public class Policies {
     return null;
   }
 
-  public List<Rule> getRules() {
+  public List<PolicyRule> getRules() {
     return new ArrayList<>(rules);
   }
 

@@ -1,8 +1,8 @@
 package agh.edu.zeuspol.services;
 
-import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;

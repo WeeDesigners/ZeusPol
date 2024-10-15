@@ -1,29 +1,33 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types.base;
 
+import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
+import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
 import java.util.Objects;
 
-public class Rule {
+public abstract class Rule {
   public final long id;
   public final RuleAttribute attribute;
   public final RuleSubject subject;
   public final List<Number> value;
   public final UnitType unit;
-  public final ActionType action;
+  public final RelationType relation;
 
   public Rule(
       RuleAttribute attribute,
       RuleSubject subject,
       List<Number> value,
       UnitType unit,
-      ActionType action) {
+      RelationType action) {
     this.id = IdGenerator.getRuleId();
     this.attribute = attribute;
     this.subject = subject;
     this.value = value;
     this.unit = unit;
-    this.action = action;
+    this.relation = action;
   }
 
   @Override
@@ -35,18 +39,18 @@ public class Rule {
         && subject == rule.subject
         && Objects.equals(value, rule.value)
         && unit == rule.unit
-        && action == rule.action;
+        && relation == rule.relation;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attribute, subject, value, unit, action);
+    return Objects.hash(attribute, subject, value, unit, relation);
   }
 
   @Override
   public String toString() {
     // TODO -> better concat
     return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", "
-        + action + " }";
+        + relation + " }";
   }
 }

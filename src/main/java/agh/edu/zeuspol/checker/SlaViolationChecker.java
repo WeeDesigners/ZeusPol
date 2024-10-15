@@ -1,9 +1,11 @@
 package agh.edu.zeuspol.checker;
 
-import agh.edu.zeuspol.datastructures.ActionType;
-import agh.edu.zeuspol.datastructures.Rule;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import java.util.List;
+
+// TODO -> refactor due to Rule refactoring
 
 public class SlaViolationChecker {
 
@@ -23,37 +25,37 @@ public class SlaViolationChecker {
         if (slaRule.unit != rule.unit) {
           throw new IllegalArgumentException();
         }
-        if (slaRule.action == ActionType.EQ || rule.action == ActionType.EQ) {
-          if (slaRule.action == ActionType.EQ && rule.action == ActionType.EQ) {
-            ActionType action = slaRule.action;
+        if (slaRule.relation == RelationType.EQ || rule.relation == RelationType.EQ) {
+          if (slaRule.relation == RelationType.EQ && rule.relation == RelationType.EQ) {
+            RelationType action = slaRule.relation;
             if (!action.apply(slaRule.value, rule.value.get(0))) {
               return true;
             }
           } else {
             return true;
           }
-        } else if (slaRule.action == ActionType.BT && rule.action == ActionType.BT) {
+        } else if (slaRule.relation == RelationType.BT && rule.relation == RelationType.BT) {
           if (!isBetween(slaRule.value, rule.value)) {
             return true;
           }
-        } else if (slaRule.action == ActionType.BT) {
-          ActionType action = rule.action;
+        } else if (slaRule.relation == RelationType.BT) {
+          RelationType action = rule.relation;
           Number n1 = slaRule.value.get(0);
           Number n2 = slaRule.value.get(1);
           if (!(action.apply(rule.value, n1) || action.apply(rule.value, n2))) {
             return true;
           }
-        } else if (rule.action == ActionType.BT) {
-          ActionType action = slaRule.action;
+        } else if (rule.relation == RelationType.BT) {
+          RelationType action = slaRule.relation;
           Number n1 = rule.value.get(0);
           Number n2 = rule.value.get(1);
           if (!(action.apply(slaRule.value, n1) && action.apply(slaRule.value, n2))) {
             return true;
           }
-        } else if (slaRule.action != rule.action) {
+        } else if (slaRule.relation != rule.relation) {
           return true;
         } else {
-          ActionType action = slaRule.action;
+          RelationType action = slaRule.relation;
           if (action.apply(slaRule.value, rule.value.get(0))) {
             return true;
           }

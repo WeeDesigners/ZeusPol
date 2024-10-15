@@ -1,7 +1,7 @@
 package drools;
 
 
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 
 
 dialect  "mvel"
