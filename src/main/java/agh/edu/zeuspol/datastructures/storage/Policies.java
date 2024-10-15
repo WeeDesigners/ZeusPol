@@ -42,8 +42,8 @@ public class Policies {
     this.rules.add(rule);
   }
 
-  public Rule removeRule(long id) {
-    for (Rule rule : rules) {
+  public PolicyRule removeRule(long id) {
+    for (PolicyRule rule : rules) {
       if (rule.id == id) {
         rules.remove(rule);
         return rule;
@@ -52,7 +52,7 @@ public class Policies {
     return null;
   }
 
-  public List<Rule> getRules() {
+  public List<PolicyRule> getRules() {
     return new ArrayList<>(rules);
   }
 

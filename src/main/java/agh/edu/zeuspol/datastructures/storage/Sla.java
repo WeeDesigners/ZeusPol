@@ -32,8 +32,8 @@ public class Sla {
     this.rules.add(rule);
   }
 
-  public Rule removeRule(long id) {
-    for (Rule rule : rules) {
+  public SlaRule removeRule(long id) {
+    for (SlaRule rule : rules) {
       if (rule.id == id) {
         rules.remove(rule);
         return rule;
@@ -51,7 +51,7 @@ public class Sla {
     removeRules();
   }
 
-  public List<Rule> getRules() {
+  public List<SlaRule> getRules() {
     return new ArrayList<>(rules);
   }
 
