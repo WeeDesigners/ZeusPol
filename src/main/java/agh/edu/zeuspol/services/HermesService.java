@@ -1,6 +1,6 @@
 package agh.edu.zeuspol.services;
 
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import org.springframework.beans.factory.annotation.Value;

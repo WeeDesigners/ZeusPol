@@ -1,5 +1,9 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types.base;
 
+import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
+import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
 import java.util.Objects;

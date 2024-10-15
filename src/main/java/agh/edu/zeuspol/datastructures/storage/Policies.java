@@ -1,8 +1,8 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.checker.SlaViolationChecker;
-import agh.edu.zeuspol.datastructures.PolicyRule;
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import java.util.ArrayList;
 import java.util.List;
 

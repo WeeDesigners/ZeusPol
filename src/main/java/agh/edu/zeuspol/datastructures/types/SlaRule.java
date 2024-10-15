@@ -1,4 +1,7 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types;
+
+import agh.edu.zeuspol.datastructures.types.attributes.*;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types.attributes;
 
 public enum RuleAttribute {
   TIMESPAN, // TODO -> actually unused

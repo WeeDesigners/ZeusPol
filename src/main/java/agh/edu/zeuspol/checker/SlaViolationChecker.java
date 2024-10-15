@@ -1,7 +1,7 @@
 package agh.edu.zeuspol.checker;
 
-import agh.edu.zeuspol.datastructures.RelationType;
-import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import java.util.List;
 

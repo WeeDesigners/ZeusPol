@@ -3,11 +3,16 @@ package agh.edu.zeuspol;
 import static org.junit.jupiter.api.Assertions.*;
 
 import agh.edu.zeuspol.checker.SlaViolationChecker;
-import agh.edu.zeuspol.datastructures.*;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
+import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
+import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 import org.junit.jupiter.api.Test;
 
 public class SlaViolationCheckerTests {

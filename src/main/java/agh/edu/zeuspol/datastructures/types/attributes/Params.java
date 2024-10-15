@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types.attributes;
 
 import java.util.HashMap;
 

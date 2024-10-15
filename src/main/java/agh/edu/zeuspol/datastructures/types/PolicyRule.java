@@ -1,9 +1,12 @@
-package agh.edu.zeuspol.datastructures;
+package agh.edu.zeuspol.datastructures.types;
+
+import agh.edu.zeuspol.datastructures.types.attributes.*;
+import agh.edu.zeuspol.datastructures.types.base.Rule;
 
 import java.util.List;
 import java.util.Objects;
 
-public class PolicyRule extends Rule{
+public class PolicyRule extends Rule {
 
     public final Action action;
     public Params params;
