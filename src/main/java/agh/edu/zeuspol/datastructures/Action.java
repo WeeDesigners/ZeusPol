@@ -4,21 +4,27 @@ import java.util.Map;
 
 public enum Action {
 
+    DEFAULT {
+        @Override
+        public void request(Map<String, String> params) {
+            System.out.println("Default action - requested");
+        }
+    },
     ACTION_1 {
         @Override
-        public void execute(Map<String, String> params) {
+        public void request(Map<String, String> params) {
             //TODO
             System.out.println("Action 1 - requested");
         }
     },
     ACTION_2 {
         @Override
-        public void execute(Map<String, String> params) {
+        public void request(Map<String, String> params) {
             //TODO
             System.out.println("Action 2 - requested");
         }
     },
     ;
 
-    public abstract void execute(Map<String, String> params);
+    public abstract void request(Map<String, String> params);
 }
