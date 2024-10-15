@@ -1,6 +1,8 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.Rule;
+import agh.edu.zeuspol.datastructures.SlaRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class Sla {
 
   private static Sla instance = new Sla();
 
-  private final List<Rule> rules;
+  private final List<SlaRule> rules;
 
   private Sla() {
     this.rules = new ArrayList<>();
@@ -22,11 +24,11 @@ public class Sla {
     return instance;
   }
 
-  public void addRules(List<Rule> rules) {
+  public void addRules(List<SlaRule> rules) {
     this.rules.addAll(rules);
   }
 
-  public void addRule(Rule rule) {
+  public void addRule(SlaRule rule) {
     this.rules.add(rule);
   }
 

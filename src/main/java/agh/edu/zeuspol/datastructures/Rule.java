@@ -4,7 +4,7 @@ import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
 import java.util.Objects;
 
-public class Rule {
+public abstract class Rule {
   public final long id;
   public final RuleAttribute attribute;
   public final RuleSubject subject;

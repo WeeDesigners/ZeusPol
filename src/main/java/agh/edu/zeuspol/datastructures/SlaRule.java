@@ -1,12 +1,10 @@
 package agh.edu.zeuspol.datastructures;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class SlaRule extends Rule {
-
 
     public SlaRule(RuleAttribute attribute, RuleSubject subject, List<Number> value, UnitType unit, RelationType action) {
         super(attribute, subject, value, unit, action);
