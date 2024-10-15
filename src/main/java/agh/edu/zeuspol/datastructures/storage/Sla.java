@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.types.SlaRule;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,6 @@ public class Sla {
   public void removeRules() {
     this.rules.clear();
   }
-
 
   public void clearSla() {
     removeRules();

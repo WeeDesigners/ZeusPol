@@ -29,7 +29,8 @@ public class Policies {
   }
 
   public boolean addRulesSecure(List<PolicyRule> rules) {
-    //I have imagined how it would sound if person with "reranie" disorder tried to say "ruleRules" C:
+    // I have imagined how it would sound if person with "reranie" disorder tried to say "ruleRules"
+    // C:
     List<Rule> ruleRules = new ArrayList<>(rules);
     if (!SlaViolationChecker.checkRules(ruleRules)) {
       this.addRules(rules);

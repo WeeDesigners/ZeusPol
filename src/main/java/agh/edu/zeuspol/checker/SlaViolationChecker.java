@@ -1,12 +1,11 @@
 package agh.edu.zeuspol.checker;
 
+import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.datastructures.types.base.Rule;
-import agh.edu.zeuspol.datastructures.storage.Sla;
 import java.util.List;
 
-
-//TODO -> refactor due to Rule refactoring
+// TODO -> refactor due to Rule refactoring
 
 public class SlaViolationChecker {
 
