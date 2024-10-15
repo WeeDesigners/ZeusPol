@@ -8,19 +8,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
 import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
-import agh.edu.zeuspol.datastructures.types.base.Rule;
 import org.junit.jupiter.api.Test;
 
 public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_NoViolation() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -31,8 +31,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -46,8 +46,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_ViolationDifferentUnits() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -58,8 +58,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -73,8 +73,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_ViolationDifferentActionTypes() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -85,8 +85,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(11),
@@ -100,8 +100,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_BetweenNoViolation() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(5, 15),
@@ -112,8 +112,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(6, 14),
@@ -127,8 +127,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_BetweenViolation() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(5, 15),
@@ -139,8 +139,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(16, 20),
@@ -154,8 +154,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_MixedActionsNoViolation() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -166,8 +166,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(11, 20),
@@ -181,8 +181,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_MixedActionsViolation() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Collections.singletonList(10),
@@ -193,8 +193,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(
+    SlaRule rule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(5, 8),
@@ -208,8 +208,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_MixedActionsNoViolation2() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(10, 15),
@@ -220,8 +220,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
+    SlaRule rule =
+        new SlaRule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -230,8 +230,8 @@ public class SlaViolationCheckerTests {
 
   @Test
   public void testCheck_MixedActionsViolation2() {
-    Rule slaRule =
-        new Rule(
+    SlaRule slaRule =
+        new SlaRule(
             RuleAttribute.UPTIME,
             RuleSubject.CPU,
             Arrays.asList(10, 15),
@@ -242,8 +242,8 @@ public class SlaViolationCheckerTests {
     sla.clearSla();
     sla.addRule(slaRule);
 
-    Rule rule =
-        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
+    SlaRule rule =
+        new SlaRule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
