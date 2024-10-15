@@ -1,16 +1,14 @@
 package agh.edu.zeuspol.datastructures;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class PolicyRule extends Rule{
 
     public final Action action;
-    public Map<String, String> params;
+    public Params params;
 
-    public PolicyRule(RuleAttribute attribute, RuleSubject subject, List<Number> value, UnitType unit, RelationType relation, Action action, Map<String, String> params) {
+    public PolicyRule(RuleAttribute attribute, RuleSubject subject, List<Number> value, UnitType unit, RelationType relation, Action action, Params params) {
         super(attribute, subject, value, unit, relation);
         this.action = action;
         this.params = params;
