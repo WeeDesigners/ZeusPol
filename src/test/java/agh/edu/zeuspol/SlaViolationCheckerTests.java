@@ -20,7 +20,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.EQ);
+            RelationType.EQ);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -32,7 +32,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.EQ);
+            RelationType.EQ);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -47,7 +47,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.EQ);
+            RelationType.EQ);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -59,7 +59,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.NUMBER,
-            ActionType.EQ);
+            RelationType.EQ);
 
     assertThrows(IllegalArgumentException.class, () -> SlaViolationChecker.checkRule(rule));
 
@@ -74,7 +74,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.LT);
+            RelationType.LT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -86,7 +86,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(11),
             UnitType.BYTE,
-            ActionType.GT);
+            RelationType.GT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
@@ -101,7 +101,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(5, 15),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -113,7 +113,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(6, 14),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -128,7 +128,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(5, 15),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -140,7 +140,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(16, 20),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
@@ -155,7 +155,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.GT);
+            RelationType.GT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -167,7 +167,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(11, 20),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -182,7 +182,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Collections.singletonList(10),
             UnitType.BYTE,
-            ActionType.GT);
+            RelationType.GT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
@@ -194,7 +194,7 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(5, 8),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
@@ -209,14 +209,14 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(10, 15),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
     sla.addRule(slaRule);
 
     Rule rule =
-        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, ActionType.GT);
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -231,14 +231,14 @@ public class SlaViolationCheckerTests {
             RuleSubject.CPU,
             Arrays.asList(10, 15),
             UnitType.BYTE,
-            ActionType.BT);
+            RelationType.BT);
 
     Sla sla = Sla.getInstance();
     sla.clearSla();
     sla.addRule(slaRule);
 
     Rule rule =
-        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, ActionType.GT);
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
