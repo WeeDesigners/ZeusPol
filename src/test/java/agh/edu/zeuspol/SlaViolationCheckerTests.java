@@ -4,14 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import agh.edu.zeuspol.checker.SlaViolationChecker;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
 import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 import agh.edu.zeuspol.datastructures.types.base.Rule;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class SlaViolationCheckerTests {
@@ -220,8 +221,7 @@ public class SlaViolationCheckerTests {
     sla.addRule(slaRule);
 
     Rule rule =
-        new Rule(
-            RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
 
     assertFalse(SlaViolationChecker.checkRule(rule));
 
@@ -243,8 +243,7 @@ public class SlaViolationCheckerTests {
     sla.addRule(slaRule);
 
     Rule rule =
-        new Rule(
-            RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
+        new Rule(RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
 
     assertTrue(SlaViolationChecker.checkRule(rule));
 
