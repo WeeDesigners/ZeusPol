@@ -13,7 +13,7 @@ public class RuleToDrlConverter {
     private String metricImport = "import io.github.hephaestusmetrics.model.metrics.Metric;";
     private String actionServiceImport = "";
     private String metricClass = "Metric";
-    private String dialectName = "dialect  \"mvel\"";
+    private String dialectName = ""; //"dialect  \"mvel\"";
     private String ruleBegin = "rule";
     private String ruleEnd = "end";
     private String ruleWhen = "when";

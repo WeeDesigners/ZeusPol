@@ -75,11 +75,15 @@ public class ThemisActionBuilder {
 
     public String buildThemisAction() {
         StringBuilder sb = new StringBuilder();
+        sb.append("System.out.println(\"Rule fireddddddddddddddddddddddddddd\");\n");
+        sb.append("try {\n");
         sb.append("Process process = Runtime.getRuntime().exec(new String[]{\"bash\", \"-c\", ")
                 .append("\"")
                 .append(this.createHttpRequest())
                 .append("\"});\n");
-        sb.append("System.out.println(\"Rule fireddddddddddddddddddddddddddd\")\n");
+        sb.append("}");
+        sb.append("catch (Exception e) {e.printStackTrace();}\n");
+
         return sb.toString();
     }
 
