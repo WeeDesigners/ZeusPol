@@ -54,7 +54,7 @@ public class RuleToDrlConverterTest {
 
         Params b = new Params();
         b.put("actionName","ChangeResourcesOfContainerWithinDeploymentAction");
-        b.put("collectionName","Kubernetes");
+        b.put("collectionName","kubernetes");
         b.put("namespace", "test-app");
         b.put("deploymentName", "test-app");
         b.put("containerName", "test-app");
