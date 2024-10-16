@@ -5,7 +5,8 @@ import agh.edu.zeuspol.datastructures.types.attributes.Params;
 import agh.edu.zeuspol.exceptions.NoThemisActionTemplateFoundException;
 
 import java.util.Map;
-
+// TODO - refactor this
+// TODO - change file structure
 public class ThemisActionBuilder {
 
     private String collectionName;
