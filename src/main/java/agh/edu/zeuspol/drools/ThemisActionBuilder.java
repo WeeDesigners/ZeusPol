@@ -79,6 +79,7 @@ public class ThemisActionBuilder {
                 .append("\"")
                 .append(this.createHttpRequest())
                 .append("\"});\n");
+        sb.append("System.out.println(\"Rule fireddddddddddddddddddddddddddd\")\n");
         return sb.toString();
     }
 
