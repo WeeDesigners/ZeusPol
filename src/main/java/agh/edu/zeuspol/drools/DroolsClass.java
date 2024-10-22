@@ -5,6 +5,7 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
+// TODO - class deprecated, use DrlRuleExecutor built with DynamicDrlBuilder
 public class DroolsClass {
   private final KieServices kieServices = KieServices.get();
   private String sessionName;

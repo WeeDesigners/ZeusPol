@@ -4,6 +4,9 @@ package agh.edu.zeuspol;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
+import agh.edu.zeuspol.drools.converter.CurlThemisActionBuilder;
+import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
+import agh.edu.zeuspol.drools.converter.ThemisActionBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,10 +16,11 @@ public class RuleToDrlConverterTest {
 
     @Test
     public void tempConverterTest() {
-        ThemisActionBuilder b = new ThemisActionBuilder(Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction);
+        ThemisActionBuilder b = new CurlThemisActionBuilder();
 
         b.setActionName("ChangeResourcesOfContainerWithinDeploymentAction");
         b.setCollectionName("Kubernetes");
+        b.setAction(Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction);
         b.addParam("namespace", "test-app");
         b.addParam("deploymentName", "test-app");
         b.addParam("containerName", "test-app");
@@ -26,8 +30,6 @@ public class RuleToDrlConverterTest {
         b.addParam("requestsMemory", "800Mi");
 
         System.out.println(b.buildThemisAction());
-
-        System.out.println((new DrlProvider()).testRule);
     }
 
     @Test

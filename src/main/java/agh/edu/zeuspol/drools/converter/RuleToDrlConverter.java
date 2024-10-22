@@ -1,16 +1,19 @@
-package agh.edu.zeuspol.drools;
+package agh.edu.zeuspol.drools.converter;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class RuleToDrlConverter {
 
     private double EPSILON = 0.00000000001;
 
+    private ThemisActionBuilder themisActionBuilder;
+
     private String packageName = "package drools;";
     private String metricImport = "import io.github.hephaestusmetrics.model.metrics.Metric;";
+    private List<String> otherImports = new ArrayList<String>();
     private String actionServiceImport = "";
     private String metricClass = "Metric";
     private String dialectName = ""; //"dialect  \"mvel\"";
@@ -19,11 +22,25 @@ public class RuleToDrlConverter {
     private String ruleWhen = "when";
     private String ruleThen = "then";
 
+//    TODO - Consider deleting default ThemisActionBuilder
+    public RuleToDrlConverter() {
+        this.themisActionBuilder = new CurlThemisActionBuilder();
+    }
+
+    public RuleToDrlConverter(ThemisActionBuilder themisActionBuilder) {
+        this.themisActionBuilder = themisActionBuilder;
+    }
+
 
     public String convert(PolicyRule rule) {
+        this.populateNeededImports();
+
         StringBuilder drlStringBuilder = new StringBuilder();
         drlStringBuilder.append(this.packageName).append("\n");
         drlStringBuilder.append(this.metricImport).append("\n");
+        for (String importNeeded: this.otherImports) {
+            drlStringBuilder.append(importNeeded).append("\n");
+        }
         drlStringBuilder.append(this.actionServiceImport).append("\n");
         drlStringBuilder.append(this.dialectName).append("\n");
         drlStringBuilder
@@ -35,7 +52,7 @@ public class RuleToDrlConverter {
         drlStringBuilder.append(this.ruleWhen).append("\n");
         drlStringBuilder.append(this.metricClass)
                 .append("(queryTag == ")
-                .append(this.metricName(rule))
+                .append(this.metricNameString(rule))
                 .append(", ")
                 .append(this.valueComparisonString(rule.relation, rule.value))
                 .append(")")
@@ -49,17 +66,21 @@ public class RuleToDrlConverter {
         return drlStringBuilder.toString();
     }
 
-    private String actionString(PolicyRule rule) {
-        ThemisActionBuilder themisActionBuilder = new ThemisActionBuilder(rule.action);
+//    Helper methods
+    private void populateNeededImports() {
+        this.otherImports.addAll(this.themisActionBuilder.importsNeeded());
+    }
 
+    private String actionString(PolicyRule rule) {
+        this.themisActionBuilder.setCollectionName(rule.params.get("collectionName"));
+        this.themisActionBuilder.setActionName(rule.params.get("actionName"));
+        this.themisActionBuilder.setAction(rule.action);
         themisActionBuilder.addParams(rule.params);
-        themisActionBuilder.setActionName(rule.params.get("actionName"));
-        themisActionBuilder.setCollectionName(rule.params.get("collectionName"));
 
         return themisActionBuilder.buildThemisAction();
     }
 
-    private String metricName(PolicyRule rule) {
+    private String metricNameString(PolicyRule rule) {
         return "\"" + rule.subject.toString() + "_" + rule.unit.toString() + "\"";
     }
 

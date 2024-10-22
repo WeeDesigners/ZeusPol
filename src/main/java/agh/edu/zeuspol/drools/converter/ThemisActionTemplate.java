@@ -1,10 +1,10 @@
-package agh.edu.zeuspol.drools;
+package agh.edu.zeuspol.drools.converter;
 
 public class ThemisActionTemplate {
-    private String collectionName;
-    private String actionName;
-    private String[] optionalParams;
-    private String[] requiredParams;
+    private final String collectionName;
+    private final String actionName;
+    private final String[] optionalParams;
+    private final String[] requiredParams;
 
     public ThemisActionTemplate(String collectionName, String actionName, String[] optionalParams, String[] requiredParams) {
         this.collectionName = collectionName;

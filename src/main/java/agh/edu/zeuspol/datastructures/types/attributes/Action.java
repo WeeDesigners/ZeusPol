@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.types.attributes;
 
-import agh.edu.zeuspol.drools.ThemisActionTemplate;
-import org.apache.poi.ss.formula.functions.T;
+import agh.edu.zeuspol.drools.converter.ThemisActionTemplate;
 
 public enum Action {
   DEFAULT {
@@ -50,8 +49,8 @@ public enum Action {
     private final ThemisActionTemplate actionTemplate = new ThemisActionTemplate(
             "kubernetes",
             "ChangeResourcesOfContainerWithinDeploymentAction",
-            new String[] {"namespace", "deploymentName", "containerName", "limitsCpu", "limitsMemory", "requestsCpu", "requestsMemory"},
-            new String[] {}
+            new String[] {},
+            new String[] {"namespace", "deploymentName", "containerName", "limitsCpu", "limitsMemory", "requestsCpu", "requestsMemory"}
     );
 
     @Override
