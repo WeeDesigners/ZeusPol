@@ -82,8 +82,8 @@ public class ZeuspolApplication {
     RuleToDrlConverter converter = new RuleToDrlConverter();
 
     Params b = new Params();
-    b.put("actionName","ChangeResourcesOfContainerWithinDeploymentAction");
-    b.put("collectionName","kubernetes");
+    b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");
+    b.put("collectionName", "kubernetes");
     b.put("namespace", "test-app");
     b.put("deploymentName", "test-app");
     b.put("containerName", "test-app");
@@ -92,15 +92,15 @@ public class ZeuspolApplication {
     b.put("requestsCpu", "2");
     b.put("requestsMemory", "800Mi");
 
-    PolicyRule rule = new PolicyRule(
+    PolicyRule rule =
+        new PolicyRule(
             RuleAttribute.RESOURCE,
             RuleSubject.CPU,
             List.of(10),
             UnitType.PERCENT,
             RelationType.GT,
             Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
-            b
-    );
+            b);
 
     DrlStringFile s = converter.convert(rule);
     System.out.println(s);
@@ -109,7 +109,7 @@ public class ZeuspolApplication {
 
     builder.addFile(s);
 
-    DrlRuleExecutor executor =  builder.build();
+    DrlRuleExecutor executor = builder.build();
 
     // infinite loop of mainLoops
     while (true) {

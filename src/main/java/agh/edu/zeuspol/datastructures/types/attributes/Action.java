@@ -46,12 +46,20 @@ public enum Action {
       System.out.println("Action 2 - requested");
     }
 
-    private final ThemisActionTemplate actionTemplate = new ThemisActionTemplate(
+    private final ThemisActionTemplate actionTemplate =
+        new ThemisActionTemplate(
             "kubernetes",
             "ChangeResourcesOfContainerWithinDeploymentAction",
             new String[] {},
-            new String[] {"namespace", "deploymentName", "containerName", "limitsCpu", "limitsMemory", "requestsCpu", "requestsMemory"}
-    );
+            new String[] {
+              "namespace",
+              "deploymentName",
+              "containerName",
+              "limitsCpu",
+              "limitsMemory",
+              "requestsCpu",
+              "requestsMemory"
+            });
 
     @Override
     public ThemisActionTemplate getActionTemplate() {
@@ -61,5 +69,6 @@ public enum Action {
   ;
 
   public abstract void request(Params params);
+
   public abstract ThemisActionTemplate getActionTemplate();
 }

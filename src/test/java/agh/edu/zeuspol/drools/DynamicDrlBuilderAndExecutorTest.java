@@ -1,165 +1,167 @@
 package agh.edu.zeuspol.drools;
 
 import agh.edu.zeuspol.exceptions.DynamicDrlBuildError;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
 public class DynamicDrlBuilderAndExecutorTest {
 
-    @Test
-    public void dynamicLoaderTest() {
-        String toAppend = "test";
+  @Test
+  public void dynamicLoaderTest() {
+    String toAppend = "test";
 
-        String drlFileContent =
-                """
-                            package com.example;
-                        
-                            import java.util.List;
-                        
-                            rule "Add element if list has more than one item"
-                                when
-                                    $sb : StringBuilder(this.toString() == "");
-                                then
-                                    $sb.append("%s");
-                            end
-                        """.formatted(toAppend);
+    String drlFileContent =
+        """
+            package com.example;
 
-        DynamicDrlBuilder builder = new DynamicDrlBuilder();
+            import java.util.List;
 
-        builder.addFile("test/testModify.drl", drlFileContent);
-        DrlRuleExecutor executor = builder.build();
+            rule "Add element if list has more than one item"
+                when
+                    $sb : StringBuilder(this.toString() == "");
+                then
+                    $sb.append("%s");
+            end
+        """
+            .formatted(toAppend);
 
-        StringBuilder sb = new StringBuilder();
+    DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
-        executor.fireRules(List.of(sb));
-        Assertions.assertEquals(toAppend, sb.toString());
-    }
+    builder.addFile("test/testModify.drl", drlFileContent);
+    DrlRuleExecutor executor = builder.build();
 
-    @Test
-    public void multipleBuildsTest() {
-        String toAppend = "test";
+    StringBuilder sb = new StringBuilder();
 
-        String drlFileContent =
-                """
-                            package com.example;
-                        
-                            import java.util.List;
-                        
-                            rule "Add element if list has more than one item"
-                                when
-                                    $sb : StringBuilder(this.toString() == "");
-                                then
-                                    $sb.append("%s");
-                            end
-                        """.formatted(toAppend);
+    executor.fireRules(List.of(sb));
+    Assertions.assertEquals(toAppend, sb.toString());
+  }
 
-        DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
-        DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
+  @Test
+  public void multipleBuildsTest() {
+    String toAppend = "test";
 
-        StringBuilder fact1 = new StringBuilder();
-        StringBuilder fact2 = new StringBuilder();
+    String drlFileContent =
+        """
+            package com.example;
 
-        loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        DrlRuleExecutor executor1 = loader1.build();
+            import java.util.List;
 
-        loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        DrlRuleExecutor executor2 = loader2.build();
+            rule "Add element if list has more than one item"
+                when
+                    $sb : StringBuilder(this.toString() == "");
+                then
+                    $sb.append("%s");
+            end
+        """
+            .formatted(toAppend);
 
-        executor2.fireRules(List.of(fact2));
-        executor1.fireRules(List.of(fact1));
+    DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
+    DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
 
-        Assertions.assertEquals(toAppend, fact1.toString());
-        Assertions.assertEquals(toAppend, fact2.toString());
-    }
+    StringBuilder fact1 = new StringBuilder();
+    StringBuilder fact2 = new StringBuilder();
 
-    @Test
-    public void removeFileTest() {
-        String toAppend = "test";
+    loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    DrlRuleExecutor executor1 = loader1.build();
 
-        String drlFileContent =
-                """
-                            package com.example;
-                        
-                            import java.util.List;
-                        
-                            rule "Add element if list has more than one item"
-                                when
-                                    $sb : StringBuilder(this.toString() == "");
-                                then
-                                    $sb.append("%s");
-                            end
-                        """.formatted(toAppend);
+    loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    DrlRuleExecutor executor2 = loader2.build();
 
-        DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
-        DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
+    executor2.fireRules(List.of(fact2));
+    executor1.fireRules(List.of(fact1));
 
-        StringBuilder fact1 = new StringBuilder();
-        StringBuilder fact2 = new StringBuilder();
+    Assertions.assertEquals(toAppend, fact1.toString());
+    Assertions.assertEquals(toAppend, fact2.toString());
+  }
 
-        loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        loader1.removeFile("test/test.drl");
-        DrlRuleExecutor executor1 = loader1.build();
+  @Test
+  public void removeFileTest() {
+    String toAppend = "test";
 
-        loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
-        loader2.removeFile("test/test.drl");
-        DrlRuleExecutor executor2 = loader2.build();
+    String drlFileContent =
+        """
+            package com.example;
 
-        executor2.fireRules(List.of(fact2));
-        executor1.fireRules(List.of(fact1));
+            import java.util.List;
 
-        Assertions.assertEquals("", fact1.toString());
-        Assertions.assertEquals("", fact2.toString());
-    }
+            rule "Add element if list has more than one item"
+                when
+                    $sb : StringBuilder(this.toString() == "");
+                then
+                    $sb.append("%s");
+            end
+        """
+            .formatted(toAppend);
 
-    @Test
-    public void getFileTest() {
-        DynamicDrlBuilder loader = new DynamicDrlBuilder();
+    DynamicDrlBuilder loader1 = new DynamicDrlBuilder();
+    DynamicDrlBuilder loader2 = new DynamicDrlBuilder();
 
-        String drlFileContentPassed =
-                """
-                            package com.example;
-                        
-                            import java.util.List;
-                        
-                            rule "Add element if list has more than one item"
-                                when
-                                    $list : List(size > 1)
-                                then
-                                    $list.add("NewElement");
-                            end
-                        """;
+    StringBuilder fact1 = new StringBuilder();
+    StringBuilder fact2 = new StringBuilder();
 
-        loader.addFile("test/test.drl", drlFileContentPassed.getBytes(StandardCharsets.UTF_8));
+    loader1.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    loader1.removeFile("test/test.drl");
+    DrlRuleExecutor executor1 = loader1.build();
 
-        String drlFileContentReceived = loader.getFile("test/test.drl");
+    loader2.addFile("test/test.drl", drlFileContent.getBytes(StandardCharsets.UTF_8));
+    loader2.removeFile("test/test.drl");
+    DrlRuleExecutor executor2 = loader2.build();
 
-        Assertions.assertEquals(drlFileContentPassed, drlFileContentReceived);
-    }
+    executor2.fireRules(List.of(fact2));
+    executor1.fireRules(List.of(fact1));
 
-    @Test
-    public void buildErrorTest() {
-        String invalidDrlFileContent =
-                """
-                        package com.example;
-                        someGibrish;alkjdsf;
-                        
-                        import java.util.List;
-                        
-                        rule "Add element if list has more than one item"
-                            when
-                                $sb : StringBuilder(this.toString() == "");
-                            then
-                                $sb.append("%s");
-                        end
-                        """;
+    Assertions.assertEquals("", fact1.toString());
+    Assertions.assertEquals("", fact2.toString());
+  }
 
-        DynamicDrlBuilder builder = new DynamicDrlBuilder();
+  @Test
+  public void getFileTest() {
+    DynamicDrlBuilder loader = new DynamicDrlBuilder();
 
-        builder.addFile("test/testModify.drl", invalidDrlFileContent);
+    String drlFileContentPassed =
+        """
+            package com.example;
 
-        Assertions.assertThrows(DynamicDrlBuildError.class, builder::build);
-    }
+            import java.util.List;
+
+            rule "Add element if list has more than one item"
+                when
+                    $list : List(size > 1)
+                then
+                    $list.add("NewElement");
+            end
+        """;
+
+    loader.addFile("test/test.drl", drlFileContentPassed.getBytes(StandardCharsets.UTF_8));
+
+    String drlFileContentReceived = loader.getFile("test/test.drl");
+
+    Assertions.assertEquals(drlFileContentPassed, drlFileContentReceived);
+  }
+
+  @Test
+  public void buildErrorTest() {
+    String invalidDrlFileContent =
+        """
+        package com.example;
+        someGibrish;alkjdsf;
+
+        import java.util.List;
+
+        rule "Add element if list has more than one item"
+            when
+                $sb : StringBuilder(this.toString() == "");
+            then
+                $sb.append("%s");
+        end
+        """;
+
+    DynamicDrlBuilder builder = new DynamicDrlBuilder();
+
+    builder.addFile("test/testModify.drl", invalidDrlFileContent);
+
+    Assertions.assertThrows(DynamicDrlBuildError.class, builder::build);
+  }
 }
