@@ -102,12 +102,12 @@ public class ZeuspolApplication {
             b
     );
 
-    String s = converter.convert(rule);
+    DrlStringFile s = converter.convert(rule);
     System.out.println(s);
 
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
-    builder.addFile("test/test.drl", s);
+    builder.addFile(s);
 
     DrlRuleExecutor executor =  builder.build();
 

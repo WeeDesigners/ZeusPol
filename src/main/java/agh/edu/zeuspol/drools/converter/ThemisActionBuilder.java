@@ -5,7 +5,7 @@ import agh.edu.zeuspol.datastructures.types.attributes.Params;
 
 import java.util.List;
 
-// TODO - change file structure
+
 public abstract class ThemisActionBuilder {
 
 //    TODO - consider removing collectionName and actionName

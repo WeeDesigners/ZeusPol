@@ -50,6 +50,10 @@ public class DynamicDrlBuilder {
         this.addFile(fileSystemPath, fileContent.getBytes(StandardCharsets.UTF_8));
     }
 
+    public void addFile(DrlStringFile stringFile) {
+        this.addFile(stringFile.getPath(), stringFile.getFileContent());
+    }
+
     public String getFile(String fileSystemPath) {
         byte[] fileBytes = this.kieFileSystem.read(this.fullFileSystemPath(fileSystemPath));
         if (fileBytes == null) {

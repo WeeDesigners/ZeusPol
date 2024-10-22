@@ -2,6 +2,8 @@ package agh.edu.zeuspol.drools.converter;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+import agh.edu.zeuspol.drools.DrlStringFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +15,10 @@ public class RuleToDrlConverter {
 
     private String packageName = "package drools;";
     private String metricImport = "import io.github.hephaestusmetrics.model.metrics.Metric;";
-    private List<String> otherImports = new ArrayList<String>();
+    private List<String> otherImports = new ArrayList<>();
     private String actionServiceImport = "";
     private String metricClass = "Metric";
-    private String dialectName = ""; //"dialect  \"mvel\"";
+    private String dialectName = "";
     private String ruleBegin = "rule";
     private String ruleEnd = "end";
     private String ruleWhen = "when";
@@ -32,7 +34,7 @@ public class RuleToDrlConverter {
     }
 
 
-    public String convert(PolicyRule rule) {
+    public DrlStringFile convert(PolicyRule rule) {
         this.populateNeededImports();
 
         StringBuilder drlStringBuilder = new StringBuilder();
@@ -63,11 +65,13 @@ public class RuleToDrlConverter {
         drlStringBuilder.append(this.actionString(rule));
 
         drlStringBuilder.append(this.ruleEnd).append("\n");
-        return drlStringBuilder.toString();
+
+        return new DrlStringFile(this.ruleNameString(rule), drlStringBuilder.toString()) ;
     }
 
 //    Helper methods
     private void populateNeededImports() {
+        this.otherImports = new ArrayList<>();
         this.otherImports.addAll(this.themisActionBuilder.importsNeeded());
     }
 
