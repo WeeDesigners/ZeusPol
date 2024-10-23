@@ -1,5 +1,6 @@
 package agh.edu.zeuspol.drools;
 
+import agh.edu.zeuspol.exceptions.DynamicDrlBuildError;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.kie.api.KieServices;
@@ -15,8 +16,8 @@ import org.kie.api.runtime.KieContainer;
 
 public class DynamicDrlBuilder {
 
-  private String defaultRulesPath = "src/main/resources/";
-  private KieFileSystem kieFileSystem;
+  private final String defaultRulesPath = "src/main/resources/";
+  private final KieFileSystem kieFileSystem;
 
   public DynamicDrlBuilder() {
     KieServices kieServices = KieServices.get();
@@ -48,6 +49,10 @@ public class DynamicDrlBuilder {
     this.addFile(fileSystemPath, fileContent.getBytes(StandardCharsets.UTF_8));
   }
 
+  public void addFile(DrlStringFile stringFile) {
+    this.addFile(stringFile.getPath(), stringFile.getFileContent());
+  }
+
   public String getFile(String fileSystemPath) {
     byte[] fileBytes = this.kieFileSystem.read(this.fullFileSystemPath(fileSystemPath));
     if (fileBytes == null) {
@@ -63,14 +68,12 @@ public class DynamicDrlBuilder {
     this.kieFileSystem.delete(this.fullFileSystemPath(fileSystemPath));
   }
 
-  public DrlRuleExecutor build() {
+  public DrlRuleExecutor build() throws DynamicDrlBuildError {
     KieServices kieServices = KieServices.Factory.get();
     KieBuilder kieBuilder = kieServices.newKieBuilder(this.kieFileSystem).buildAll();
-    List<Message> message = kieBuilder.getResults().getMessages(Message.Level.ERROR);
-    if (kieBuilder.getResults().getMessages(Message.Level.ERROR).size() != 0) {
-      System.out.println("While building file system errors occurred!");
-      System.out.println(message);
-      throw new RuntimeException("While building file system errors occurred!");
+    List<Message> messages = kieBuilder.getResults().getMessages(Message.Level.ERROR);
+    if (!messages.isEmpty()) {
+      throw new DynamicDrlBuildError(messages);
     }
 
     KieContainer kieContainer =
@@ -78,6 +81,7 @@ public class DynamicDrlBuilder {
     return new DrlRuleExecutor(kieContainer.getKieBase());
   }
 
+  //  Helper methods
   private String fullFileSystemPath(String fileSystemPath) {
     return this.defaultRulesPath + fileSystemPath;
   }

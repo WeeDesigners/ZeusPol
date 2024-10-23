@@ -2,7 +2,10 @@ package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
+import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
+import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.HermesService;
 import agh.edu.zeuspol.services.ThemisService;
@@ -76,13 +79,37 @@ public class ZeuspolApplication {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
 
-    DrlProvider drlProvider = new DrlProvider();
-    DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
-    for (DrlStringFile f : drlProvider.getDrlFiles()) {
-      dynamicDrlBuilder.addFile(f.getPath(), f.getFileContent());
-    }
+    RuleToDrlConverter converter = new RuleToDrlConverter();
 
-    DrlRuleExecutor executor = dynamicDrlBuilder.build();
+    Params b = new Params();
+    b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");
+    b.put("collectionName", "kubernetes");
+    b.put("namespace", "test-app");
+    b.put("deploymentName", "test-app");
+    b.put("containerName", "test-app");
+    b.put("limitsCpu", "2");
+    b.put("limitsMemory", "800Mi");
+    b.put("requestsCpu", "2");
+    b.put("requestsMemory", "800Mi");
+
+    PolicyRule rule =
+        new PolicyRule(
+            RuleAttribute.RESOURCE,
+            RuleSubject.CPU,
+            List.of(10),
+            UnitType.PERCENT,
+            RelationType.GT,
+            Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
+            b);
+
+    DrlStringFile s = converter.convert(rule);
+    System.out.println(s);
+
+    DynamicDrlBuilder builder = new DynamicDrlBuilder();
+
+    builder.addFile(s);
+
+    DrlRuleExecutor executor = builder.build();
 
     // infinite loop of mainLoops
     while (true) {

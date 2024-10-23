@@ -1,6 +1,5 @@
-package agh.edu.zeuspol;
+package agh.edu.zeuspol.drools;
 
-import agh.edu.zeuspol.drools.DroolsClass;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

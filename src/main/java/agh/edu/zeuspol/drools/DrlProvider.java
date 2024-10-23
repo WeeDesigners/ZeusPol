@@ -6,7 +6,7 @@ public class DrlProvider {
 
   private String testPath = "test/test.drl";
 
-  private String testRule =
+  public String testRule =
       """
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.BufferedReader;
