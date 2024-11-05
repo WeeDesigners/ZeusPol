@@ -3,6 +3,8 @@ package agh.edu.zeuspol.drools.converter;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.drools.DrlStringFile;
+import agh.edu.zeuspol.drools.RuleStats;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,45 +35,63 @@ public class RuleToDrlConverter {
   }
 
   public DrlStringFile convert(PolicyRule rule) {
-    this.populateNeededImports();
-
     StringBuilder drlStringBuilder = new StringBuilder();
-    drlStringBuilder.append(this.packageName).append("\n");
-    drlStringBuilder.append(this.metricImport).append("\n");
-    for (String importNeeded : this.otherImports) {
-      drlStringBuilder.append(importNeeded).append("\n");
-    }
-    drlStringBuilder.append(this.actionServiceImport).append("\n");
-    drlStringBuilder.append(this.dialectName).append("\n");
-    drlStringBuilder
-        .append(this.ruleBegin)
-        .append(" \"")
-        .append(this.ruleNameString(rule))
-        .append("\"")
-        .append("\n");
-    drlStringBuilder.append(this.ruleWhen).append("\n");
-    drlStringBuilder
-        .append(this.metricClass)
-        .append("(queryTag == ")
-        .append(this.metricNameString(rule))
-        .append(", ")
-        .append(this.valueComparisonString(rule.relation, rule.value))
-        .append(")")
-        .append("\n");
 
-    drlStringBuilder.append(this.ruleThen).append("\n");
-
-    drlStringBuilder.append(this.actionString(rule));
-
-    drlStringBuilder.append(this.ruleEnd).append("\n");
+    this.appendImports(drlStringBuilder);
+    this.appendRuleBegin(drlStringBuilder, rule);
+    this.appendRuleCondition(drlStringBuilder, rule);
+    this.appendThemisAction(drlStringBuilder, rule);
+    this.appendEnd(drlStringBuilder);
 
     return new DrlStringFile(this.ruleNameString(rule), drlStringBuilder.toString());
   }
 
-  //    Helper methods
-  private void populateNeededImports() {
-    this.otherImports = new ArrayList<>();
-    this.otherImports.addAll(this.themisActionBuilder.importsNeeded());
+  public void addImport(String stringImport) {
+    this.otherImports.add(stringImport);
+  }
+
+  //    Methods that builds rule
+
+  protected void appendImports(StringBuilder drlStringBuilder) {
+    drlStringBuilder.append(this.packageName).append("\n");
+    drlStringBuilder.append(this.metricImport).append("\n");
+    for (String imp: this.themisActionBuilder.importsNeeded()){
+      drlStringBuilder.append(imp).append("\n");
+    }
+    for (String imp : this.otherImports) {
+      drlStringBuilder.append(imp).append("\n");
+    }
+    drlStringBuilder.append(this.actionServiceImport).append("\n");
+  }
+
+  protected void appendRuleBegin(StringBuilder drlStringBuilder, PolicyRule rule) {
+    drlStringBuilder
+            .append(this.ruleBegin)
+            .append(" \"")
+            .append(this.ruleNameString(rule))
+            .append("\"")
+            .append("\n");
+    drlStringBuilder.append(this.ruleWhen).append("\n");
+  }
+
+  protected void appendRuleCondition(StringBuilder drlStringBuilder, PolicyRule rule) {
+    drlStringBuilder
+            .append(this.metricClass)
+            .append("(queryTag == ")
+            .append(this.metricNameString(rule))
+            .append(", ")
+            .append(this.valueComparisonString(rule.relation, rule.value))
+            .append(")")
+            .append("\n");
+  }
+
+  protected void appendThemisAction(StringBuilder drlStringBuilder, PolicyRule rule) {
+    drlStringBuilder.append(this.ruleThen).append("\n");
+    drlStringBuilder.append(this.actionString(rule));
+  }
+
+  protected void appendEnd(StringBuilder drlStringBuilder) {
+    drlStringBuilder.append(this.ruleEnd).append("\n");
   }
 
   private String actionString(PolicyRule rule) {
@@ -79,8 +99,11 @@ public class RuleToDrlConverter {
     this.themisActionBuilder.setActionName(rule.params.get("actionName"));
     this.themisActionBuilder.setAction(rule.action);
     themisActionBuilder.addParams(rule.params);
+    String themisActionString = themisActionBuilder.buildThemisAction();
 
-    return themisActionBuilder.buildThemisAction();
+    themisActionBuilder.reset();
+
+    return themisActionString;
   }
 
   private String metricNameString(PolicyRule rule) {
@@ -96,7 +119,7 @@ public class RuleToDrlConverter {
     };
   }
 
-  private String ruleNameString(PolicyRule rule) {
+  protected String ruleNameString(PolicyRule rule) {
     return (rule.id
             + "_"
             + rule.attribute
