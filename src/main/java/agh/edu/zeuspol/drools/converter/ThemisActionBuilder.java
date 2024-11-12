@@ -12,6 +12,13 @@ public abstract class ThemisActionBuilder {
   private final Params params = new Params();
   private Action action;
 
+  public void reset() {
+    this.collectionName = null;
+    this.actionName = null;
+    this.params.clear();
+    this.action = null;
+  }
+
   public void setCollectionName(String collectionName) {
     this.collectionName = collectionName;
     this.addParam("collectionName", collectionName);
@@ -73,5 +80,9 @@ public abstract class ThemisActionBuilder {
     } else if (this.actionName == null) {
       throw new NullPointerException("Action name not set");
     }
+  }
+
+  protected String logInfoString() {
+    return "System.out.println(\"Rule " + this.getAction() + " fired\");\n";
   }
 }
