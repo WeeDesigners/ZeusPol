@@ -1,6 +1,7 @@
 package agh.edu.zeuspol.drools.converter;
 
 import java.util.List;
+import java.util.Map;
 
 public class HttpClientThemisActionBuilder extends ThemisActionBuilder{
     private List<String> imports = List.of(
@@ -17,7 +18,10 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder{
     public String buildThemisAction() {
         return this.logInfoString() + "\n" +
                 "String url = \"http://themis-executor.themis-executor:8080/execute\";" + "\n" +
-                "String jsonInputString = \"{\\\"collectionName\\\": \\\"kubernetes\\\",\\\"actionName\\\": \\\"ChangeResourcesOfContainerWithinDeploymentAction\\\",\\\"params\\\": {\\\"containerName\\\": \\\"test-app\\\",\\\"limitsCpu\\\": \\\"2\\\",\\\"namespace\\\": \\\"test-app\\\",\\\"deploymentName\\\": \\\"test-app\\\",\\\"limitsMemory\\\": \\\"800Mi\\\",\\\"requestsMemory\\\": \\\"800Mi\\\",\\\"requestsCpu\\\": \\\"2\\\",\\\"collectionName\\\": \\\"kubernetes\\\",\\\"actionName\\\": \\\"ChangeResourcesOfContainerWithinDeploymentAction\\\"}}\";" + "\n" +
+                "String jsonInputString = \"{" +
+                "\\\"collectionName\\\": \\\"" + this.getCollectionName() + "\\\"," +
+                "\\\"actionName\\\": \\\"" + this.getActionName() + "\\\"," +
+                "\\\"params\\\": {" + this.paramsString() + "}}\";" + "\n" +
                 "HttpClient client = HttpClient.newHttpClient();" + "\n" +
                 "HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header(\"Content-Type\", \"application/json\").POST(HttpRequest.BodyPublishers.ofString(jsonInputString)).build();" + "\n" +
                 "try {\n" +
@@ -29,8 +33,22 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder{
                 "}\n";
     }
 
+
     @Override
     public List<String> importsNeeded() {
         return this.imports;
+    }
+
+    private String paramsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : super.getParams().entrySet()) {
+            sb.append("\\\"")
+                    .append(entry.getKey())
+                    .append("\\\": \\\"")
+                    .append(entry.getValue())
+                    .append("\\\",");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
     }
 }
