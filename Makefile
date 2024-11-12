@@ -9,8 +9,8 @@ docker-build-local-windows:
 
 docker-build-and-push:
 	mvn clean install
-	docker build --no-cache -t socz3qqq/zeuspol .
-	docker push socz3qqq/zeuspol:latest
+	docker build --no-cache -t weedesigners/zeuspol .
+	docker push weedesigners/zeuspol:
 
 deploy:
 	make deploy-hermes
