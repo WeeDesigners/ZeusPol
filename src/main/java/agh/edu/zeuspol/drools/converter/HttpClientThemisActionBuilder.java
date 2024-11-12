@@ -20,7 +20,6 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder{
                 "String jsonInputString = \"{\\\"collectionName\\\": \\\"kubernetes\\\",\\\"actionName\\\": \\\"ChangeResourcesOfContainerWithinDeploymentAction\\\",\\\"params\\\": {\\\"containerName\\\": \\\"test-app\\\",\\\"limitsCpu\\\": \\\"2\\\",\\\"namespace\\\": \\\"test-app\\\",\\\"deploymentName\\\": \\\"test-app\\\",\\\"limitsMemory\\\": \\\"800Mi\\\",\\\"requestsMemory\\\": \\\"800Mi\\\",\\\"requestsCpu\\\": \\\"2\\\",\\\"collectionName\\\": \\\"kubernetes\\\",\\\"actionName\\\": \\\"ChangeResourcesOfContainerWithinDeploymentAction\\\"}}\";" + "\n" +
                 "HttpClient client = HttpClient.newHttpClient();" + "\n" +
                 "HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header(\"Content-Type\", \"application/json\").POST(HttpRequest.BodyPublishers.ofString(jsonInputString)).build();" + "\n" +
-                "HttpClient request = HttpClient.newHttpClient();" + "\n" +
                 "try {\n" +
                 "HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\n" +
                 "System.out.println(\"Response Code: \" + response.statusCode());\n" +
