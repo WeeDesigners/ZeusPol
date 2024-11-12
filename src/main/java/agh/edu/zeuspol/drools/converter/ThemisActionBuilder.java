@@ -81,4 +81,8 @@ public abstract class ThemisActionBuilder {
       throw new NullPointerException("Action name not set");
     }
   }
+
+  protected String logInfoString() {
+    return "System.out.println(\"Rule " + this.getAction() + " fired\");\n";
+  }
 }

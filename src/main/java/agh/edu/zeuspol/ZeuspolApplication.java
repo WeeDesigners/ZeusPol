@@ -5,6 +5,7 @@ import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
+import agh.edu.zeuspol.drools.converter.HttpClientThemisActionBuilder;
 import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.HermesService;
@@ -79,7 +80,7 @@ public class ZeuspolApplication {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
 
-    RuleToDrlConverter converter = new RuleToDrlConverter();
+    RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
     Params b = new Params();
     b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");

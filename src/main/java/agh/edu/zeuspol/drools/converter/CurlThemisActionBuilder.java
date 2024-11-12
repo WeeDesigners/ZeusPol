@@ -57,8 +57,4 @@ public class CurlThemisActionBuilder extends ThemisActionBuilder {
 
     return sb.toString();
   }
-
-  private String logInfoString() {
-    return "System.out.println(\"Rule " + this.getAction() + " fired\");\n";
-  }
 }
