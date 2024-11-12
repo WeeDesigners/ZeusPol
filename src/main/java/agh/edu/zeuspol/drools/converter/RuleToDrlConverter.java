@@ -3,8 +3,6 @@ package agh.edu.zeuspol.drools.converter;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.drools.DrlStringFile;
-import agh.edu.zeuspol.drools.RuleStats;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class RuleToDrlConverter {
   protected void appendImports(StringBuilder drlStringBuilder) {
     drlStringBuilder.append(this.packageName).append("\n");
     drlStringBuilder.append(this.metricImport).append("\n");
-    for (String imp: this.themisActionBuilder.importsNeeded()){
+    for (String imp : this.themisActionBuilder.importsNeeded()) {
       drlStringBuilder.append(imp).append("\n");
     }
     for (String imp : this.otherImports) {
@@ -66,23 +64,23 @@ public class RuleToDrlConverter {
 
   protected void appendRuleBegin(StringBuilder drlStringBuilder, PolicyRule rule) {
     drlStringBuilder
-            .append(this.ruleBegin)
-            .append(" \"")
-            .append(this.ruleNameString(rule))
-            .append("\"")
-            .append("\n");
+        .append(this.ruleBegin)
+        .append(" \"")
+        .append(this.ruleNameString(rule))
+        .append("\"")
+        .append("\n");
     drlStringBuilder.append(this.ruleWhen).append("\n");
   }
 
   protected void appendRuleCondition(StringBuilder drlStringBuilder, PolicyRule rule) {
     drlStringBuilder
-            .append(this.metricClass)
-            .append("(queryTag == ")
-            .append(this.metricNameString(rule))
-            .append(", ")
-            .append(this.valueComparisonString(rule.relation, rule.value))
-            .append(")")
-            .append("\n");
+        .append(this.metricClass)
+        .append("(queryTag == ")
+        .append(this.metricNameString(rule))
+        .append(", ")
+        .append(this.valueComparisonString(rule.relation, rule.value))
+        .append(")")
+        .append("\n");
   }
 
   protected void appendThemisAction(StringBuilder drlStringBuilder, PolicyRule rule) {
