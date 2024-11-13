@@ -103,12 +103,21 @@ public class ZeuspolApplication {
             Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
             b);
 
+
+
     DrlStringFile s = converter.convert(rule);
     System.out.println(s);
 
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
     builder.addFile(s);
+
+    for (PolicyRule pr: Policies.getInstance().getRules()) {
+      System.out.println("----------------------------------");
+      DrlStringFile sf = converter.convert(pr);
+      System.out.println(sf.getFileContent());
+      builder.addFile(sf);
+    }
 
     DrlRuleExecutor executor = builder.build();
 
