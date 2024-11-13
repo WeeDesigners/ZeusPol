@@ -26,7 +26,7 @@ public class RuleToDrlWithStatsConverterTest {
                 new PolicyRule(
                         RuleAttribute.RESOURCE,
                         RuleSubject.CPU,
-                        List.of(10),
+                        List.of(10.1),
                         UnitType.PERCENT,
                         RelationType.GT,
                         Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,

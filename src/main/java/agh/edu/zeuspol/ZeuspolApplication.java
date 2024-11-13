@@ -96,14 +96,14 @@ public class ZeuspolApplication {
         new PolicyRule(
             RuleAttribute.RESOURCE,
             RuleSubject.CPU,
-            List.of(10),
+            List.of(10.1),
             UnitType.PERCENT,
             RelationType.GT,
             Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
             b);
 
     DrlStringFile s = converter.convert(rule);
-    System.out.println(s);
+    System.out.println(s.getFileContent());
 
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
