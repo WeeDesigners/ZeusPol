@@ -1,20 +1,20 @@
-package agh.edu.zeuspol.endpoints.requests;
+package agh.edu.zeuspol.datastructures.types.attributes;
 
 import java.util.HashMap;
 
 public class ExecutionRequest {
   private String collectionName;
   private String actionName;
-  private HashMap<String, String> params;
+  private Params params;
 
-  public ExecutionRequest() {
-    collectionName = "default_collection_name";
-    actionName = "default_action_name";
-    params = new HashMap<>();
+  public ExecutionRequest(String collectionName, String actionName) {
+    this.collectionName = collectionName;
+    this.actionName = actionName;
+    params = new Params();
   }
 
   public ExecutionRequest(
-      String collectionName, String actionName, HashMap<String, String> params) {
+      String collectionName, String actionName, Params params) {
     this.collectionName = collectionName;
     this.actionName = actionName;
     this.params = params;
@@ -36,7 +36,7 @@ public class ExecutionRequest {
     this.actionName = actionName;
   }
 
-  public HashMap<String, String> getParams() {
+  public Params getParams() {
     return params;
   }
 

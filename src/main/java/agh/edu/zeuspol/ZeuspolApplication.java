@@ -32,16 +32,6 @@ public class ZeuspolApplication {
   public static void main(String[] args) throws IOException {
 
     context = SpringApplication.run(ZeuspolApplication.class, args);
-
-    // load Sla and Policies from Hermes
-    HermesService hermesService = context.getBean(HermesService.class);
-    Policies.setInstance(hermesService.getPolicies());
-    Sla.setInstance(hermesService.getSla());
-
-    // check if SLA and Policies are imported properly
-    System.out.println(Sla.getInstance());
-    System.out.println(Policies.getInstance());
-
     // run loop of main loops
     mainLoop();
   }
@@ -82,26 +72,17 @@ public class ZeuspolApplication {
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
-    Params b = new Params();
-    b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");
-    b.put("collectionName", "kubernetes");
-    b.put("namespace", "test-app");
-    b.put("deploymentName", "test-app");
-    b.put("containerName", "test-app");
-    b.put("limitsCpu", "2");
-    b.put("limitsMemory", "800Mi");
-    b.put("requestsCpu", "2");
-    b.put("requestsMemory", "800Mi");
+    ExecutionRequest b = new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
+    b.addParam("namespace", "test-app");
+    b.addParam("deploymentName", "test-app");
+    b.addParam("containerName", "test-app");
+    b.addParam("limitsCpu", "2");
+    b.addParam("limitsMemory", "800Mi");
+    b.addParam("requestsCpu", "2");
+    b.addParam("requestsMemory", "800Mi");
 
-    PolicyRule rule =
-        new PolicyRule(
-            RuleAttribute.RESOURCE,
-            RuleSubject.CPU,
-            List.of(10),
-            UnitType.PERCENT,
-            RelationType.GT,
-            Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
-            b);
+
+    PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", "CPU", RelationType.GT, 0.5, b);
 
 
 

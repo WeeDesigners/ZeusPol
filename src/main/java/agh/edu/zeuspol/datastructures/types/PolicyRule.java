@@ -5,39 +5,47 @@ import agh.edu.zeuspol.datastructures.types.base.Rule;
 import java.util.List;
 import java.util.Objects;
 
-public class PolicyRule extends Rule {
+public class PolicyRule {
 
-  public final Action action;
-  public Params params;
+  public final long id;
+  public final String name;
+  public final String metric;
+  public final RelationType relation;
+  public final double value;
+  public final ExecutionRequest params;
 
-  public PolicyRule(
-      RuleAttribute attribute,
-      RuleSubject subject,
-      List<Number> value,
-      UnitType unit,
-      RelationType relation,
-      Action action,
-      Params params) {
-    super(attribute, subject, value, unit, relation);
-    this.action = action;
+  public PolicyRule(long id, String name, String metric, RelationType relation, double value, ExecutionRequest params) {
+    this.id = id;
+    this.name = name;
+    this.metric = metric;
+    this.relation = relation;
+    this.value = value;
     this.params = params;
   }
 
+
   @Override
-  public boolean equals(Object o) {
-    PolicyRule rule = (PolicyRule) o;
-    return super.equals(o) && this.action == rule.action && this.params.equals(rule.params);
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (object == null || getClass() != object.getClass()) return false;
+    PolicyRule that = (PolicyRule) object;
+    return id == that.id && Double.compare(value, that.value) == 0 && Objects.equals(name, that.name) && Objects.equals(metric, that.metric) && relation == that.relation && Objects.equals(params, that.params);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attribute, subject, value, unit, relation, action, params);
+    return Objects.hash(id, name, metric, relation, value, params);
   }
 
   @Override
   public String toString() {
-    // TODO -> better concat
-    return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", "
-        + relation + ", " + action + ", " + params + " }";
+    return "PolicyRule{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", metric='" + metric + '\'' +
+            ", relation=" + relation +
+            ", value=" + value +
+            ", params=" + params +
+            '}';
   }
 }

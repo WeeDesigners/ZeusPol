@@ -1,5 +1,7 @@
 package agh.edu.zeuspol.drools.converter;
 
+import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,13 +9,11 @@ import java.util.Map;
 public class CurlThemisActionBuilder extends ThemisActionBuilder {
 
   @Override
-  public String buildThemisAction() {
-
-    return this.logInfoString()
-        + "try {\n"
+  public String buildThemisAction(ExecutionRequest executionRequest) {
+    return "try {\n"
         + "Process process = Runtime.getRuntime().exec(new String[]{\"bash\", \"-c\", "
         + "\""
-        + this.createHttpRequest()
+        + this.createHttpRequest(executionRequest)
         + "\"});\n"
         + "}"
         + "catch (Exception e) {e.printStackTrace();}\n";
@@ -25,23 +25,20 @@ public class CurlThemisActionBuilder extends ThemisActionBuilder {
   }
 
   //    Helper methods
-  private String createHttpRequest() {
-    super.propertiesNullCheck();
-    super.checkRequestValidity();
-
+  private String createHttpRequest(ExecutionRequest executionRequest) {
     StringBuilder sb = new StringBuilder();
     sb.append("curl -X POST http://themis-executor.themis-executor:8080/execute ")
         .append("-H \\\"Content-Type: application/json\\\" ")
         .append("-d '{\\\"collectionName\\\": \\\"")
-        .append(super.getCollectionName())
+        .append(executionRequest.getCollectionName())
         .append("\\\",")
         .append("\\\"actionName\\\": \\\"")
-        .append(super.getActionName())
+        .append(executionRequest.getActionName())
         .append("\\\",")
         .append("\\\"params\\\": {");
 
     // Append parameters
-    for (Map.Entry<String, String> entry : super.getParams().entrySet()) {
+    for (Map.Entry<String, String> entry : executionRequest.getParams().entrySet()) {
       sb.append("\\\"")
           .append(entry.getKey())
           .append("\\\": \\\"")

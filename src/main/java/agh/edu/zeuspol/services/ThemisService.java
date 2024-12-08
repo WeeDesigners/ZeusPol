@@ -1,6 +1,6 @@
 package agh.edu.zeuspol.services;
 
-import agh.edu.zeuspol.endpoints.requests.ExecutionRequest;
+import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
 import io.github.hephaestusmetrics.model.queryresults.RawQueryResult;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Value;

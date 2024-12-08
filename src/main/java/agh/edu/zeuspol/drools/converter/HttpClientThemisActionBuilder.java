@@ -1,9 +1,14 @@
 package agh.edu.zeuspol.drools.converter;
 
+import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
+import agh.edu.zeuspol.datastructures.types.attributes.Params;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
+
   private List<String> imports =
       List.of(
           "import java.net.URI",
@@ -15,20 +20,20 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
           "import java.util.List");
 
   @Override
-  public String buildThemisAction() {
-    return this.logInfoString()
+  public String buildThemisAction(ExecutionRequest executionRequest) {
+    return "System.out.println(\"Rule " + executionRequest.getCollectionName() + executionRequest.getActionName() + " fired\");\n" // TODO - to be deleted, logging should not be added here, add it somewhere else
         + "\n"
         + "String url = \"http://themis-executor.themis-executor:8080/execute\";"
         + "\n"
         + "String jsonInputString = \"{"
         + "\\\"collectionName\\\": \\\""
-        + this.getCollectionName()
+        + executionRequest.getCollectionName()
         + "\\\","
         + "\\\"actionName\\\": \\\""
-        + this.getActionName()
+        + executionRequest.getActionName()
         + "\\\","
         + "\\\"params\\\": {"
-        + this.paramsString()
+        + this.paramsString(executionRequest.getParams())
         + "}}\";\n"
         + "HttpClient client = HttpClient.newHttpClient();\n"
         + "HttpRequest request ="
@@ -49,9 +54,9 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
     return this.imports;
   }
 
-  private String paramsString() {
+  private String paramsString(Params params) {
     StringBuilder sb = new StringBuilder();
-    for (Map.Entry<String, String> entry : super.getParams().entrySet()) {
+    for (Map.Entry<String, String> entry : params.entrySet()) {
       sb.append("\\\"")
           .append(entry.getKey())
           .append("\\\": \\\"")

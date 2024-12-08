@@ -1,7 +1,5 @@
 package agh.edu.zeuspol.datastructures.types.attributes;
 
-import agh.edu.zeuspol.drools.converter.ThemisActionTemplate;
-
 public enum Action {
   DEFAULT {
     @Override
