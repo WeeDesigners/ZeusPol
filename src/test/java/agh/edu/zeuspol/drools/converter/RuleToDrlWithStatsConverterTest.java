@@ -9,27 +9,18 @@ public class RuleToDrlWithStatsConverterTest {
 
   @Test
   public void test() {
-    Params b = new Params();
+    ExecutionRequest executionRequest = new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
 
-    b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");
-    b.put("collectionName", "kubernetes");
-    b.put("namespace", "test-app");
-    b.put("deploymentName", "test-app");
-    b.put("containerName", "test-app");
-    b.put("limitsCpu", "2");
-    b.put("limitsMemory", "800Mi");
-    b.put("requestsCpu", "2");
-    b.put("requestsMemory", "800Mi");
+    executionRequest.addParam("namespace", "test-app");
+    executionRequest.addParam("deploymentName", "test-app");
+    executionRequest.addParam("containerName", "test-app");
+    executionRequest.addParam("limitsCpu", "2");
+    executionRequest.addParam("limitsMemory", "800Mi");
+    executionRequest.addParam("requestsCpu", "2");
+    executionRequest.addParam("requestsMemory", "800Mi");
 
-    PolicyRule pRule =
-        new PolicyRule(
-            RuleAttribute.RESOURCE,
-            RuleSubject.CPU,
-            List.of(10),
-            UnitType.PERCENT,
-            RelationType.GT,
-            Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
-            b);
+    PolicyRule pRule = new PolicyRule(1, "testName", "CPU", RelationType.GT, 0.5, executionRequest);
+
 
     RuleToDrlWithStatsConverter converter = new RuleToDrlWithStatsConverter();
 
