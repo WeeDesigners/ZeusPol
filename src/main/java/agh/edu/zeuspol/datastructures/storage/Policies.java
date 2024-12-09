@@ -58,7 +58,6 @@ public class Policies {
 
   @Override
   public String toString() {
-    // TODO -> better concat
     return "\n====================================\n "
         + "Policies:\n"
         + rules
