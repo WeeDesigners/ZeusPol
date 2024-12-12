@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.datastructures.types.attributes;
 
-
 public class ExecutionRequest {
   private String collectionName;
   private String actionName;
