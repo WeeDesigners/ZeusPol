@@ -41,7 +41,7 @@ public class RuleToDrlConverter {
     this.appendThemisAction(drlStringBuilder, rule);
     this.appendEnd(drlStringBuilder);
 
-    return new DrlStringFile(this.ruleNameString(rule), drlStringBuilder.toString());
+    return new DrlStringFile(String.valueOf(rule.id), drlStringBuilder.toString());
   }
 
   public void addImport(String stringImport) {
@@ -66,7 +66,7 @@ public class RuleToDrlConverter {
     drlStringBuilder
         .append(this.ruleBegin)
         .append(" \"")
-        .append(this.ruleNameString(rule))
+        .append(rule.name)
         .append("\"")
         .append("\n");
     drlStringBuilder.append(this.ruleWhen).append("\n");
@@ -75,9 +75,9 @@ public class RuleToDrlConverter {
   protected void appendRuleCondition(StringBuilder drlStringBuilder, PolicyRule rule) {
     drlStringBuilder
         .append(this.metricClass)
-        .append("(queryTag == ")
-        .append(this.metricNameString(rule))
-        .append(", ")
+        .append("(queryTag == \"")
+        .append(rule.metric)
+        .append("\", ")
         .append(this.valueComparisonString(rule.relation, rule.value))
         .append(")")
         .append("\n");
@@ -93,42 +93,15 @@ public class RuleToDrlConverter {
   }
 
   private String actionString(PolicyRule rule) {
-    this.themisActionBuilder.setCollectionName(rule.params.get("collectionName"));
-    this.themisActionBuilder.setActionName(rule.params.get("actionName"));
-    this.themisActionBuilder.setAction(rule.action);
-    themisActionBuilder.addParams(rule.params);
-    String themisActionString = themisActionBuilder.buildThemisAction();
-
-    themisActionBuilder.reset();
-
-    return themisActionString;
+    return themisActionBuilder.buildThemisAction(rule.executionRequest);
   }
 
-  private String metricNameString(PolicyRule rule) {
-    return "\"" + rule.subject.toString() + "_" + rule.unit.toString() + "\"";
-  }
-
-  private String valueComparisonString(RelationType actionType, List<Number> numbers) {
+  private String valueComparisonString(RelationType actionType, double value) {
     return switch (actionType) {
-      case GT -> "value > %s".formatted(numbers.get(0));
-      case LT -> "value < %s".formatted(numbers.get(0));
-      case EQ -> "value - %s < %s".formatted(numbers.get(0), this.EPSILON);
-      case BT -> "value >= %s && value <= %s".formatted(numbers.get(0), numbers.get(1));
+      case GT -> "value >= %s".formatted(value);
+      case LT -> "value <= %s".formatted(value);
+      case EQ -> "value == %s".formatted(value);
+      case BT -> throw new IllegalArgumentException("Between relation not supported");
     };
-  }
-
-  protected String ruleNameString(PolicyRule rule) {
-    return (rule.id
-            + "_"
-            + rule.attribute
-            + "_"
-            + rule.subject
-            + "_"
-            + rule.unit
-            + "_"
-            + rule.value
-            + "_"
-            + rule.action)
-        .replaceAll("\\s+", "");
   }
 }

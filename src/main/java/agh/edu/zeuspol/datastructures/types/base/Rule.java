@@ -8,6 +8,8 @@ import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
 import java.util.Objects;
 
+// TODO - to be deleted
+
 public abstract class Rule {
   public final long id;
   public final RuleAttribute attribute;
@@ -49,7 +51,6 @@ public abstract class Rule {
 
   @Override
   public String toString() {
-    // TODO -> better concat
     return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", "
         + relation + " }";
   }

@@ -1,65 +1,22 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.types.SlaRule;
+import agh.edu.zeuspol.datastructures.types.attributes.SlaType;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sla {
+  public final long id;
+  public final long clientId;
+  public final long applicationId;
+  public final SlaType slaType;
+  private final List<SlaRule> slaRules;
 
-  private static Sla instance = new Sla();
-
-  private final List<SlaRule> rules;
-
-  private Sla() {
-    this.rules = new ArrayList<>();
-  }
-
-  public static void setInstance(Sla sla) {
-    instance = sla;
-  }
-
-  public static Sla getInstance() {
-    return instance;
-  }
-
-  public void addRules(List<SlaRule> rules) {
-    this.rules.addAll(rules);
-  }
-
-  public void addRule(SlaRule rule) {
-    this.rules.add(rule);
-  }
-
-  public SlaRule removeRule(long id) {
-    for (SlaRule rule : rules) {
-      if (rule.id == id) {
-        rules.remove(rule);
-        return rule;
-      }
-    }
-    return null;
-  }
-
-  public void removeRules() {
-    this.rules.clear();
-  }
-
-  public void clearSla() {
-    removeRules();
-  }
-
-  public List<SlaRule> getRules() {
-    return new ArrayList<>(rules);
-  }
-
-  @Override
-  public String toString() {
-    // TODO -> better concat
-    return "\n====================================\n"
-        + "SLA:\n"
-        + "------------------------------------\n"
-        + "Rules:\n"
-        + rules
-        + "\n====================================\n";
+  public Sla(long id, long clientId, long applicationId, SlaType slaType) {
+    this.id = id;
+    this.clientId = clientId;
+    this.applicationId = applicationId;
+    this.slaType = slaType;
+    this.slaRules = new ArrayList<>();
   }
 }

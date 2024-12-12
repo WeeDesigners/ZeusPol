@@ -28,7 +28,7 @@ public class RuleToDrlWithStatsConverter extends RuleToDrlConverter {
     this.appendRuleStatsUpdate(drlStringBuilder);
     this.appendEnd(drlStringBuilder);
 
-    return new DrlStringFile(this.ruleNameString(rule), drlStringBuilder.toString());
+    return new DrlStringFile(String.valueOf(rule.id), drlStringBuilder.toString());
   }
 
   protected void appendRuleStatsCondition(StringBuilder drlStringBuilder, PolicyRule rule) {

@@ -4,39 +4,31 @@ import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class RuleToDrlConverterTest {
 
   @Test
   public void doesConvertedRuleCompileTest() {
-    Params b = new Params();
+    ExecutionRequest executionRequest =
+        new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
 
-    b.put("actionName", "ChangeResourcesOfContainerWithinDeploymentAction");
-    b.put("collectionName", "kubernetes");
-    b.put("namespace", "test-app");
-    b.put("deploymentName", "test-app");
-    b.put("containerName", "test-app");
-    b.put("limitsCpu", "2");
-    b.put("limitsMemory", "800Mi");
-    b.put("requestsCpu", "2");
-    b.put("requestsMemory", "800Mi");
+    executionRequest.addParam("namespace", "test-app");
+    executionRequest.addParam("deploymentName", "test-app");
+    executionRequest.addParam("containerName", "test-app");
+    executionRequest.addParam("limitsCpu", "2");
+    executionRequest.addParam("limitsMemory", "800Mi");
+    executionRequest.addParam("requestsCpu", "2");
+    executionRequest.addParam("requestsMemory", "800Mi");
 
-    PolicyRule pRule =
-        new PolicyRule(
-            RuleAttribute.RESOURCE,
-            RuleSubject.CPU,
-            List.of(10),
-            UnitType.PERCENT,
-            RelationType.GT,
-            Action.KubernetesChangeResourcesOfContainerWithinDeploymentAction,
-            b);
+    PolicyRule pRule = new PolicyRule(1, "testName", "CPU", RelationType.GT, 0.5, executionRequest);
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new CurlThemisActionBuilder());
     DrlStringFile drlStringFile = converter.convert(pRule);
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
     builder.addFile(drlStringFile);
     builder.build();
+
+    System.out.println(converter.convert(pRule).getFileContent());
   }
 }

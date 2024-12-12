@@ -1,7 +1,7 @@
 package agh.edu.zeuspol.endpoints;
 
 import agh.edu.zeuspol.ZeuspolApplication;
-import agh.edu.zeuspol.endpoints.requests.ExecutionRequest;
+import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
 import agh.edu.zeuspol.services.ThemisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
