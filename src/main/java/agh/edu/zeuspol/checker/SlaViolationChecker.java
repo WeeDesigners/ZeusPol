@@ -1,13 +1,13 @@
-//package agh.edu.zeuspol.checker;
+// package agh.edu.zeuspol.checker;
 //
-//import agh.edu.zeuspol.datastructures.storage.Sla;
-//import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
-//import agh.edu.zeuspol.datastructures.types.base.Rule;
-//import java.util.List;
+// import agh.edu.zeuspol.datastructures.storage.Sla;
+// import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
+// import agh.edu.zeuspol.datastructures.types.base.Rule;
+// import java.util.List;
 //
 //// TODO -> Currently outdated and not needed
 //
-//public class SlaViolationChecker {
+// public class SlaViolationChecker {
 //
 //  public static boolean checkRules(List<Rule> rules) {
 //    for (Rule rule : rules) {
@@ -76,4 +76,4 @@
 //    double m2 = span2.get(1).doubleValue();
 //    return n1 <= m1 && n1 <= m2 && n2 >= m1 && n2 >= m2;
 //  }
-//}
+// }

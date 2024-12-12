@@ -1,14 +1,12 @@
 package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
-import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
 import agh.edu.zeuspol.drools.converter.HttpClientThemisActionBuilder;
 import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
-import agh.edu.zeuspol.services.HermesService;
 import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.IOException;
@@ -72,7 +70,8 @@ public class ZeuspolApplication {
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
-    ExecutionRequest b = new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
+    ExecutionRequest b =
+        new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
     b.addParam("namespace", "test-app");
     b.addParam("deploymentName", "test-app");
     b.addParam("containerName", "test-app");
@@ -81,10 +80,7 @@ public class ZeuspolApplication {
     b.addParam("requestsCpu", "2");
     b.addParam("requestsMemory", "800Mi");
 
-
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", "CPU", RelationType.GT, 0.5, b);
-
-
 
     DrlStringFile s = converter.convert(rule);
     System.out.println(s);
@@ -93,7 +89,7 @@ public class ZeuspolApplication {
 
     builder.addFile(s);
 
-    for (PolicyRule pr: Policies.getInstance().getRules()) {
+    for (PolicyRule pr : Policies.getInstance().getRules()) {
       System.out.println("----------------------------------");
       DrlStringFile sf = converter.convert(pr);
       System.out.println(sf.getFileContent());

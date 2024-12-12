@@ -2,7 +2,6 @@ package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.datastructures.types.attributes.SlaType;
-
 import java.util.ArrayList;
 import java.util.List;
 

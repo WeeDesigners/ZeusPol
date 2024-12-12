@@ -1,10 +1,6 @@
 package agh.edu.zeuspol.datastructures.types;
 
 import agh.edu.zeuspol.datastructures.types.attributes.*;
-import agh.edu.zeuspol.datastructures.types.base.Rule;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SlaRule {
 
@@ -19,5 +15,4 @@ public class SlaRule {
     this.relation = relation;
     this.value = value;
   }
-
 }

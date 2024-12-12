@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.datastructures.types.attributes;
 
-import java.util.HashMap;
 
 public class ExecutionRequest {
   private String collectionName;
@@ -13,8 +12,7 @@ public class ExecutionRequest {
     params = new Params();
   }
 
-  public ExecutionRequest(
-      String collectionName, String actionName, Params params) {
+  public ExecutionRequest(String collectionName, String actionName, Params params) {
     this.collectionName = collectionName;
     this.actionName = actionName;
     this.params = params;

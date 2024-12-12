@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.storage;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
-import agh.edu.zeuspol.datastructures.types.base.Rule;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +26,17 @@ public class Policies {
     this.rules.addAll(rules);
   }
 
-//  public boolean addRulesSecure(List<PolicyRule> rules) {
-//    // I have imagined how it would sound if person with "reranie" disorder tried to say "ruleRules"
-//    // C:
-//    List<Rule> ruleRules = new ArrayList<>(rules);
-//    if (!SlaViolationChecker.checkRules(ruleRules)) {
-//      this.addRules(rules);
-//      return true;
-//    }
-//    return false;
-//  }
+  //  public boolean addRulesSecure(List<PolicyRule> rules) {
+  //    // I have imagined how it would sound if person with "reranie" disorder tried to say
+  // "ruleRules"
+  //    // C:
+  //    List<Rule> ruleRules = new ArrayList<>(rules);
+  //    if (!SlaViolationChecker.checkRules(ruleRules)) {
+  //      this.addRules(rules);
+  //      return true;
+  //    }
+  //    return false;
+  //  }
 
   public void addRule(PolicyRule rule) {
     this.rules.add(rule);

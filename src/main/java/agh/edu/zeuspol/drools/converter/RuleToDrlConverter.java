@@ -93,7 +93,7 @@ public class RuleToDrlConverter {
   }
 
   private String actionString(PolicyRule rule) {
-      return themisActionBuilder.buildThemisAction(rule.executionRequest);
+    return themisActionBuilder.buildThemisAction(rule.executionRequest);
   }
 
   private String valueComparisonString(RelationType actionType, double value) {
