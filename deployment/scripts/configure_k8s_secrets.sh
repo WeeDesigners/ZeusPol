@@ -14,7 +14,7 @@ trap "exit" INT
 echo "Welcome to the Zeuspol Application deployment :)"
 echo "Zeus communicates with themis, thus you need to provide some configuration values for themis to work properly on your cluster"
 echo "Please run the command: kubectl config view --flatten"
-echo -n "Kubernetes master ip ( e.g 192.168.49.2): "
+echo -n "Kubernetes master ip ( e.g https://192.168.49.2:6443 ) INCLUDE PROTOCOL AND PORT!: "
 read -r KUBERNETES_MASTER
 echo
 echo -n "Kubernetes certificate-authority-data in base64 (it already is you read it from the output of kubectl config view --flatten): "
@@ -31,6 +31,9 @@ read -r OPNESTACK_USERNAME
 echo
 echo -n "Openstack password: "
 read -r OPENSTACK_PASSWORD
+echo
+echo -n "Mail password: "
+read -r MAIL
 
 kubectl apply -f deployment/themis/00-ns.yaml
 kubectl create secret generic --namespace=themis-executor themis-secrets-k8s \
@@ -42,3 +45,6 @@ kubectl create secret generic --namespace=themis-executor themis-secrets-k8s \
 kubectl create secret generic --namespace=themis-executor themis-secrets-openstack \
 	--from-literal=OPENSTACK_USERNAME="$OPENSTACK_USERNAME" \
 	--from-literal=OPENSTACK_PASSWORD="$OPENSTACK_PASSWORD"
+
+kubectl create secret generic --namespace=themis-executor themis-secret-mail \
+  --from-literal=MAIL_PASSWORD="$MAIL_PASSWORD"

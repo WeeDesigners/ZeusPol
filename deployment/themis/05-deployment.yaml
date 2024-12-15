@@ -52,11 +52,16 @@ spec:
             - name: DATA_STORAGE_REMOVAL_PERMITTED
               value: "true"
             - name: MAIL_HOST
-              value: poczta.int.pl
+              value: smtp-mail.outlook.com
             - name: MAIL_PORT
               value: "587"
             - name: MAIL_ADDRESS
-              value: listonoszpat@int.pl
+              value: weedesigners@hotmail.com
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: themis-secrets-mail
+                  key: MAIL_PASSWORD
             - name: OPENSTACK_USERNAME
               valueFrom:
                 secretKeyRef:
