@@ -42,6 +42,9 @@ deploy-sock-shop:
 deploy-monitoring:
 	kubectl apply -f deployment/microservices-demo/manifests-monitoring
 
+deploy-butique:
+	kubectl apply -f deployment/microservices-demo/butique_shop
+
 deploy-hermes:
 	kubectl apply -f deployment/hermes
 
