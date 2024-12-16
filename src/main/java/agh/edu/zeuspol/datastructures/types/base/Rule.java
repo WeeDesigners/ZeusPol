@@ -2,7 +2,7 @@ package agh.edu.zeuspol.datastructures.types.base;
 
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
-import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
+import agh.edu.zeuspol.datastructures.types.attributes.ValueType;
 import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
@@ -13,14 +13,14 @@ import java.util.Objects;
 public abstract class Rule {
   public final long id;
   public final RuleAttribute attribute;
-  public final RuleSubject subject;
+  public final ValueType subject;
   public final List<Number> value;
   public final UnitType unit;
   public final RelationType relation;
 
   public Rule(
       RuleAttribute attribute,
-      RuleSubject subject,
+      ValueType subject,
       List<Number> value,
       UnitType unit,
       RelationType action) {
