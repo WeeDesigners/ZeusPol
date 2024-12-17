@@ -1,12 +1,12 @@
 package agh.edu.zeuspol.drools;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class RuleStats {
-  long ruleId;
+  public final long ruleId;
   int numFires = 0;
-  LocalDate lastFired = null;
+  LocalDateTime lastFired = null;
 
   public RuleStats(PolicyRule rule) {
     this.ruleId = rule.id;
@@ -14,6 +14,6 @@ public class RuleStats {
 
   public void fired() {
     this.numFires++;
-    this.lastFired = LocalDate.now();
+    this.lastFired = LocalDateTime.now();
   }
 }

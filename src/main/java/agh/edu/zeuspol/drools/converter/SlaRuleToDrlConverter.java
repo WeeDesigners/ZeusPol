@@ -1,15 +1,16 @@
 package agh.edu.zeuspol.drools.converter;
 
-import agh.edu.zeuspol.datastructures.types.PolicyRule;
+import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.datastructures.types.attributes.Condition;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RuleToDrlConverter {
-  private ThemisActionBuilder themisActionBuilder;
+public class SlaRuleToDrlConverter {
 
+  private EmailActionBuilder emailActionBuilder = new EmailActionBuilder();
   private String packageName = "package drools;";
   private String metricImport = "import io.github.hephaestusmetrics.model.metrics.Metric;";
   private List<String> otherImports = new ArrayList<>();
@@ -21,22 +22,14 @@ public class RuleToDrlConverter {
   private String ruleWhen = "when";
   private String ruleThen = "then";
 
-  //    TODO - Consider deleting default ThemisActionBuilder
-  public RuleToDrlConverter() {
-    this.themisActionBuilder = new CurlThemisActionBuilder();
-  }
-
-  public RuleToDrlConverter(ThemisActionBuilder themisActionBuilder) {
-    this.themisActionBuilder = themisActionBuilder;
-  }
-
-  public DrlStringFile convert(PolicyRule rule) {
+  public DrlStringFile convert(Sla sla, SlaRule rule) {
     StringBuilder drlStringBuilder = new StringBuilder();
 
     this.appendImports(drlStringBuilder);
     this.appendRuleBegin(drlStringBuilder, rule);
     this.appendRuleConditions(drlStringBuilder, rule);
-    this.appendThemisAction(drlStringBuilder, rule);
+    this.appendThemisAction(drlStringBuilder, sla, rule);
+    drlStringBuilder.append("PolicySlaViolationCheck.policyViolationCheck();\n");
     this.appendEnd(drlStringBuilder);
 
     return new DrlStringFile(String.valueOf(rule.id), drlStringBuilder.toString());
@@ -51,7 +44,8 @@ public class RuleToDrlConverter {
   protected void appendImports(StringBuilder drlStringBuilder) {
     drlStringBuilder.append(this.packageName).append("\n");
     drlStringBuilder.append(this.metricImport).append("\n");
-    for (String imp : this.themisActionBuilder.importsNeeded()) {
+    drlStringBuilder.append("import agh.edu.zeuspol.drools.PolicySlaViolationCheck;\n");
+    for (String imp : this.emailActionBuilder.importsNeeded()) {
       drlStringBuilder.append(imp).append("\n");
     }
     for (String imp : this.otherImports) {
@@ -60,17 +54,12 @@ public class RuleToDrlConverter {
     drlStringBuilder.append(this.actionServiceImport).append("\n");
   }
 
-  protected void appendRuleBegin(StringBuilder drlStringBuilder, PolicyRule rule) {
-    drlStringBuilder
-        .append(this.ruleBegin)
-        .append(" \"")
-        .append(rule.name)
-        .append("\"")
-        .append("\n");
+  protected void appendRuleBegin(StringBuilder drlStringBuilder, SlaRule rule) {
+    drlStringBuilder.append(this.ruleBegin).append(" \"").append(rule.id).append("\"").append("\n");
     drlStringBuilder.append(this.ruleWhen).append("\n");
   }
 
-  protected void appendRuleConditions(StringBuilder drlStringBuilder, PolicyRule rule) {
+  protected void appendRuleConditions(StringBuilder drlStringBuilder, SlaRule rule) {
     for (Condition cond : rule.getConditions()) {
       drlStringBuilder
           .append(this.metricClass)
@@ -83,24 +72,24 @@ public class RuleToDrlConverter {
     }
   }
 
-  protected void appendThemisAction(StringBuilder drlStringBuilder, PolicyRule rule) {
+  protected void appendThemisAction(StringBuilder drlStringBuilder, Sla sla, SlaRule rule) {
     drlStringBuilder.append(this.ruleThen).append("\n");
-    drlStringBuilder.append(this.actionString(rule));
+    drlStringBuilder.append(this.actionString(sla, rule)).append("\n");
   }
 
   protected void appendEnd(StringBuilder drlStringBuilder) {
     drlStringBuilder.append(this.ruleEnd).append("\n");
   }
 
-  private String actionString(PolicyRule rule) {
-    return themisActionBuilder.buildThemisAction(rule.action);
+  private String actionString(Sla sla, SlaRule rule) {
+    return this.emailActionBuilder.buildEmailAction(sla, rule);
   }
 
   private String valueComparisonString(RelationType actionType, double value) {
     return switch (actionType) {
-      case GT -> "value >= %s".formatted(value);
-      case LT -> "value <= %s".formatted(value);
-      case EQ -> "value == %s".formatted(value);
+      case GT -> "value <= %s".formatted(value);
+      case LT -> "value >= %s".formatted(value);
+      case EQ -> "value != %s".formatted(value);
       case BT -> throw new IllegalArgumentException("Between relation not supported");
     };
   }
