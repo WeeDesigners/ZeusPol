@@ -1,12 +1,14 @@
 package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
+import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
 import agh.edu.zeuspol.drools.converter.HttpClientThemisActionBuilder;
 import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
+import agh.edu.zeuspol.services.HermesService;
 import agh.edu.zeuspol.services.ThemisService;
 import io.github.hephaestusmetrics.model.metrics.Metric;
 import java.io.IOException;
@@ -67,6 +69,21 @@ public class ZeuspolApplication {
   private static void mainLoop() {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
+
+    // TODO -> idk where to place it
+    HermesService hermesService = context.getBean(HermesService.class);
+    Policies myS3xiPolicies = hermesService.getPolicies();
+    List<Sla> myS3xiSlas = hermesService.getAllSlas();
+
+    // checking if everything works properly
+    System.out.println();
+    System.out.println("Policies from Hermes:");
+    System.out.println(myS3xiPolicies.toString());
+    System.out.println();
+    System.out.println("Slas from Hermes:");
+    System.out.println(myS3xiSlas.toString());
+    System.out.println();
+    // end of TODO
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
