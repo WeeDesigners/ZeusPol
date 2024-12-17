@@ -99,6 +99,7 @@ public class ZeuspolApplication {
 
     PolicyRule policyRule = new PolicyRule(1, "TestRule", new Action("Test", "test", params));
     policyRule.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.GT, 0.5));
+    Policies.getInstance().addRule(policyRule);
 
     SlaRule slaRule = new SlaRule(5, ValueType.AVAILABILITY);
     slaRule.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.LT, 0.6));
@@ -111,11 +112,13 @@ public class ZeuspolApplication {
 
 
 
-//    System.out.println("--------------Policies:--------------");
-//    for( PolicyRule policyRule: myS3xiPolicies.getRules()) {
-//      System.out.println(policyRule);
-//      builder.addFile(policyConverter.convert(policyRule));
-//    }
+    System.out.println("--------------Policies:--------------");
+    for( PolicyRule pr: Policies.getInstance().getRules()) {
+      System.out.println(pr);
+      builder.addFile(policyConverter.convert(pr));
+    }
+
+
 //    System.out.println("--------------Sla rules:--------------");
 //    for (Sla sla: myS3xiSlas){
 //      for (SlaRule slaRule: sla.getRules()){
