@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.services;
 
-
 import java.util.List;
 
 public class SlaViolationEmailNotification {
