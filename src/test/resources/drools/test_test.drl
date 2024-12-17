@@ -1,5 +1,4 @@
 package drools;
-import agh.edu.zeuspol.datastructures.types.base.Rule;
 
 import io.github.hephaestusmetrics.model.metrics.Metric;
 
