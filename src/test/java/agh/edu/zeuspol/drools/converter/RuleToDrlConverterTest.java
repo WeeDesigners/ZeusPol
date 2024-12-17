@@ -19,7 +19,8 @@ public class RuleToDrlConverterTest {
     params.put("requestsCpu", "2");
     params.put("requestsMemory", "800Mi");
 
-    Action action = new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    Action action =
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
     rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
 
@@ -43,7 +44,8 @@ public class RuleToDrlConverterTest {
     params.put("requestsCpu", "2");
     params.put("requestsMemory", "800Mi");
 
-    Action action = new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    Action action =
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
     rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
     rule.addCondition(new Condition("RAM", RelationType.GT, 16));

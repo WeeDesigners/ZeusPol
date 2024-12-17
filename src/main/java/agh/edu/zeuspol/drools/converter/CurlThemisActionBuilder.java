@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.drools.converter;
 
 import agh.edu.zeuspol.datastructures.types.attributes.Action;
-import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

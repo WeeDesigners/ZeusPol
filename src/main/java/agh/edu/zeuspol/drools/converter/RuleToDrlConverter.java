@@ -74,15 +74,15 @@ public class RuleToDrlConverter {
   }
 
   protected void appendRuleConditions(StringBuilder drlStringBuilder, PolicyRule rule) {
-    for(Condition cond: rule.getConditions()){
+    for (Condition cond : rule.getConditions()) {
       drlStringBuilder
-              .append(this.metricClass)
-              .append("(queryTag == \"")
-              .append(cond.metric)
-              .append("\", ")
-              .append(this.valueComparisonString(cond.relation, cond.value))
-              .append(")")
-              .append("\n");
+          .append(this.metricClass)
+          .append("(queryTag == \"")
+          .append(cond.metric)
+          .append("\", ")
+          .append(this.valueComparisonString(cond.relation, cond.value))
+          .append(")")
+          .append("\n");
     }
   }
 

@@ -16,11 +16,7 @@ public abstract class Rule {
   public final List<Number> value;
   public final RelationType relation;
 
-  public Rule(
-      RuleAttribute attribute,
-      ValueType subject,
-      List<Number> value,
-      RelationType action) {
+  public Rule(RuleAttribute attribute, ValueType subject, List<Number> value, RelationType action) {
     this.id = IdGenerator.getRuleId();
     this.attribute = attribute;
     this.subject = subject;

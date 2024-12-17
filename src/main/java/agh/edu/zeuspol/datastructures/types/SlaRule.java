@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.types;
 
 import agh.edu.zeuspol.datastructures.types.attributes.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ public class SlaRule {
   public ValueType valueType;
   public List<Condition> conditions;
 
-
   public SlaRule(long id, ValueType valueType) {
     this.id = id;
     this.valueType = valueType;
@@ -19,8 +17,8 @@ public class SlaRule {
   }
 
   public boolean addConditions(List<Condition> conditions) {
-    for(Condition condition : conditions) {
-      if(!this.conditions.contains(condition)) {
+    for (Condition condition : conditions) {
+      if (!this.conditions.contains(condition)) {
         return false;
       }
     }
@@ -43,5 +41,4 @@ public class SlaRule {
   public String toString() {
     return "{" + id + ", " + valueType + ", " + conditions + "}";
   }
-
 }

@@ -70,7 +70,6 @@ public class ZeuspolApplication {
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
-
     Params params = new Params();
     params.put("namespace", "test-app");
     params.put("deploymentName", "test-app");
@@ -80,10 +79,11 @@ public class ZeuspolApplication {
     params.put("requestsCpu", "2");
     params.put("requestsMemory", "800Mi");
 
-    Action action = new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    Action action =
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
-    rule.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.GT, 0.5));
-
+    rule.addCondition(
+        new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.GT, 0.5));
 
     DrlStringFile s = converter.convert(rule);
     System.out.println(s);

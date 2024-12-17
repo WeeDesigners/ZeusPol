@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.datastructures.types;
 
 import agh.edu.zeuspol.datastructures.types.attributes.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +12,6 @@ public class PolicyRule {
   private final List<Condition> conditions;
   public final Action action;
 
-
   public PolicyRule(long id, String name, Action action) {
     this.id = id;
     this.name = name;
@@ -22,8 +20,8 @@ public class PolicyRule {
   }
 
   public boolean addConditions(List<Condition> conditions) {
-    for(Condition condition : conditions) {
-      if(!this.conditions.contains(condition)) {
+    for (Condition condition : conditions) {
+      if (!this.conditions.contains(condition)) {
         return false;
       }
     }
@@ -46,13 +44,11 @@ public class PolicyRule {
   public boolean equals(Object o) {
     PolicyRule rule = (PolicyRule) o;
     return super.equals(o)
-            && this.id == rule.id
-            && this.name.equals(rule.name)
-            && this.conditions.equals(rule.getConditions())
-            && this.action.equals(rule.action);
+        && this.id == rule.id
+        && this.name.equals(rule.name)
+        && this.conditions.equals(rule.getConditions())
+        && this.action.equals(rule.action);
   }
-
-
 
   @Override
   public int hashCode() {

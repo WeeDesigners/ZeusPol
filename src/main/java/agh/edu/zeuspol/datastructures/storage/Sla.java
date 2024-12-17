@@ -19,37 +19,36 @@ public class Sla {
     this.slaRules = new ArrayList<>();
   }
 
-  public boolean addRules(List<SlaRule> rules){
-    for(SlaRule rule : rules){
-      if(this.addRule(rule)){
+  public boolean addRules(List<SlaRule> rules) {
+    for (SlaRule rule : rules) {
+      if (this.addRule(rule)) {
         return false;
       }
     }
     return true;
   }
 
-  public boolean addRule(SlaRule rule){
-    if(!checkUniqueId(rule.id)){
+  public boolean addRule(SlaRule rule) {
+    if (!checkUniqueId(rule.id)) {
       return false;
-    }
-    else {
+    } else {
       this.slaRules.add(rule);
     }
     return true;
   }
 
-  private boolean checkUniqueId(long id){
-    for(SlaRule rule : slaRules){
-      if(rule.id == id){
+  private boolean checkUniqueId(long id) {
+    for (SlaRule rule : slaRules) {
+      if (rule.id == id) {
         return false;
       }
     }
     return true;
   }
 
-  public SlaRule removeRule(long id){
-    for(SlaRule rule : slaRules){
-      if(rule.id == id){
+  public SlaRule removeRule(long id) {
+    for (SlaRule rule : slaRules) {
+      if (rule.id == id) {
         slaRules.remove(rule);
         return rule;
       }
@@ -57,7 +56,7 @@ public class Sla {
     return null;
   }
 
-  public void removeRules(){
+  public void removeRules() {
     this.slaRules.clear();
   }
 
@@ -65,13 +64,12 @@ public class Sla {
     return new ArrayList<>(slaRules);
   }
 
-
   @Override
   public String toString() {
-    //TODO -> better concat
+    // TODO -> better concat
     return "\n====================================\n Rules:\n"
-            + slaRules
-            + "\n====================================\n";
+        + slaRules
+        + "\n====================================\n";
   }
 
   public SlaType getType() {
@@ -97,6 +95,4 @@ public class Sla {
   public void setApplicationId(String applicationId) {
     this.applicationId = applicationId;
   }
-
-
 }
