@@ -4,11 +4,15 @@ import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+class SlaList extends ArrayList<Sla> {}
 
 @Service
 public class HermesService {
@@ -23,14 +27,12 @@ public class HermesService {
 
 
   public List<Sla> getAllSlas() {
-    List<Sla> result = new ArrayList<>();
-    List slas = restTemplate.getForObject(hermesUrl + "/sla", List.class);
-    if (slas != null) {
-      for(Object sla : slas) {
-        result.add((Sla) sla);
-      }
+    ResponseEntity<Sla[]> slasEntity= restTemplate.getForEntity(hermesUrl + "/sla", Sla[].class);
+    Sla[] slas = slasEntity.getBody();
+    if(slas != null){
+      return Arrays.asList(slas);
     }
-    return result;
+    return new ArrayList<>();
   }
 
   public Sla getSla(long id) {
