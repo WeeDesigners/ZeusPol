@@ -164,4 +164,31 @@ public class DynamicDrlBuilderAndExecutorTest {
 
     Assertions.assertThrows(DynamicDrlBuildError.class, builder::build);
   }
+
+
+  @Test
+  public void multipleConditionsTest() {
+    DynamicDrlBuilder loader = new DynamicDrlBuilder();
+
+    String drlFile =
+            """
+                package com.example;
+    
+                import java.util.List;
+    
+                rule "Add element if list has more than one item"
+                    when
+                        String(this == "a")
+                        String(this == "b")
+                    then
+                        System.out.println("Hey");
+                end
+            """;
+
+    loader.addFile("test/test.drl", drlFile);
+    DrlRuleExecutor ruleExecutor = loader.build();
+
+    ruleExecutor.fireRules(List.of("a", "b"));
+
+  }
 }

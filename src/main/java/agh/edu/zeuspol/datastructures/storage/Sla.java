@@ -38,6 +38,15 @@ public class Sla {
     return true;
   }
 
+  private boolean checkUniqueId(long id){
+    for(SlaRule rule : slaRules){
+      if(rule.id == id){
+        return false;
+      }
+    }
+    return true;
+  }
+
   public SlaRule removeRule(long id){
     for(SlaRule rule : slaRules){
       if(rule.id == id){

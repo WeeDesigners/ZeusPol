@@ -3,7 +3,6 @@ package agh.edu.zeuspol.datastructures.types.base;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
 import agh.edu.zeuspol.datastructures.types.attributes.ValueType;
-import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 import agh.edu.zeuspol.generators.IdGenerator;
 import java.util.List;
 import java.util.Objects;
@@ -15,20 +14,17 @@ public abstract class Rule {
   public final RuleAttribute attribute;
   public final ValueType subject;
   public final List<Number> value;
-  public final UnitType unit;
   public final RelationType relation;
 
   public Rule(
       RuleAttribute attribute,
       ValueType subject,
       List<Number> value,
-      UnitType unit,
       RelationType action) {
     this.id = IdGenerator.getRuleId();
     this.attribute = attribute;
     this.subject = subject;
     this.value = value;
-    this.unit = unit;
     this.relation = action;
   }
 
@@ -40,18 +36,16 @@ public abstract class Rule {
     return attribute == rule.attribute
         && subject == rule.subject
         && Objects.equals(value, rule.value)
-        && unit == rule.unit
         && relation == rule.relation;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attribute, subject, value, unit, relation);
+    return Objects.hash(attribute, subject, value, relation);
   }
 
   @Override
   public String toString() {
-    return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + unit + ", "
-        + relation + " }";
+    return "{ " + id + ", " + attribute + ", " + subject + ", " + value + ", " + relation + " }";
   }
 }
