@@ -10,7 +10,7 @@ import agh.edu.zeuspol.drools.PolicySlaViolationCheck;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlaRuleToDrlConverter extends RuleToDrlConverter {
+public class SlaRuleToDrlConverter {
 
     private EmailActionBuilder emailActionBuilder = new EmailActionBuilder();
     private String packageName = "package drools;";
