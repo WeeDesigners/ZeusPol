@@ -10,13 +10,13 @@ public class Sla {
   private SlaType type;
   private String clientId;
   private String applicationId;
-  private final List<SlaRule> slaRules;
+  private final List<SlaRule> rules;
 
   public Sla(long id, String clientId, String applicationId, SlaType type, List<SlaRule> slaRules) {
     this.id = id;
     this.clientId = clientId;
     this.applicationId = applicationId;
-    this.slaRules = new ArrayList<>();
+    this.rules = new ArrayList<>();
   }
 
   public boolean addRules(List<SlaRule> rules) {
@@ -32,13 +32,13 @@ public class Sla {
     if (!checkUniqueId(rule.id)) {
       return false;
     } else {
-      this.slaRules.add(rule);
+      this.rules.add(rule);
     }
     return true;
   }
 
   private boolean checkUniqueId(long id) {
-    for (SlaRule rule : slaRules) {
+    for (SlaRule rule : rules) {
       if (rule.id == id) {
         return false;
       }
@@ -47,9 +47,9 @@ public class Sla {
   }
 
   public SlaRule removeRule(long id) {
-    for (SlaRule rule : slaRules) {
+    for (SlaRule rule : rules) {
       if (rule.id == id) {
-        slaRules.remove(rule);
+        rules.remove(rule);
         return rule;
       }
     }
@@ -57,18 +57,31 @@ public class Sla {
   }
 
   public void removeRules() {
-    this.slaRules.clear();
+    this.rules.clear();
   }
 
   public List<SlaRule> getRules() {
-    return new ArrayList<>(slaRules);
+    return new ArrayList<>(rules);
   }
 
   @Override
   public String toString() {
     // TODO -> better concat
-    return "\n====================================\n Rules:\n"
-        + slaRules
+    return "\n====================================\n"
+        + "id: "
+        + id
+        + "\n"
+        + "type: "
+        + type
+        + "\n"
+        + "clientId: "
+        + clientId
+        + "\n"
+        + "applicationId: "
+        + applicationId
+        + "\n"
+        + "rules:\n"
+        + rules
         + "\n====================================\n";
   }
 

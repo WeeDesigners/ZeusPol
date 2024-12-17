@@ -2,15 +2,16 @@ package agh.edu.zeuspol.services;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
-import agh.edu.zeuspol.datastructures.types.base.Rule;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+class SlaList extends ArrayList<Sla> {}
 
 @Service
 public class HermesService {
@@ -23,53 +24,17 @@ public class HermesService {
     this.restTemplate = restTemplateBuilder.build();
   }
 
-  public String addRuleObject(Rule rule) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
-    HttpEntity<Rule> requestEntity = new HttpEntity<>(rule, headers);
-
-    try {
-      return this.restTemplate.postForObject(
-          hermesUrl + "/rules/addRuleObject", requestEntity, String.class);
-    } catch (HttpClientErrorException e) {
-      return e.getResponseBodyAsString();
+  public List<Sla> getAllSlas() {
+    ResponseEntity<Sla[]> slasEntity = restTemplate.getForEntity(hermesUrl + "/sla", Sla[].class);
+    Sla[] slas = slasEntity.getBody();
+    if (slas != null) {
+      return Arrays.asList(slas);
     }
+    return new ArrayList<>();
   }
 
-  public String addRuleString(String ruleString) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
-    HttpEntity<String> requestEntity = new HttpEntity<>(ruleString, headers);
-
-    try {
-      return this.restTemplate.postForObject(
-          hermesUrl + "/rules/addRuleString", requestEntity, String.class);
-    } catch (HttpClientErrorException e) {
-      return e.getResponseBodyAsString();
-    }
-  }
-
-  public Rule getRuleObject(long id) {
-    Rule rule = restTemplate.getForObject(hermesUrl + "/rules/getRuleObject/{id}", Rule.class, id);
-    if (rule == null) {
-      // TODO -> some error or sth... idk....
-    }
-    return rule;
-  }
-
-  public String getRuleString(long id) {
-    String ruleString =
-        restTemplate.getForObject(hermesUrl + "/rules/getRuleString/{id}", String.class, id);
-    if (ruleString == null || ruleString.isEmpty()) {
-      // TODO -> some error or sth... idk....
-    }
-    return ruleString;
-  }
-
-  public Sla getSla() {
-    Sla sla = restTemplate.getForObject(hermesUrl + "/sla/get", Sla.class);
+  public Sla getSla(long id) {
+    Sla sla = restTemplate.getForObject(hermesUrl + "/sla/" + id, Sla.class);
     if (sla == null) {
       // TODO -> some error or sth... idk....
     }
@@ -77,7 +42,7 @@ public class HermesService {
   }
 
   public Policies getPolicies() {
-    Policies policies = restTemplate.getForObject(hermesUrl + "/policies/get", Policies.class);
+    Policies policies = restTemplate.getForObject(hermesUrl + "/policies", Policies.class);
     if (policies == null) {
       // TODO -> some error or sth... idk....
     }
