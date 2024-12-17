@@ -87,21 +87,20 @@ public class ZeuspolApplication {
     System.out.println();
     // end of TODO
 
-    RuleToDrlConverter policyConverter = new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
+    RuleToDrlConverter policyConverter =
+        new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
-
     System.out.println("--------------Policies:--------------");
-    for( PolicyRule pr: Policies.getInstance().getRules()) {
+    for (PolicyRule pr : Policies.getInstance().getRules()) {
       System.out.println(pr);
       builder.addFile(policyConverter.convert(pr));
     }
 
-
     System.out.println("--------------Sla rules:--------------");
-    for (Sla sla: myS3xiSlas){
-      for (SlaRule slaRule: sla.getRules()){
+    for (Sla sla : myS3xiSlas) {
+      for (SlaRule slaRule : sla.getRules()) {
         System.out.println(slaRule);
         builder.addFile(slaRuleConverter.convert(sla, slaRule));
       }

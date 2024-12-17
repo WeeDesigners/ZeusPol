@@ -1,7 +1,6 @@
 package agh.edu.zeuspol.drools;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RuleStats {

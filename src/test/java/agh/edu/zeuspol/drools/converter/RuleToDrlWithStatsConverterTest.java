@@ -22,7 +22,8 @@ public class RuleToDrlWithStatsConverterTest {
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
     rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
 
-    RuleToDrlWithStatsConverter converter = new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
+    RuleToDrlWithStatsConverter converter =
+        new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
 
     System.out.println(converter.convert(rule).getFileContent());
   }
