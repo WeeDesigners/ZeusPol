@@ -16,7 +16,8 @@ public class Sla {
     this.id = id;
     this.clientId = clientId;
     this.applicationId = applicationId;
-    this.slaRules = new ArrayList<>();
+    this.type = type;
+    this.slaRules = slaRules;
   }
 
   public boolean addRules(List<SlaRule> rules) {

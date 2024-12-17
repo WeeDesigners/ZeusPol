@@ -33,13 +33,13 @@ public class RuleToDrlWithStatsConverter extends RuleToDrlConverter {
 
   protected void appendRuleStatsCondition(StringBuilder drlStringBuilder, PolicyRule rule) {
     drlStringBuilder
-        .append("$stats: RuleStats(id == ")
+        .append("$stats: RuleStats(ruleId == ")
         .append(rule.id)
-        .append(",lastFired != null)")
+        .append(")")
         .append("\n");
   }
 
   protected void appendRuleStatsUpdate(StringBuilder drlStringBuilder) {
-    drlStringBuilder.append("stats.fired()").append("\n");
+    drlStringBuilder.append("$stats.fired();").append("\n");
   }
 }

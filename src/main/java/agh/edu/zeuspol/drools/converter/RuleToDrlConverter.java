@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RuleToDrlConverter {
-
-  private double EPSILON = 0.00000000001;
-
   private ThemisActionBuilder themisActionBuilder;
 
   private String packageName = "package drools;";
