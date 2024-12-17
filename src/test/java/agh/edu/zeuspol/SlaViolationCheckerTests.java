@@ -8,7 +8,7 @@ package agh.edu.zeuspol;
 // import agh.edu.zeuspol.datastructures.types.SlaRule;
 // import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 // import agh.edu.zeuspol.datastructures.types.attributes.RuleAttribute;
-// import agh.edu.zeuspol.datastructures.types.attributes.RuleSubject;
+// import agh.edu.zeuspol.datastructures.types.attributes.ValueType;
 // import agh.edu.zeuspol.datastructures.types.attributes.UnitType;
 // import java.util.Arrays;
 // import java.util.Collections;
@@ -22,7 +22,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.EQ);
@@ -34,7 +34,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.EQ);
@@ -49,7 +49,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.EQ);
@@ -61,7 +61,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.NUMBER,
   //            RelationType.EQ);
@@ -76,7 +76,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.LT);
@@ -88,7 +88,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(11),
   //            UnitType.BYTE,
   //            RelationType.GT);
@@ -103,7 +103,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(5, 15),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -115,7 +115,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(6, 14),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -130,7 +130,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(5, 15),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -142,7 +142,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(16, 20),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -157,7 +157,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.GT);
@@ -169,7 +169,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(11, 20),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -184,7 +184,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Collections.singletonList(10),
   //            UnitType.BYTE,
   //            RelationType.GT);
@@ -196,7 +196,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule rule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(5, 8),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -211,7 +211,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(10, 15),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -222,7 +222,7 @@ public class SlaViolationCheckerTests {
   //
   //    SlaRule rule =
   //        new SlaRule(
-  //            RuleAttribute.UPTIME, RuleSubject.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
+  //            RuleAttribute.UPTIME, ValueType.CPU, List.of(12), UnitType.BYTE, RelationType.GT);
   //
   //    assertFalse(SlaViolationChecker.checkRule(rule));
   //
@@ -234,7 +234,7 @@ public class SlaViolationCheckerTests {
   //    SlaRule slaRule =
   //        new SlaRule(
   //            RuleAttribute.UPTIME,
-  //            RuleSubject.CPU,
+  //            ValueType.CPU,
   //            Arrays.asList(10, 15),
   //            UnitType.BYTE,
   //            RelationType.BT);
@@ -245,7 +245,7 @@ public class SlaViolationCheckerTests {
   //
   //    SlaRule rule =
   //        new SlaRule(
-  //            RuleAttribute.UPTIME, RuleSubject.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
+  //            RuleAttribute.UPTIME, ValueType.CPU, List.of(16), UnitType.BYTE, RelationType.GT);
   //
   //    assertTrue(SlaViolationChecker.checkRule(rule));
   //

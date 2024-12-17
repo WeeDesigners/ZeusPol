@@ -1,6 +1,7 @@
 package agh.edu.zeuspol.drools.converter;
 
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
+import agh.edu.zeuspol.datastructures.types.attributes.Condition;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class RuleToDrlConverter {
 
     this.appendImports(drlStringBuilder);
     this.appendRuleBegin(drlStringBuilder, rule);
-    this.appendRuleCondition(drlStringBuilder, rule);
+    this.appendRuleConditions(drlStringBuilder, rule);
     this.appendThemisAction(drlStringBuilder, rule);
     this.appendEnd(drlStringBuilder);
 
@@ -72,15 +73,17 @@ public class RuleToDrlConverter {
     drlStringBuilder.append(this.ruleWhen).append("\n");
   }
 
-  protected void appendRuleCondition(StringBuilder drlStringBuilder, PolicyRule rule) {
-    drlStringBuilder
-        .append(this.metricClass)
-        .append("(queryTag == \"")
-        .append(rule.metric)
-        .append("\", ")
-        .append(this.valueComparisonString(rule.relation, rule.value))
-        .append(")")
-        .append("\n");
+  protected void appendRuleConditions(StringBuilder drlStringBuilder, PolicyRule rule) {
+    for (Condition cond : rule.getConditions()) {
+      drlStringBuilder
+          .append(this.metricClass)
+          .append("(queryTag == \"")
+          .append(cond.metric)
+          .append("\", ")
+          .append(this.valueComparisonString(cond.relation, cond.value))
+          .append(")")
+          .append("\n");
+    }
   }
 
   protected void appendThemisAction(StringBuilder drlStringBuilder, PolicyRule rule) {
@@ -93,7 +96,7 @@ public class RuleToDrlConverter {
   }
 
   private String actionString(PolicyRule rule) {
-    return themisActionBuilder.buildThemisAction(rule.executionRequest);
+    return themisActionBuilder.buildThemisAction(rule.action);
   }
 
   private String valueComparisonString(RelationType actionType, double value) {

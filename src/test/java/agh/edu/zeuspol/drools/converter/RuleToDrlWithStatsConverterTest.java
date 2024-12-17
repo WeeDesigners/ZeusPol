@@ -8,21 +8,22 @@ public class RuleToDrlWithStatsConverterTest {
 
   @Test
   public void test() {
-    ExecutionRequest executionRequest =
-        new ExecutionRequest("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction");
+    Params params = new Params();
+    params.put("namespace", "test-app");
+    params.put("deploymentName", "test-app");
+    params.put("containerName", "test-app");
+    params.put("limitsCpu", "2");
+    params.put("limitsMemory", "800Mi");
+    params.put("requestsCpu", "2");
+    params.put("requestsMemory", "800Mi");
 
-    executionRequest.addParam("namespace", "test-app");
-    executionRequest.addParam("deploymentName", "test-app");
-    executionRequest.addParam("containerName", "test-app");
-    executionRequest.addParam("limitsCpu", "2");
-    executionRequest.addParam("limitsMemory", "800Mi");
-    executionRequest.addParam("requestsCpu", "2");
-    executionRequest.addParam("requestsMemory", "800Mi");
-
-    PolicyRule pRule = new PolicyRule(1, "testName", "CPU", RelationType.GT, 0.5, executionRequest);
+    Action action =
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
+    rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
 
     RuleToDrlWithStatsConverter converter = new RuleToDrlWithStatsConverter();
 
-    System.out.println(converter.convert(pRule).getFileContent());
+    System.out.println(converter.convert(rule).getFileContent());
   }
 }

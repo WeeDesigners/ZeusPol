@@ -1,6 +1,6 @@
 package agh.edu.zeuspol.drools.converter;
 
-import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
+import agh.edu.zeuspol.datastructures.types.attributes.Action;
 import agh.edu.zeuspol.datastructures.types.attributes.Params;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +18,10 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
           "import java.util.List");
 
   @Override
-  public String buildThemisAction(ExecutionRequest executionRequest) {
+  public String buildThemisAction(Action action) {
     return "System.out.println(\"Rule "
-        + executionRequest.getCollectionName()
-        + executionRequest.getActionName()
+        + action.collectionName
+        + action.actionName
         + " fired\");\n" // TODO - to be deleted, logging should not be added here, add it somewhere
         // else
         + "\n"
@@ -29,13 +29,13 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
         + "\n"
         + "String jsonInputString = \"{"
         + "\\\"collectionName\\\": \\\""
-        + executionRequest.getCollectionName()
+        + action.collectionName
         + "\\\","
         + "\\\"actionName\\\": \\\""
-        + executionRequest.getActionName()
+        + action.actionName
         + "\\\","
         + "\\\"params\\\": {"
-        + this.paramsString(executionRequest.getParams())
+        + this.paramsString(action.params)
         + "}}\";\n"
         + "HttpClient client = HttpClient.newHttpClient();\n"
         + "HttpRequest request ="

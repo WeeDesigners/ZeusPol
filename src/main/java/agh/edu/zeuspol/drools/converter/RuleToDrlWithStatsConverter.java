@@ -22,7 +22,7 @@ public class RuleToDrlWithStatsConverter extends RuleToDrlConverter {
 
     this.appendImports(drlStringBuilder);
     this.appendRuleBegin(drlStringBuilder, rule);
-    this.appendRuleCondition(drlStringBuilder, rule);
+    this.appendRuleConditions(drlStringBuilder, rule);
     this.appendRuleStatsCondition(drlStringBuilder, rule);
     this.appendThemisAction(drlStringBuilder, rule);
     this.appendRuleStatsUpdate(drlStringBuilder);
