@@ -105,7 +105,7 @@ public class ZeuspolApplication {
     slaRule.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.LT, 0.6));
     Sla sla = new Sla(2, "2", "3", SlaType.SAAS, List.of(slaRule));
 
-    builder.addFile(policyConverter.convert(policyRule));
+
     for (SlaRule sr: sla.getRules()){
         builder.addFile(slaRuleConverter.convert(sla, sr));
     }
