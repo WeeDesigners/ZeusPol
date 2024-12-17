@@ -70,12 +70,12 @@ public class ZeuspolApplication {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
 
-    //TODO -> idk where to place it
+    // TODO -> idk where to place it
     HermesService hermesService = context.getBean(HermesService.class);
     Policies myS3xiPolicies = hermesService.getPolicies();
     List<Sla> myS3xiSlas = hermesService.getAllSlas();
 
-    //checking if everything works properly
+    // checking if everything works properly
     System.out.println();
     System.out.println("Policies from Hermes:");
     System.out.println(myS3xiPolicies.toString());
@@ -83,7 +83,7 @@ public class ZeuspolApplication {
     System.out.println("Slas from Hermes:");
     System.out.println(myS3xiSlas.toString());
     System.out.println();
-    //end of TODO
+    // end of TODO
 
     RuleToDrlConverter converter = new RuleToDrlConverter(new HttpClientThemisActionBuilder());
 
