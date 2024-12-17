@@ -27,10 +27,10 @@ metadata:
   {{- end }}
 ---
 {{- end }}
-apiversion: apps/v1
-kind: deployment
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: {{ .values.recommendationservice.name }}
+  name: {{ .Values.recommendationService.name }}
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.recommendationService.name }}
@@ -109,7 +109,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.recommendationService.name }}
-  {{- if .Values.recommendationService.enablePrometheus}}
+  {{- if .Values.recommendationService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

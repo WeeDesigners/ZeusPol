@@ -102,7 +102,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.cartService.name }}
-  {{- if .Values.cartService.enablePrometheus}}
+  {{- if .Values.cartService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

@@ -107,7 +107,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.productCatalogService.name }}
-  {{- if .Values.productCatalogService.enablePrometheus}}
+  {{- if .Values.productCatalogService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

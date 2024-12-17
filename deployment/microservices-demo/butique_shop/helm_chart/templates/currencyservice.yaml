@@ -106,7 +106,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.currencyService.name }}
-  {{- if .Values.currencyService.enablePrometheus}}
+  {{- if .Values.currencyService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

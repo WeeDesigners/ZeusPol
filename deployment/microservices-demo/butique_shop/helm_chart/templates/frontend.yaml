@@ -140,6 +140,12 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.frontend.name }}
+  {{- if .Values.frontend.enablePrometheus }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics" 
+  {{- end }}
 spec:
   type: ClusterIP
   selector:
@@ -155,12 +161,6 @@ kind: Service
 metadata:
   name: {{ .Values.frontend.name }}-external
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.frontend.enablePrometheus}}
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "9090"
-    prometheus.io/path: "/metrics" 
-  {{- end }}
 spec:
   type: LoadBalancer
   selector:

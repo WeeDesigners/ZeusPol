@@ -95,7 +95,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.adService.name }}
-  {{- if .Values.adService.enablePrometheus}}
+  {{- if .Values.adService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

@@ -115,7 +115,7 @@ kind: Service
 metadata:
   name: {{ .Values.opentelemetryCollector.name }}
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.opentelemetryCollector.enablePrometheus}}
+  {{- if .Values.opentelemetryCollector.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

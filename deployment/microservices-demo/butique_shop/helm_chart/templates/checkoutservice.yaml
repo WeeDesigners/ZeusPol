@@ -116,7 +116,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.checkoutService.name }}
-  {{- if .Values.checkoutService.enablePrometheus}}
+  {{- if .Values.checkoutService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

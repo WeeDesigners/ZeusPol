@@ -103,7 +103,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.paymentService.name }}
-  {{- if .Values.paymentService.enablePrometheus}}
+  {{- if .Values.paymentService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"

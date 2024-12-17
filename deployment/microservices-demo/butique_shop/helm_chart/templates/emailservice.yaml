@@ -107,7 +107,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.emailService.name }}
-  {{- if .Values.emailService.enablePrometheus}}
+  {{- if .Values.emailService.enablePrometheus }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"
