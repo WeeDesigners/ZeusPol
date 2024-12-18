@@ -1,0 +1,22 @@
+config:
+  target: 'http://149.156.182.226:31444'  # Replace with the URL of your Sock Shop app
+  phases:
+    - duration: 30  # Duration of the test (in seconds)
+      arrivalRate: 5  # Number of new virtual users per second
+      name: "Load Test Phase"
+scenarios:
+  - flow:
+      - get:
+          url: "/"
+      - get:
+          url: "/catalogue"
+      - get:
+          url: "/carts"
+      - post:
+          url: "/orders"
+          json:
+            userId: "{{ userId }}"
+            items:
+              - productId: "{{ productId }}"
+                quantity: 1
+
