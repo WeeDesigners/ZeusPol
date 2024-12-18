@@ -27,7 +27,9 @@ public class Policies {
   }
 
   public void addRules(List<PolicyRule> rules) {
-    this.rules.addAll(rules);
+    for (PolicyRule r: rules){
+      this.addRule(r);
+    }
   }
 
   //  public boolean addRulesSecure(List<PolicyRule> rules) {

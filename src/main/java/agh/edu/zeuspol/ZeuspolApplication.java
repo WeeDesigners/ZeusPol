@@ -75,6 +75,8 @@ public class ZeuspolApplication {
     // TODO -> idk where to place it
     HermesService hermesService = context.getBean(HermesService.class);
     Policies myS3xiPolicies = hermesService.getPolicies();
+
+    Policies.getInstance().addRules(myS3xiPolicies.getRules());
     List<Sla> myS3xiSlas = hermesService.getAllSlas();
 
     // checking if everything works properly
