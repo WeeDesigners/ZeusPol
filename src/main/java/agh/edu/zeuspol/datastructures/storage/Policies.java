@@ -27,7 +27,7 @@ public class Policies {
   }
 
   public void addRules(List<PolicyRule> rules) {
-    for (PolicyRule r: rules){
+    for (PolicyRule r : rules) {
       this.addRule(r);
     }
   }
