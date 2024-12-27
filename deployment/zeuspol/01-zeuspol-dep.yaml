@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zeuspol
-  namespace: zeuspol
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
@@ -14,23 +14,23 @@ spec:
         app: zeuspol
     spec:
       containers:
-        - name: zeuspol
-          image: weedesigners/zeuspol:latest
+        - name: {{ .Values.container_name }}
+          image: {{ .Values.image }}
           env:
             - name: ZEUS_ADDRESS
               value: "0.0.0.0"
             - name: ZEUS_PORT
               value: "8080"
             - name: HEPHAESTUS_URL
-              value: http://hephaestus-gui.hephaestus:8080
+              value: {{ .Values.hephaestus_url }}
             - name: THEMIS_URL
-              value: http://149.156.182.226:32137
+              value: {{ .Values.themis_url }}
             - name: HERMES_URL
-              value: http://hermes.hermes:8080
+              value: {{ .Values.hermes_url }}
             - name: kubernetes-management
-              value: http://kubernetes-management.kubernetes-management:8097
+              value: {{ .Values.kubernetes_management_url }}
 
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           resources:
