@@ -2,7 +2,7 @@
 docker-build-local:
 	eval $(minikube docker-env)
 	mvn clean install
-	docker build --no-cache -t zeuspol .
+	sudo docker build --no-cache -t zeuspol .
 
 docker-build-local-windows:
 	powershell -Command "& minikube -p minikube docker-env | Invoke-Expression; mvn clean install; docker build --no-cache -t zeuspol ."
