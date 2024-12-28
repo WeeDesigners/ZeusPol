@@ -4,10 +4,9 @@ import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
+import agh.edu.zeuspol.datastructures.types.attributes.*;
 import agh.edu.zeuspol.drools.*;
-import agh.edu.zeuspol.drools.converter.HttpClientThemisActionBuilder;
-import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
-import agh.edu.zeuspol.drools.converter.RuleToDrlWithStatsConverter;
+import agh.edu.zeuspol.drools.converter.PolicyRuleToDrlConverter;
 import agh.edu.zeuspol.drools.converter.SlaRuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.HermesService;
@@ -72,23 +71,45 @@ public class ZeuspolApplication {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
 
-    // TODO -> idk where to place it
-    HermesService hermesService = context.getBean(HermesService.class);
-    Policies myS3xiPolicies = hermesService.getPolicies();
-    List<Sla> myS3xiSlas = hermesService.getAllSlas();
+//    // TODO -> idk where to place it
+//    HermesService hermesService = context.getBean(HermesService.class);
+//    Policies myS3xiPolicies = hermesService.getPolicies();
+//    List<Sla> myS3xiSlas = hermesService.getAllSlas();
+//
+//    // checking if everything works properly
+//    System.out.println();
+//    System.out.println("Policies from Hermes:");
+//    System.out.println(myS3xiPolicies.toString());
+//    System.out.println();
+//    System.out.println("Slas from Hermes:");
+//    System.out.println(myS3xiSlas.toString());
+//    System.out.println();
+//    // end of TODO
 
-    // checking if everything works properly
-    System.out.println();
-    System.out.println("Policies from Hermes:");
-    System.out.println(myS3xiPolicies.toString());
-    System.out.println();
-    System.out.println("Slas from Hermes:");
-    System.out.println(myS3xiSlas.toString());
-    System.out.println();
-    // end of TODO
 
-    RuleToDrlConverter policyConverter =
-        new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
+    List<Sla> myS3xiSlas = new ArrayList<>();
+    SlaRule slaRuleTemp = new SlaRule(2, ValueType.AVAILABILITY);
+    slaRuleTemp.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.LT, 0.5));
+    Sla slaTemp = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRuleTemp));
+    myS3xiSlas.add(slaTemp);
+
+    Params params = new Params();
+    params.put("namespace", "test-app");
+    params.put("deploymentName", "test-app");
+    params.put("containerName", "test-app");
+    params.put("limitsCpu", "2");
+    params.put("limitsMemory", "800Mi");
+    params.put("requestsCpu", "2");
+    params.put("requestsMemory", "800Mi");
+
+    Action action =
+            new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
+    rule.addCondition(new agh.edu.zeuspol.datastructures.types.attributes.Condition("CPU", RelationType.GT, 0.5));
+
+    Policies.getInstance().addRule(rule);
+
+    PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
