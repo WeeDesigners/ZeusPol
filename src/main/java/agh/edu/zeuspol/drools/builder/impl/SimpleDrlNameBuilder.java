@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.drools.builder.impl;
 
-import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.drools.builder.base.DrlNameBuilder;
 
 public class SimpleDrlNameBuilder extends DrlNameBuilder {
