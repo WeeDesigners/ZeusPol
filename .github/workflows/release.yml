@@ -1,53 +1,133 @@
 ---
 name: Release
-
+permissions:
+  contents: write
+  statuses: write
 on:
-  push:
-    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      create-release:
+        description: 'Create release'
+        required: true
+        type: boolean
+        default: false
+      release-type:
+        description: 'Choose release type'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+        - custom
+      custom-release-version:
+        description: 'Choose a custom version to release'
+        required: false
+        type: string
+        default: ""
+      custom-next-version:
+        description: 'Choose a custom next version for the app'
+        required: false
+        type: string
+        default: ""
+      custom-tag-message:
+        description: 'Add a custom description of the release'
+        required: false
+        type: string
+        default: ""
 
 jobs:
-  build:
-    name: build and push docker image
+  release:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.create-release }}
+    name: Release new Zeuspol version (Bumb app version)
     runs-on: ubuntu-latest
+    outputs:
+      release_version: ${{ steps.publish-release.outputs.release_version }} 
     permissions:
       contents: write
-      # To report GitHub Actions status checks
       statuses: write
     steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
           cache: maven
+      
+      - name: Configure git
+        run: |
+          git config --global user.email "release-bot@release-bot.dev"
+          git config --global user.name "release-bot"
+
+      - name: Set Release version
+        run: |
+          if [ -z "${{ github.event.inputs.custom-release-version }}" ]; then
+              if ${{ github.event.inputs.release-type == 'major' }}; then
+              mvn build-helper:parse-version versions:set \
+                  -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0 \
+                  versions:commit
+              elif ${{ github.event.inputs.release-type == 'minor' }}; then
+              mvn build-helper:parse-version versions:set \
+                  -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0 \
+                  versions:commit
+              elif ${{ github.event.inputs.release-type == 'patch' }}; then
+              mvn versions:set -DremoveSnapshot
+              fi
+          else
+              mvn versions:set -DnewVersion=${{ github.event.inputs.custom-release-version}}
+          fi
 
       - name: Build with Maven
         run: mvn -B clean package --file pom.xml
 
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-      - name: Maven Dependency Tree Dependency Submission
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      - name: Add tag and commit release
+        id: publish-release
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          git add pom.xml
+          release_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "release_version=$release_version" >> $GITHUB_OUTPUT
+          git commit -m "[ ${{ github.event.inputs.release-type}} release $release_version ] "
+          git tag v$release_version -m "${{ github.event.inputs.custom-tag-message }}"
+          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} ${{ github.ref_name }}
+          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} v$release_version
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: weedesigners/zeuspol
-
-      - name: Build and push Docker image
-        id: push
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Send an event that a tag was created
+        run: |
+          curl -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -d '{"event_type":"tag-pushed-by-ci"}'
+          
+      - name: Move app to a new dev version with snapshot
+        id: bump-version  
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          if [ -z "${{ github.event.inputs.custom-next-version }}" ]; then
+          mvn build-helper:parse-version versions:set \
+              -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT \
+              versions:commit
+          else
+          mvn versions:set -DnewVersion=${{ github.event.inputs.custom-next-version}}
+          fi
+          next_dev_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "next_dev_version=$next_dev_version" >> $GITHUB_OUTPUT
+          git add pom.xml
+          git commit -m "[Automated release] Change app version to $next_dev_version"
+          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} ${{ github.ref_name }}
