@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-class SlaList extends ArrayList<Sla> {}
 
 @Service
 public class HermesService {
@@ -42,7 +41,7 @@ public class HermesService {
   }
 
   public Policies getPolicies() {
-    Policies policies = restTemplate.getForObject(hermesUrl + "/policies", Policies.class);
+    Policies policies = restTemplate.getForObject(hermesUrl + "/policies/active", Policies.class);
     if (policies == null) {
       // TODO -> some error or sth... idk....
     }
