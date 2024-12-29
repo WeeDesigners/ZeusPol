@@ -1,13 +1,22 @@
-package agh.edu.zeuspol.drools.converter;
+package agh.edu.zeuspol.drools.builder.impl;
 
 import agh.edu.zeuspol.datastructures.types.attributes.Action;
 import agh.edu.zeuspol.datastructures.types.attributes.Params;
+import agh.edu.zeuspol.drools.builder.base.DrlActionBuilder;
+
+
 import java.util.List;
 import java.util.Map;
 
-public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
+public class HttpClientThemisActionBuilder extends DrlActionBuilder {
 
-  private List<String> imports =
+  private Action action;
+
+  public HttpClientThemisActionBuilder(Action action) {
+    this.action = action;
+  }
+
+  private final List<String> imports =
       List.of(
           "import java.net.URI",
           "import java.net.http.HttpClient",
@@ -18,7 +27,7 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
           "import java.util.List");
 
   @Override
-  public String buildThemisAction(Action action) {
+  public String build() {
     return "System.out.println(\"Rule "
         + action.collectionName
         + action.actionName
@@ -52,7 +61,7 @@ public class HttpClientThemisActionBuilder extends ThemisActionBuilder {
   }
 
   @Override
-  public List<String> importsNeeded() {
+  public List<String> imports() {
     return this.imports;
   }
 

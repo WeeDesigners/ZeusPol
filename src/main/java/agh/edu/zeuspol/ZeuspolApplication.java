@@ -5,9 +5,7 @@ import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.drools.*;
-import agh.edu.zeuspol.drools.converter.HttpClientThemisActionBuilder;
-import agh.edu.zeuspol.drools.converter.RuleToDrlConverter;
-import agh.edu.zeuspol.drools.converter.RuleToDrlWithStatsConverter;
+import agh.edu.zeuspol.drools.converter.PolicyRuleToDrlConverter;
 import agh.edu.zeuspol.drools.converter.SlaRuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.HermesService;
@@ -87,8 +85,7 @@ public class ZeuspolApplication {
     System.out.println();
     // end of TODO
 
-    RuleToDrlConverter policyConverter =
-        new RuleToDrlWithStatsConverter(new HttpClientThemisActionBuilder());
+    PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 
