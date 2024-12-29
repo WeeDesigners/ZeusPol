@@ -4,7 +4,7 @@ import agh.edu.zeuspol.drools.builder.DrlBuilder;
 
 public class DrlNameBuilder implements DrlBuilder {
 
-    public String build() {
-        return "TEST_NAME";
-    }
+  public String build() {
+    return "TEST_NAME";
+  }
 }
