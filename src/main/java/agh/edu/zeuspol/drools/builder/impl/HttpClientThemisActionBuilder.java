@@ -3,8 +3,6 @@ package agh.edu.zeuspol.drools.builder.impl;
 import agh.edu.zeuspol.datastructures.types.attributes.Action;
 import agh.edu.zeuspol.datastructures.types.attributes.Params;
 import agh.edu.zeuspol.drools.builder.base.DrlActionBuilder;
-
-
 import java.util.List;
 import java.util.Map;
 

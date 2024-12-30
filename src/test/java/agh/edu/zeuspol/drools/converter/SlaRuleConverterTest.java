@@ -1,5 +1,6 @@
 package agh.edu.zeuspol.drools.converter;
 
+import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
@@ -9,87 +10,96 @@ import agh.edu.zeuspol.drools.DrlRuleExecutor;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
 import io.github.hephaestusmetrics.model.metrics.Metric;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class SlaRuleConverterTest {
 
-    @Test
-    public void test() {
-        SlaRuleToDrlConverter converter = new SlaRuleToDrlConverter();
+  @BeforeAll
+  public static void setupZeuspol() {
+    ZeuspolApplication.loadZeuspolContext(new String[0]);
+  }
 
-        SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
+  @Test
+  public void test() {
 
-        slaRule.addCondition(new Condition("CPU", RelationType.LT, 0.5));
+    SlaRuleToDrlConverter converter = new SlaRuleToDrlConverter();
 
-        Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
+    SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
 
-        DrlStringFile file = converter.convert(sla, slaRule);
+    slaRule.addCondition(new Condition("CPU", RelationType.LT, 0.5));
 
-        System.out.println(file.getFileContent());
+    Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
 
-        DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
-        dynamicDrlBuilder.addFile(file);
+    DrlStringFile file = converter.convert(sla, slaRule);
 
-        DrlRuleExecutor executor = dynamicDrlBuilder.build();
+    System.out.println(file.getFileContent());
 
-        Metric metric = new Metric("CPU", null, Map.of("a", "a"), 1, 0.6);
+    DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
+    dynamicDrlBuilder.addFile(file);
 
-        executor.fireRules(List.of(metric));
-    }
+    DrlRuleExecutor executor = dynamicDrlBuilder.build();
 
-    @Test
-    public void test2() {
+    Metric metric = new Metric("CPU", null, Map.of("a", "a"), 1, 0.6);
 
-        SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
-        slaRule.addCondition(new Condition("CPU", RelationType.LT, 0.5));
-        Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
+    executor.fireRules(List.of(metric));
+  }
 
-        Params params = new Params();
-        params.put("namespace", "test-app");
-        params.put("deploymentName", "test-app");
-        params.put("containerName", "test-app");
-        params.put("limitsCpu", "2");
-        params.put("limitsMemory", "800Mi");
-        params.put("requestsCpu", "2");
-        params.put("requestsMemory", "800Mi");
-        Action action =
-                new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
-        PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
-        rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
+  @Test
+  public void test2() {
 
-        Metric metric = new Metric("CPU", null, Map.of("a", "a"), 1, 0.6);
+    SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
+    slaRule.addCondition(new Condition("CPU", RelationType.LT, 0.5));
+    Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
 
-        Policies p = Policies.getInstance();
-        p.addRule(rule);
+    Params params = new Params();
+    params.put("namespace", "test-app");
+    params.put("deploymentName", "test-app");
+    params.put("containerName", "test-app");
+    params.put("limitsCpu", "2");
+    params.put("limitsMemory", "800Mi");
+    params.put("requestsCpu", "2");
+    params.put("requestsMemory", "800Mi");
+    params.put("specialcharacterstest", "hey\\nhello\\rletsseeifitworks\\t");
 
-        SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
-        PolicyRuleToDrlConverter policyConverter =
-                new PolicyRuleToDrlConverter();
+    Action action =
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+    PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);
+    rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
 
-        DrlStringFile fileSla = slaRuleConverter.convert(sla, slaRule);
-        DrlStringFile filePolicy = policyConverter.convert(rule);
+    Metric metric = new Metric("CPU", null, Map.of("a", "a"), 1, 0.6);
 
-        System.out.println(fileSla.getFileContent());
-        System.out.println(filePolicy.getFileContent());
+    Policies p = Policies.getInstance();
+    p.addRule(rule);
 
-        DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
-        dynamicDrlBuilder.addFile(filePolicy);
+    SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
+    PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
 
-        DrlRuleExecutor executor = dynamicDrlBuilder.build();
+    DrlStringFile fileSla = slaRuleConverter.convert(sla, slaRule);
+    DrlStringFile filePolicy = policyConverter.convert(rule);
 
-        List<Object> l = new ArrayList<>();
-        l.add(metric);
-        l.addAll(Policies.getInstance().getRulesStatsList());
+    System.out.println(fileSla.getFileContent());
+    System.out.println(filePolicy.getFileContent());
 
-        executor.fireRules(l);
+    DynamicDrlBuilder dynamicDrlBuilder = new DynamicDrlBuilder();
+    dynamicDrlBuilder.addFile(filePolicy);
 
-        dynamicDrlBuilder.addFile(fileSla);
-        executor = dynamicDrlBuilder.build();
+    DrlRuleExecutor executor = dynamicDrlBuilder.build();
 
-        executor.fireRules(l);
-    }
+    List<Object> l = new ArrayList<>();
+    l.add(metric);
+    l.addAll(Policies.getInstance().getRulesStatsList());
+
+    executor.fireRules(l);
+
+    dynamicDrlBuilder.addFile(fileSla);
+    executor = dynamicDrlBuilder.build();
+
+    executor.fireRules(l);
+  }
 }
