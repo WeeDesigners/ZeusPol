@@ -23,7 +23,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class ZeuspolApplication {
-
   private static ConfigurableApplicationContext context;
   private static boolean isRunning = false;
   private static final Lock lock = new ReentrantLock();
@@ -31,7 +30,8 @@ public class ZeuspolApplication {
 
   public static void main(String[] args) throws IOException {
 
-    context = SpringApplication.run(ZeuspolApplication.class, args);
+    loadZeuspolContext(args);
+
     // run loop of main loops
     mainLoop();
   }
@@ -124,7 +124,7 @@ public class ZeuspolApplication {
       }
       objs.addAll(Policies.getInstance().getRulesStatsList());
 
-      executor.fireRules(objs);
+      //      executor.fireRules(objs);
 
       System.out.println("=============================================");
 
@@ -139,5 +139,19 @@ public class ZeuspolApplication {
         throw new RuntimeException(e);
       }
     }
+  }
+
+  public static void loadZeuspolContext(String[] args) {
+    if (context != null) {
+      throw new RuntimeException("Zeuspol context is already started!");
+    }
+    context = SpringApplication.run(ZeuspolApplication.class, args);
+  }
+
+  public static ConfigurableApplicationContext getContext() {
+    if (context == null) {
+      throw new RuntimeException("Context of ZeuspolApplication not loaded");
+    }
+    return context;
   }
 }
