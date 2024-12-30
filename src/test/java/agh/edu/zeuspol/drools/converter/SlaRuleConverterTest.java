@@ -1,5 +1,6 @@
 package agh.edu.zeuspol.drools.converter;
 
+import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
@@ -9,16 +10,26 @@ import agh.edu.zeuspol.drools.DrlRuleExecutor;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
 import io.github.hephaestusmetrics.model.metrics.Metric;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@SpringBootTest
 public class SlaRuleConverterTest {
+
+    @BeforeAll
+    public static void setupZeuspol() {
+        ZeuspolApplication.loadZeuspolContext(new String[0]);
+    }
 
     @Test
     public void test() {
+
         SlaRuleToDrlConverter converter = new SlaRuleToDrlConverter();
 
         SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
@@ -56,6 +67,8 @@ public class SlaRuleConverterTest {
         params.put("limitsMemory", "800Mi");
         params.put("requestsCpu", "2");
         params.put("requestsMemory", "800Mi");
+        params.put("specialcharacterstest", "hey\\nhello\\rletsseeifitworks\\t");
+
         Action action =
                 new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
         PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action);

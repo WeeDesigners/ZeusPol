@@ -22,6 +22,7 @@ public class PolicyRuleConverterTest {
         params.put("limitsMemory", "800Mi");
         params.put("requestsCpu", "2");
         params.put("requestsMemory", "800Mi");
+        params.put("specialcharacterstest", "hey\\nhello\\rletsseeifitworks\\t");
 
         Action action =
                 new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
