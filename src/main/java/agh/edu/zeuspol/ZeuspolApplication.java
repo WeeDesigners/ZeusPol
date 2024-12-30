@@ -32,12 +32,6 @@ public class ZeuspolApplication {
 
     loadZeuspolContext(args);
 
-    System.out.println("jdjdjdjdjdjdjjdjdjdjdjjdjdjdjddddddddddddddjdjjdjdjdjdjjdd");
-    System.out.println("jdjdjdjdjdjdjjdjdjdjdjjdjdjdjddddddddddddddjdjjdjdjdjdjjdd");
-    System.out.println("jdjdjdjdjdjdjjdjdjdjdjjdjdjdjddddddddddddddjdjjdjdjdjdjjdd");
-    System.out.println("jdjdjdjdjdjdjjdjdjdjdjjdjdjdjddddddddddddddjdjjdjdjdjdjjdd");
-    System.out.println("jdjdjdjdjdjdjjdjdjdjdjjdjdjdjddddddddddddddjdjjdjdjdjdjjdd");
-    System.out.println(context);
     // run loop of main loops
     mainLoop();
   }
