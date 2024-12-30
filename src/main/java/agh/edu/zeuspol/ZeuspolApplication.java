@@ -124,7 +124,7 @@ public class ZeuspolApplication {
       }
       objs.addAll(Policies.getInstance().getRulesStatsList());
 
-//      executor.fireRules(objs);
+      //      executor.fireRules(objs);
 
       System.out.println("=============================================");
 

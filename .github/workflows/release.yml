@@ -7,32 +7,32 @@ on:
   workflow_dispatch:
     inputs:
       create-release:
-        description: 'Create release'
+        description: "Create release"
         required: true
         type: boolean
         default: false
       release-type:
-        description: 'Choose release type'
+        description: "Choose release type"
         required: false
-        default: 'patch'
+        default: "patch"
         type: choice
         options:
-        - patch
-        - minor
-        - major
-        - custom
+          - patch
+          - minor
+          - major
+          - custom
       custom-release-version:
-        description: 'Choose a custom version to release'
+        description: "Choose a custom version to release"
         required: false
         type: string
         default: ""
       custom-next-version:
-        description: 'Choose a custom next version for the app'
+        description: "Choose a custom next version for the app"
         required: false
         type: string
         default: ""
       custom-tag-message:
-        description: 'Add a custom description of the release'
+        description: "Add a custom description of the release"
         required: false
         type: string
         default: ""
@@ -43,7 +43,7 @@ jobs:
     name: Release new Zeuspol version (Bumb app version)
     runs-on: ubuntu-latest
     outputs:
-      release_version: ${{ steps.publish-release.outputs.release_version }} 
+      release_version: ${{ steps.publish-release.outputs.release_version }}
     permissions:
       contents: write
       statuses: write
@@ -66,7 +66,7 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: maven
-      
+
       - name: Configure git
         run: |
           git config --global user.email "release-bot@release-bot.dev"
@@ -113,9 +113,9 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository }}/dispatches \
           -d '{"event_type":"tag-pushed-by-ci"}'
-          
+
       - name: Move app to a new dev version with snapshot
-        id: bump-version  
+        id: bump-version
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |

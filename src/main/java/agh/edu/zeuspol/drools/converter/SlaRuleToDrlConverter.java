@@ -14,7 +14,8 @@ public class SlaRuleToDrlConverter {
 
   public DrlStringFile convert(Sla sla, SlaRule slaRule) {
     SlaRuleDrlConditionBuilder conditionBuilder = new SlaRuleDrlConditionBuilder(slaRule);
-    PolicySlaViolationDrlActionBuilder policySlaViolationDrlActionBuilder = new PolicySlaViolationDrlActionBuilder();
+    PolicySlaViolationDrlActionBuilder policySlaViolationDrlActionBuilder =
+        new PolicySlaViolationDrlActionBuilder();
     EmailDrlActionBuilder actionBuilder = new EmailDrlActionBuilder(sla, slaRule);
     SimpleDrlNameBuilder nameBuilder = new SimpleDrlNameBuilder("SLA_" + slaRule.id);
     DrlImportsBuilder importsBuilder = new DrlImportsBuilder();
@@ -23,7 +24,12 @@ public class SlaRuleToDrlConverter {
     importsBuilder.addImports(conditionBuilder.imports());
     importsBuilder.addImports(policySlaViolationDrlActionBuilder.imports());
 
-    ToDrlConverter toDrlConverter = new ToDrlConverter(importsBuilder, nameBuilder, conditionBuilder, List.of(actionBuilder, policySlaViolationDrlActionBuilder));
+    ToDrlConverter toDrlConverter =
+        new ToDrlConverter(
+            importsBuilder,
+            nameBuilder,
+            conditionBuilder,
+            List.of(actionBuilder, policySlaViolationDrlActionBuilder));
 
     return toDrlConverter.convert();
   }
