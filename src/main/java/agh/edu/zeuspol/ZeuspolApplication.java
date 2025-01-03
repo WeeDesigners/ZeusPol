@@ -155,7 +155,7 @@ public class ZeuspolApplication {
 
   public static void loadZeuspolContext(String[] args) {
     if (context != null) {
-      throw new RuntimeException("Zeuspol context is already started!");
+      return;
     }
     context = SpringApplication.run(ZeuspolApplication.class, args);
   }

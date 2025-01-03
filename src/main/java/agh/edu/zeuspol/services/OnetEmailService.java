@@ -25,7 +25,7 @@ public class OnetEmailService {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        message.setFrom("zeuspol@onet.pl");
+        message.setFrom(this.email);
 
 
         mailSender.send(message);
@@ -43,7 +43,7 @@ public class OnetEmailService {
             Properties props = mailSender.getJavaMailProperties();
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
-//            props.put("mail.debug", "true");
+            props.put("mail.debug", "true");
             this.mailSender = mailSender;
         }
     }
