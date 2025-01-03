@@ -46,7 +46,7 @@ public class HermesService {
     }
 
     public Policies getPolicies() {
-        Policies policies = restTemplate.getForObject(hermesUrl + "/policies", Policies.class);
+        Policies policies = restTemplate.getForObject(hermesUrl + "/policies/active", Policies.class);
         if (policies == null) {
             // TODO -> some error or sth... idk....
         }
@@ -54,7 +54,7 @@ public class HermesService {
     }
 
     public List<PolicyRule> getPolicyRules() {
-      PolicyRulesWrapper response = restTemplate.getForObject(hermesUrl + "/policies", PolicyRulesWrapper.class);
+      PolicyRulesWrapper response = restTemplate.getForObject(hermesUrl + "/policies/active", PolicyRulesWrapper.class);
       if (response == null || response.getRules() == null) {
         throw new IllegalStateException("Failed to fetch policy rules from server");
       }
