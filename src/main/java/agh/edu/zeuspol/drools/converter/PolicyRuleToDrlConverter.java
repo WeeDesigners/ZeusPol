@@ -11,7 +11,7 @@ public class PolicyRuleToDrlConverter {
   public DrlStringFile convert(PolicyRule policyRule) {
     PolicyRuleDrlConditionBuilder conditionBuilder = new PolicyRuleDrlConditionBuilder(policyRule);
     ThemisServiceActionBuilder actionBuilder = new ThemisServiceActionBuilder(policyRule.action);
-    StatsDrlActionBuilder statsDrlActionBuilder = new StatsDrlActionBuilder(policyRule);
+    StatsDrlActionBuilder statsDrlActionBuilder = new StatsDrlActionBuilder();
     SimpleDrlNameBuilder nameBuilder =
         new SimpleDrlNameBuilder(policyRule.id + "_" + policyRule.name);
     DrlImportsBuilder importsBuilder = new DrlImportsBuilder();

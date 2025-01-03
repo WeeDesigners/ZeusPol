@@ -2,6 +2,7 @@ package agh.edu.zeuspol.services;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,5 +46,27 @@ public class HermesService {
       // TODO -> some error or sth... idk....
     }
     return policies;
+  }
+
+  public List<PolicyRule> getPolicyRules() {
+    PolicyRulesWrapper response =
+        restTemplate.getForObject(hermesUrl + "/policies/active", PolicyRulesWrapper.class);
+    if (response == null || response.getRules() == null) {
+      throw new IllegalStateException("Failed to fetch policy rules from server");
+    }
+    return response.getRules();
+  }
+
+  // Wrapper class for response
+  public static class PolicyRulesWrapper {
+    private List<PolicyRule> rules;
+
+    public List<PolicyRule> getRules() {
+      return rules;
+    }
+
+    public void setRules(List<PolicyRule> rules) {
+      this.rules = rules;
+    }
   }
 }

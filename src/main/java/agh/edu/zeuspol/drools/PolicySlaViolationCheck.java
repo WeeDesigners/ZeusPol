@@ -13,7 +13,7 @@ public class PolicySlaViolationCheck {
       if (stats.lastFired == null) {
         continue;
       }
-      Duration duration = Duration.between(now, stats.lastFired);
+      Duration duration = Duration.between(stats.lastFired, now);
       if (duration.toMinutes() < 5 && duration.toMinutes() >= 0) {
         System.out.println("Id of policy that potentially violated the Sla: " + stats.ruleId);
       }
