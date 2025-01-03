@@ -28,10 +28,10 @@ public class SlaRuleDrlConditionBuilder extends DrlConditionBuilder {
           .append("\n");
     }
     drlStringBuilder
-            .append("$stats: RuleStats(ruleId == ")
-            .append(this.slaRule.id)
-            .append(")")
-            .append("\n");
+        .append("$stats: RuleStats(ruleId == ")
+        .append(this.slaRule.id)
+        .append(")")
+        .append("\n");
     return drlStringBuilder.toString();
   }
 

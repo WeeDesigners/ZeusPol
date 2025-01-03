@@ -5,7 +5,6 @@ import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.builder.base.DrlImportsBuilder;
 import agh.edu.zeuspol.drools.builder.impl.*;
-
 import java.util.List;
 
 public class SlaRuleToDrlConverter {

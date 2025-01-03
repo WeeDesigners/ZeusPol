@@ -67,7 +67,6 @@ public class ZeuspolApplication {
     }
   }
 
-
   private static void fetchHermesData() {
     HermesService hermesService = context.getBean(HermesService.class);
 
@@ -92,7 +91,6 @@ public class ZeuspolApplication {
     System.out.println("Slas:");
     System.out.println(Slas.getInstance().getSlaList().toString());
     System.out.println();
-
 
     PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
@@ -132,7 +130,7 @@ public class ZeuspolApplication {
         objs.add(metric);
       }
 
-//      Adding stats of PolicyRules and SlaRules to the list of facts
+      //      Adding stats of PolicyRules and SlaRules to the list of facts
       objs.addAll(Policies.getInstance().getRulesStatsList());
       objs.addAll(Slas.getInstance().getRulesStats());
 

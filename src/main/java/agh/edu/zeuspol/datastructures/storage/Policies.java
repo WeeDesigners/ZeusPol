@@ -9,11 +9,11 @@ public class Policies {
 
   private static Policies instance = new Policies();
 
-  private final List<PolicyRule> rules = new ArrayList<>();;
+  private final List<PolicyRule> rules = new ArrayList<>();
+  ;
   private List<RuleStats> rulesStatsList = new ArrayList<>();
 
   private Policies() {}
-
 
   public static Policies newInstance() {
     instance = new Policies();
@@ -25,7 +25,7 @@ public class Policies {
   }
 
   public void addRules(List<PolicyRule> rules) {
-    for (PolicyRule rule: rules) {
+    for (PolicyRule rule : rules) {
       this.addRule(rule);
     }
   }

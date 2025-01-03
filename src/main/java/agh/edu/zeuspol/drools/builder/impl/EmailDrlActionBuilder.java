@@ -36,6 +36,7 @@ public class EmailDrlActionBuilder extends DrlActionBuilder {
 
   @Override
   public List<String> imports() {
-    return List.of("import agh.edu.zeuspol.drools.builder.action.SlaViolationEmailNotificationAction;");
+    return List.of(
+        "import agh.edu.zeuspol.drools.builder.action.SlaViolationEmailNotificationAction;");
   }
 }
