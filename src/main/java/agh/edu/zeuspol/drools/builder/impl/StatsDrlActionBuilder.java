@@ -6,12 +6,6 @@ import java.util.List;
 
 public class StatsDrlActionBuilder extends DrlActionBuilder {
 
-  private PolicyRule policyRule;
-
-  public StatsDrlActionBuilder(PolicyRule policyRule) {
-    this.policyRule = policyRule;
-  }
-
   @Override
   public String build() {
     return "$stats.fired();";

@@ -1,5 +1,6 @@
 package agh.edu.zeuspol.drools.converter;
 
+import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.Action;
 import agh.edu.zeuspol.datastructures.types.attributes.Condition;
@@ -7,9 +8,14 @@ import agh.edu.zeuspol.datastructures.types.attributes.Params;
 import agh.edu.zeuspol.datastructures.types.attributes.RelationType;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class PolicyRuleConverterTest {
+  @BeforeAll
+  public static void setupZeuspol() {
+    ZeuspolApplication.loadZeuspolContext(new String[0]);
+  }
 
   @Test
   public void doesConvertedRuleCompileTest() {

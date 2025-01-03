@@ -1,7 +1,10 @@
 package agh.edu.zeuspol.datastructures.storage;
 
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.datastructures.types.attributes.SlaType;
+import agh.edu.zeuspol.drools.RuleStats;
+
 import java.util.ArrayList;
 import java.util.List;
 

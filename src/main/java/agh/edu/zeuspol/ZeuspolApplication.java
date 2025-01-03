@@ -2,6 +2,7 @@ package agh.edu.zeuspol;
 
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.storage.Slas;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.drools.*;
@@ -66,24 +67,32 @@ public class ZeuspolApplication {
     }
   }
 
+
+  private static void fetchHermesData() {
+    HermesService hermesService = context.getBean(HermesService.class);
+
+    List<PolicyRule> policyRules = hermesService.getPolicyRules();
+    Policies.newInstance().addRules(policyRules);
+
+    List<Sla> slaList = hermesService.getAllSlas();
+    Slas.newInstance().addSlaList(slaList);
+  }
+
   private static void mainLoop() {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
 
-    // TODO -> idk where to place it
-    HermesService hermesService = context.getBean(HermesService.class);
-    Policies myS3xiPolicies = hermesService.getPolicies();
-    List<Sla> myS3xiSlas = hermesService.getAllSlas();
+    fetchHermesData();
 
     // checking if everything works properly
     System.out.println();
-    System.out.println("Policies from Hermes:");
-    System.out.println(myS3xiPolicies.toString());
+    System.out.println("Policies:");
+    System.out.println(Policies.getInstance().getRules().toString());
     System.out.println();
-    System.out.println("Slas from Hermes:");
-    System.out.println(myS3xiSlas.toString());
+    System.out.println("Slas:");
+    System.out.println(Slas.getInstance().getSlaList().toString());
     System.out.println();
-    // end of TODO
+
 
     PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
@@ -96,7 +105,7 @@ public class ZeuspolApplication {
     }
 
     System.out.println("--------------Sla rules:--------------");
-    for (Sla sla : myS3xiSlas) {
+    for (Sla sla : Slas.getInstance().getSlaList()) {
       for (SlaRule slaRule : sla.getRules()) {
         System.out.println(slaRule);
         builder.addFile(slaRuleConverter.convert(sla, slaRule));
@@ -122,9 +131,12 @@ public class ZeuspolApplication {
         System.out.println("name: " + metric.getQueryTag() + ", value: " + metric.value);
         objs.add(metric);
       }
-      objs.addAll(Policies.getInstance().getRulesStatsList());
 
-      //      executor.fireRules(objs);
+//      Adding stats of PolicyRules and SlaRules to the list of facts
+      objs.addAll(Policies.getInstance().getRulesStatsList());
+      objs.addAll(Slas.getInstance().getRulesStats());
+
+      executor.fireRules(objs);
 
       System.out.println("=============================================");
 

@@ -17,7 +17,7 @@ public class EmailDrlActionBuilder extends DrlActionBuilder {
 
   @Override
   public String build() {
-    return "SlaViolationEmailNotification.sendNotification("
+    return "SlaViolationEmailNotificationAction.sendNotification("
         + this.sla.id
         + ","
         + "\""
@@ -36,6 +36,6 @@ public class EmailDrlActionBuilder extends DrlActionBuilder {
 
   @Override
   public List<String> imports() {
-    return List.of("import agh.edu.zeuspol.services.SlaViolationEmailNotification;");
+    return List.of("import agh.edu.zeuspol.drools.builder.action.SlaViolationEmailNotificationAction;");
   }
 }

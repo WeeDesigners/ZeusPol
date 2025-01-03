@@ -3,6 +3,7 @@ package agh.edu.zeuspol.drools.converter;
 import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.storage.Policies;
 import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.storage.Slas;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.datastructures.types.attributes.*;
@@ -36,6 +37,8 @@ public class SlaRuleConverterTest {
 
     Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
 
+    Slas.getInstance().addSla(sla);
+
     DrlStringFile file = converter.convert(sla, slaRule);
 
     System.out.println(file.getFileContent());
@@ -47,7 +50,7 @@ public class SlaRuleConverterTest {
 
     Metric metric = new Metric("CPU", null, Map.of("a", "a"), 1, 0.6);
 
-    executor.fireRules(List.of(metric));
+    executor.fireRules(List.of(metric, Slas.getInstance().getRulesStats()));
   }
 
   @Test
@@ -56,6 +59,8 @@ public class SlaRuleConverterTest {
     SlaRule slaRule = new SlaRule(2, ValueType.AVAILABILITY);
     slaRule.addCondition(new Condition("CPU", RelationType.LT, 0.5));
     Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
+    Slas.getInstance().addSla(sla);
+
 
     Params params = new Params();
     params.put("namespace", "test-app");
@@ -94,12 +99,13 @@ public class SlaRuleConverterTest {
     List<Object> l = new ArrayList<>();
     l.add(metric);
     l.addAll(Policies.getInstance().getRulesStatsList());
+    l.addAll(Slas.getInstance().getRulesStats());
 
     executor.fireRules(l);
 
     dynamicDrlBuilder.addFile(fileSla);
-    executor = dynamicDrlBuilder.build();
 
+    executor = dynamicDrlBuilder.build();
     executor.fireRules(l);
   }
 }
