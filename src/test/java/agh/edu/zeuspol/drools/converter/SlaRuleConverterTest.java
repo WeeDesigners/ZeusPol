@@ -61,7 +61,6 @@ public class SlaRuleConverterTest {
     Sla sla = new Sla(1, "1", null, SlaType.SAAS, List.of(slaRule));
     Slas.getInstance().addSla(sla);
 
-
     Params params = new Params();
     params.put("namespace", "test-app");
     params.put("deploymentName", "test-app");

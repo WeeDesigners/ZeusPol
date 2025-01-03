@@ -2,7 +2,6 @@ package agh.edu.zeuspol.drools.builder.action;
 
 import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.services.OnetEmailService;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +13,8 @@ public class SlaViolationEmailNotificationAction {
 
   private static LocalDateTime lastSent = LocalDateTime.MIN;
 
-  public static void sendNotification(long slaId, String clientId, String applicationId, String slaRuleString) {
+  public static void sendNotification(
+      long slaId, String clientId, String applicationId, String slaRuleString) {
     setupEmailService();
     String info =
         "SLA WAS VIOLATED!\n"
@@ -33,8 +33,8 @@ public class SlaViolationEmailNotificationAction {
 
     try {
       Duration duration = Duration.between(lastSent, LocalDateTime.now());
-      if (duration.toMinutes() > 1){
-        for(String receiver: sendTo) {
+      if (duration.toMinutes() > 1) {
+        for (String receiver : sendTo) {
           emailService.sendSimpleEmail(receiver, "SLA VIOLATION ID: " + slaId, info);
           System.out.println("Notification sent to: " + receiver);
         }
@@ -46,8 +46,8 @@ public class SlaViolationEmailNotificationAction {
     System.out.println(info);
   }
 
-  private static void setupEmailService(){
-    if (emailService == null){
+  private static void setupEmailService() {
+    if (emailService == null) {
       emailService = ZeuspolApplication.getContext().getBean(OnetEmailService.class);
     }
   }
