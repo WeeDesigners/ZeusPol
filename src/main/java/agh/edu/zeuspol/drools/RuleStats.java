@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class RuleStats {
   public final long ruleId;
   int numFires = 0;
-  LocalDateTime lastFired = null;
+  public LocalDateTime lastFired = LocalDateTime.MIN;
 
   public RuleStats(PolicyRule rule) {
     this.ruleId = rule.id;
