@@ -30,6 +30,7 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
     drlStringBuilder
         .append("$stats: RuleStats(ruleId == ")
         .append(this.policyRule.id)
+        .append(", Duration.between(lastFired, LocalDateTime.now()).toMinutes() > 1")
         .append(")")
         .append("\n");
 
@@ -40,7 +41,9 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
   public List<String> imports() {
     return List.of(
         "import io.github.hephaestusmetrics.model.metrics.Metric;",
-        "import agh.edu.zeuspol.drools.RuleStats;");
+        "import agh.edu.zeuspol.drools.RuleStats;",
+        "import java.time.Duration;",
+        "import java.time.LocalDateTime;");
   }
 
   private String valueComparisonString(RelationType actionType, double value) {

@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.drools.converter;
 
-import agh.edu.zeuspol.datastructures.types.attributes.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
