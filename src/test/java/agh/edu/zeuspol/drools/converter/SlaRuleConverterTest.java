@@ -1,6 +1,5 @@
 package agh.edu.zeuspol.drools.converter;
 
-
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
