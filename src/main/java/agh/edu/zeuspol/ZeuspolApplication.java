@@ -28,6 +28,7 @@ public class ZeuspolApplication {
   private static boolean isRunning = false;
   private static final Lock lock = new ReentrantLock();
   private static final Condition condition = lock.newCondition();
+  private static DrlRuleExecutor drlRuleExecutor;
 
   public static void main(String[] args) throws IOException {
 
@@ -77,6 +78,24 @@ public class ZeuspolApplication {
     Slas.newInstance().addSlaList(slaList);
   }
 
+  public static void buildExecutor() {
+    PolicyRuleToDrl2Converter policyConverter = new PolicyRuleToDrl2Converter();
+    SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
+    DynamicDrlBuilder builder = new DynamicDrlBuilder();
+
+    for (PolicyRule pr : Policies.getInstance().getRules()) {
+      builder.addFile(policyConverter.convert(pr));
+    }
+
+    for (Sla sla : Slas.getInstance().getSlaList()) {
+      for (SlaRule slaRule : sla.getRules()) {
+        builder.addFile(slaRuleConverter.convert(sla, slaRule));
+      }
+    }
+
+    drlRuleExecutor = builder.build();
+  }
+
   private static void mainLoop() {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
@@ -92,25 +111,20 @@ public class ZeuspolApplication {
     System.out.println(Slas.getInstance().getSlaList().toString());
     System.out.println();
 
-    PolicyRuleToDrl2Converter policyConverter = new PolicyRuleToDrl2Converter();
-    SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
-    DynamicDrlBuilder builder = new DynamicDrlBuilder();
-
     System.out.println("--------------Policies:--------------");
     for (PolicyRule pr : Policies.getInstance().getRules()) {
       System.out.println(pr);
-      builder.addFile(policyConverter.convert(pr));
     }
 
     System.out.println("--------------Sla rules:--------------");
     for (Sla sla : Slas.getInstance().getSlaList()) {
       for (SlaRule slaRule : sla.getRules()) {
         System.out.println(slaRule);
-        builder.addFile(slaRuleConverter.convert(sla, slaRule));
       }
     }
 
-    DrlRuleExecutor executor = builder.build();
+    buildExecutor();
+
 
     // infinite loop of mainLoops
     while (true) {
@@ -134,7 +148,7 @@ public class ZeuspolApplication {
       objs.addAll(Policies.getInstance().getRulesStatsList());
       objs.addAll(Slas.getInstance().getRulesStats());
 
-      executor.fireRules(objs);
+      drlRuleExecutor.fireRules(objs);
 
       System.out.println("=============================================");
 
