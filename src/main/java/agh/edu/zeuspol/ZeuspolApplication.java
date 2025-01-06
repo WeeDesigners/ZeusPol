@@ -6,6 +6,7 @@ import agh.edu.zeuspol.datastructures.storage.Slas;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.drools.*;
+import agh.edu.zeuspol.drools.converter.PolicyRuleToDrl2Converter;
 import agh.edu.zeuspol.drools.converter.PolicyRuleToDrlConverter;
 import agh.edu.zeuspol.drools.converter.SlaRuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
@@ -92,7 +93,7 @@ public class ZeuspolApplication {
     System.out.println(Slas.getInstance().getSlaList().toString());
     System.out.println();
 
-    PolicyRuleToDrlConverter policyConverter = new PolicyRuleToDrlConverter();
+    PolicyRuleToDrl2Converter policyConverter = new PolicyRuleToDrl2Converter();
     SlaRuleToDrlConverter slaRuleConverter = new SlaRuleToDrlConverter();
     DynamicDrlBuilder builder = new DynamicDrlBuilder();
 

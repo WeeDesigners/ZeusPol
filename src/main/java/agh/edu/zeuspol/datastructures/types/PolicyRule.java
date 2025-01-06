@@ -11,12 +11,23 @@ public class PolicyRule {
   public final String name;
   private final List<Condition> conditions;
   public final Action action;
+  public int maxRetry = 3;
+  public long cooldownSec = 60;
 
   public PolicyRule(long id, String name, Action action) {
     this.id = id;
     this.name = name;
     this.conditions = new ArrayList<>();
     this.action = action;
+  }
+
+  public PolicyRule(long id, String name, Action action, int maxRetry, int cooldownSec) {
+    this.id = id;
+    this.name = name;
+    this.conditions = new ArrayList<>();
+    this.action = action;
+    this.maxRetry = maxRetry;
+    this.cooldownSec = cooldownSec;
   }
 
   public boolean addConditions(List<Condition> conditions) {
