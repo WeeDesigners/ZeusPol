@@ -57,8 +57,6 @@ public class HermesService {
     return response.getRules();
   }
 
-
-
   // Wrapper class for response
   public static class PolicyRulesWrapper {
     private List<PolicyRule> rules;
