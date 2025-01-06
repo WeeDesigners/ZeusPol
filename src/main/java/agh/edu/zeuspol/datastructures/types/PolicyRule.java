@@ -16,7 +16,6 @@ public class PolicyRule {
 
   public PolicyRule() {}
 
-
   public PolicyRule(long id, String name, Action action) {
     this.id = id;
     this.name = name;
