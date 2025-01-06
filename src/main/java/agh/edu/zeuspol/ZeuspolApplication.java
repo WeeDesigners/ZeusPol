@@ -125,7 +125,6 @@ public class ZeuspolApplication {
 
     buildExecutor();
 
-
     // infinite loop of mainLoops
     while (true) {
       // if app should be running, then run main loop
