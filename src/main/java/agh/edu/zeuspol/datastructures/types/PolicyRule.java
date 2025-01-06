@@ -7,12 +7,15 @@ import java.util.Objects;
 
 public class PolicyRule {
 
-  public final long id;
-  public final String name;
-  private final List<Condition> conditions;
-  public final Action action;
+  public long id;
+  public String name;
+  private List<Condition> conditions;
+  public Action action;
   public int maxRetry = 3;
   public long cooldownSec = 60;
+
+  public PolicyRule() {}
+
 
   public PolicyRule(long id, String name, Action action) {
     this.id = id;
