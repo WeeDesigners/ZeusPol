@@ -67,7 +67,7 @@ public class ZeuspolApplication {
     }
   }
 
-  public static void fetchHermesData() {
+  private static void fetchHermesData() {
     HermesService hermesService = context.getBean(HermesService.class);
 
     List<PolicyRule> policyRules = hermesService.getPolicyRules();
