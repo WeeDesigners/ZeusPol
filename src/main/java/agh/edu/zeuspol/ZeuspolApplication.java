@@ -77,7 +77,6 @@ public class ZeuspolApplication {
     Slas.newInstance().addSlaList(slaList);
   }
 
-
   private static void mainLoop() {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
     ThemisService themisService = context.getBean(ThemisService.class);
