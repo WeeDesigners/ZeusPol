@@ -17,8 +17,12 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
   @Override
   public String build() {
     StringBuilder drlStringBuilder = new StringBuilder();
+    int i = 0;
     for (Condition cond : policyRule.getConditions()) {
       drlStringBuilder
+          .append("$m")
+          .append(i)
+          .append(": ")
           .append("Metric")
           .append("(queryTag == \"")
           .append(cond.metric)
@@ -26,11 +30,13 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
           .append(this.valueComparisonString(cond.relation, cond.value))
           .append(")")
           .append("\n");
+      i++;
     }
     drlStringBuilder
         .append("$stats: RuleStats(ruleId == ")
         .append(this.policyRule.id)
-        .append(", Duration.between(lastFired, LocalDateTime.now()).toMinutes() > 1")
+        .append(", Duration.between(lastFired, LocalDateTime.now()).toSeconds() >= ")
+        .append(this.policyRule.cooldownSec)
         .append(")")
         .append("\n");
 

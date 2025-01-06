@@ -11,4 +11,18 @@ public class Action {
     this.actionName = actionName;
     this.params = params;
   }
+
+  @Override
+  public String toString() {
+    return "Action{"
+        + "collectionName='"
+        + collectionName
+        + '\''
+        + ", actionName='"
+        + actionName
+        + '\''
+        + ", params="
+        + params
+        + '}';
+  }
 }
