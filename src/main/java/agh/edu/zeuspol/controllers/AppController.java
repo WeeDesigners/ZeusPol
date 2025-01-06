@@ -22,27 +22,27 @@ public class AppController {
   }
 
   @PostMapping("/start")
-  public ResponseEntity<?> startApp() {
+  public ResponseEntity<String> startApp() {
     if (ZeuspolApplication.isRunning()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.badRequest().body("App is already running");
     }
 
     // start app
     ZeuspolApplication.startApp();
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok("App started");
   }
 
   @PostMapping("/stop")
-  public ResponseEntity<?> stopApp() {
+  public ResponseEntity<String> stopApp() {
     if (!ZeuspolApplication.isRunning()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.badRequest().body("App is not running");
     }
 
     // stop app
     ZeuspolApplication.stopApp();
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok("App stopped");
   }
 
   @PostMapping("/execute-action")
