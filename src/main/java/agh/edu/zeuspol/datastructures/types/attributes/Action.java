@@ -14,10 +14,15 @@ public class Action {
 
   @Override
   public String toString() {
-    return "Action{" +
-            "collectionName='" + collectionName + '\'' +
-            ", actionName='" + actionName + '\'' +
-            ", params=" + params +
-            '}';
+    return "Action{"
+        + "collectionName='"
+        + collectionName
+        + '\''
+        + ", actionName='"
+        + actionName
+        + '\''
+        + ", params="
+        + params
+        + '}';
   }
 }

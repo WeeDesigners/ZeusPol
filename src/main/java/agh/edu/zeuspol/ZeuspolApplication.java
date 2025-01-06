@@ -7,7 +7,6 @@ import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import agh.edu.zeuspol.drools.*;
 import agh.edu.zeuspol.drools.converter.PolicyRuleToDrl2Converter;
-import agh.edu.zeuspol.drools.converter.PolicyRuleToDrlConverter;
 import agh.edu.zeuspol.drools.converter.SlaRuleToDrlConverter;
 import agh.edu.zeuspol.services.HephaestusQueryService;
 import agh.edu.zeuspol.services.HermesService;

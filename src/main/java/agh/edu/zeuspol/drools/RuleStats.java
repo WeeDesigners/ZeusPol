@@ -3,7 +3,6 @@ package agh.edu.zeuspol.drools;
 import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.SlaRule;
 import io.github.hephaestusmetrics.model.metrics.Metric;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

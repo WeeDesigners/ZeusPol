@@ -11,12 +11,11 @@ import agh.edu.zeuspol.drools.DrlRuleExecutor;
 import agh.edu.zeuspol.drools.DrlStringFile;
 import agh.edu.zeuspol.drools.DynamicDrlBuilder;
 import io.github.hephaestusmetrics.model.metrics.Metric;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class PolicyRuleConverterTest {
   @BeforeAll
@@ -89,7 +88,7 @@ public class PolicyRuleConverterTest {
     params.put("requestsMemory", "800Mi");
 
     Action action =
-            new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
+        new Action("kubernetes", "ChangeResourcesOfContainerWithinDeploymentAction", params);
     PolicyRule rule = new PolicyRule(1, "ScaleKubernetesRule", action, 2, 0);
     rule.addCondition(new Condition("CPU", RelationType.GT, 0.5));
     rule.addCondition(new Condition("RAM", RelationType.GT, 16));
@@ -120,8 +119,6 @@ public class PolicyRuleConverterTest {
     executor.fireRules(facts);
     executor.fireRules(facts);
 
-
-
     //    Here we are improving state of the system so the notification should disappear
     metric0 = new Metric("CPU", null, Map.of("a", "a"), 1, 0.9);
     metric1 = new Metric("RAM", null, Map.of("a", "a"), 1, 16.9);
@@ -136,7 +133,7 @@ public class PolicyRuleConverterTest {
     executor.fireRules(facts);
     executor.fireRules(facts);
 
-//    Here notification should appear again
+    //    Here notification should appear again
     executor.fireRules(facts);
   }
 }
