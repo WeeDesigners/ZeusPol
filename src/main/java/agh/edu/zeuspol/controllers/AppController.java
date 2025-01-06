@@ -1,4 +1,4 @@
-package agh.edu.zeuspol.endpoints;
+package agh.edu.zeuspol.controllers;
 
 import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/app")
-public class ControlEndpoints {
+public class AppController {
 
   private final ThemisService themisService;
 
   @Autowired
-  public ControlEndpoints(ThemisService themisService) {
+  public AppController(ThemisService themisService) {
     this.themisService = themisService;
   }
 
