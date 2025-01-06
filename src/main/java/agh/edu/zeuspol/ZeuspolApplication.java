@@ -67,7 +67,7 @@ public class ZeuspolApplication {
     }
   }
 
-  private static void fetchHermesData() {
+  public static void fetchHermesData() {
     HermesService hermesService = context.getBean(HermesService.class);
 
     List<PolicyRule> policyRules = hermesService.getPolicyRules();
@@ -76,6 +76,7 @@ public class ZeuspolApplication {
     List<Sla> slaList = hermesService.getAllSlas();
     Slas.newInstance().addSlaList(slaList);
   }
+
 
   private static void mainLoop() {
     HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);

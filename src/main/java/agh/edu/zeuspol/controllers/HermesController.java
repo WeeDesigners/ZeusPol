@@ -1,33 +1,54 @@
 package agh.edu.zeuspol.controllers;
 
+import agh.edu.zeuspol.datastructures.storage.Policies;
+import agh.edu.zeuspol.datastructures.storage.Sla;
+import agh.edu.zeuspol.datastructures.storage.Slas;
+import agh.edu.zeuspol.datastructures.types.PolicyRule;
 import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
+import agh.edu.zeuspol.services.HermesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/hermes")
 public class HermesController {
 
+    @Autowired
+    private HermesService hermesService;
+
     @PostMapping("")
-    public String getAll(){
-        return "";
+    public ResponseEntity<?> getAll(){
+        List<PolicyRule> policyRules = hermesService.getPolicyRules();
+        Policies.newInstance().addRules(policyRules);
+
+        List<Sla> slaList = hermesService.getAllSlas();
+        Slas.newInstance().addSlaList(slaList);
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/policies")
-    public String getPolicies() {
-        String response = this.themisService.executeAction(request);
-        return "Themis response: " + response;
+    public ResponseEntity<?> getPolicies() {
+        List<PolicyRule> policyRules = hermesService.getPolicyRules();
+        Policies.newInstance().addRules(policyRules);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/sla")
-    public String getSlas() {
-        String response = this.themisService.executeAction(request);
-        return "Themis response: " + response;
+    public ResponseEntity<?> getSlas() {
+        List<Sla> slaList = hermesService.getAllSlas();
+        Slas.newInstance().addSlaList(slaList);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/sla/{id}")
-    public String getSla(@PathVariable("id") long id) {
-        String response = this.themisService.executeAction(request);
-        return "Themis response: " + response;
+    public ResponseEntity<?> getSla(@PathVariable("id") long id) {
+        Sla sla = hermesService.getSla(id);
+        Slas.getInstance().addSla(sla);
+        return ResponseEntity.ok().build();
     }
 
 }

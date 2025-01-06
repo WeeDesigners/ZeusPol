@@ -4,6 +4,7 @@ import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
 import agh.edu.zeuspol.services.ThemisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,32 +22,32 @@ public class AppController {
   }
 
   @PostMapping("/start")
-  public String startApp() {
+  public ResponseEntity<?> startApp() {
     if (ZeuspolApplication.isRunning()) {
-      return "App is already running";
+      return ResponseEntity.badRequest().build();
     }
 
     // start app
     ZeuspolApplication.startApp();
 
-    return "ZeusPol started!";
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/stop")
-  public String stopApp() {
+  public ResponseEntity<?> stopApp() {
     if (!ZeuspolApplication.isRunning()) {
-      return "App is already not running";
+      return ResponseEntity.badRequest().build();
     }
 
     // stop app
     ZeuspolApplication.stopApp();
 
-    return "ZeusPol stopped!";
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/execute-action")
-  public String executeThemis(@RequestBody ExecutionRequest request) {
+  public ResponseEntity<String> executeThemis(@RequestBody ExecutionRequest request) {
     String response = this.themisService.executeAction(request);
-    return "Themis response: " + response;
+    return ResponseEntity.ok(response);
   }
 }
