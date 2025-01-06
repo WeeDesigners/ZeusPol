@@ -1,9 +1,10 @@
-package agh.edu.zeuspol.endpoints;
+package agh.edu.zeuspol.controllers;
 
 import agh.edu.zeuspol.ZeuspolApplication;
 import agh.edu.zeuspol.datastructures.types.attributes.ExecutionRequest;
 import agh.edu.zeuspol.services.ThemisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,42 +12,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/app")
-public class ControlEndpoints {
+public class AppController {
 
   private final ThemisService themisService;
 
   @Autowired
-  public ControlEndpoints(ThemisService themisService) {
+  public AppController(ThemisService themisService) {
     this.themisService = themisService;
   }
 
   @PostMapping("/start")
-  public String startApp() {
+  public ResponseEntity<String> startApp() {
     if (ZeuspolApplication.isRunning()) {
-      return "App is already running";
+      return ResponseEntity.badRequest().body("App is already running");
     }
 
     // start app
     ZeuspolApplication.startApp();
 
-    return "ZeusPol started!";
+    return ResponseEntity.ok("App started");
   }
 
   @PostMapping("/stop")
-  public String stopApp() {
+  public ResponseEntity<String> stopApp() {
     if (!ZeuspolApplication.isRunning()) {
-      return "App is already not running";
+      return ResponseEntity.badRequest().body("App is not running");
     }
 
     // stop app
     ZeuspolApplication.stopApp();
 
-    return "ZeusPol stopped!";
+    return ResponseEntity.ok("App stopped");
   }
 
   @PostMapping("/execute-action")
-  public String executeThemis(@RequestBody ExecutionRequest request) {
+  public ResponseEntity<String> executeThemis(@RequestBody ExecutionRequest request) {
     String response = this.themisService.executeAction(request);
-    return "Themis response: " + response;
+    return ResponseEntity.ok(response);
   }
 }

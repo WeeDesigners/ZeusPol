@@ -35,7 +35,7 @@ public class HermesService {
   public Sla getSla(long id) {
     Sla sla = restTemplate.getForObject(hermesUrl + "/sla/" + id, Sla.class);
     if (sla == null) {
-      // TODO -> some error or sth... idk....
+      throw new IllegalStateException("Failed to fetch SLA object from server");
     }
     return sla;
   }
@@ -43,7 +43,7 @@ public class HermesService {
   public Policies getPolicies() {
     Policies policies = restTemplate.getForObject(hermesUrl + "/policies/active", Policies.class);
     if (policies == null) {
-      // TODO -> some error or sth... idk....
+      throw new IllegalStateException("Failed to fetch policies from server");
     }
     return policies;
   }
