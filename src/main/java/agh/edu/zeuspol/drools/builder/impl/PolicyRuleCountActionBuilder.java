@@ -24,7 +24,7 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
 
     for (int i = 0; i < this.policyRule.getConditions().size(); i++) {
       drlStringBuilder
-          .append(valueComparisonString(i, this.policyRule.getConditions().get(1).relation))
+          .append(valueComparisonString(i, this.policyRule.getConditions().get(i).relation))
           .append(" &&\n");
     }
     drlStringBuilder.delete(drlStringBuilder.length() - 4, drlStringBuilder.length());
