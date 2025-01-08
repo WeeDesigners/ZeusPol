@@ -30,6 +30,8 @@ public class SlaRuleDrlConditionBuilder extends DrlConditionBuilder {
     drlStringBuilder
         .append("$stats: RuleStats(ruleId == ")
         .append(this.slaRule.id)
+        .append(", name ==")
+        .append("null")
         .append(")")
         .append("\n");
     return drlStringBuilder.toString();
