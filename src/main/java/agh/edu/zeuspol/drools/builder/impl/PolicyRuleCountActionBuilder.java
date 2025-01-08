@@ -22,7 +22,7 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
 
     drlStringBuilder.append("if (\n").append("$stats.prevMetrics != null &&\n");
 
-    for (int i = 0; i < this.policyRule.getConditions().size(); i++) {
+    for (int i = 0; i < 1; i++) {
       drlStringBuilder
           .append(valueComparisonString(i, this.policyRule.getConditions().get(i).relation))
           .append(" &&\n");
