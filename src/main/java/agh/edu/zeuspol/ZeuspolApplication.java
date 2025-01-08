@@ -93,24 +93,6 @@ public class ZeuspolApplication {
       }
     }
 
-    drlRuleExecutor = builder.build();
-  }
-
-  private static void mainLoop() {
-    HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
-    ThemisService themisService = context.getBean(ThemisService.class);
-
-    fetchHermesData();
-
-    // checking if everything works properly
-    System.out.println();
-    System.out.println("Policies:");
-    System.out.println(Policies.getInstance().getRules().toString());
-    System.out.println();
-    System.out.println("Slas:");
-    System.out.println(Slas.getInstance().getSlaList().toString());
-    System.out.println();
-
     System.out.println("--------------Policies:--------------");
     for (PolicyRule pr : Policies.getInstance().getRules()) {
       System.out.println(pr);
@@ -122,6 +104,16 @@ public class ZeuspolApplication {
         System.out.println(slaRule);
       }
     }
+
+    drlRuleExecutor = builder.build();
+  }
+
+  private static void mainLoop() {
+    HephaestusQueryService metricsService = context.getBean(HephaestusQueryService.class);
+    ThemisService themisService = context.getBean(ThemisService.class);
+
+    fetchHermesData();
+
 
     buildExecutor();
 
@@ -149,10 +141,6 @@ public class ZeuspolApplication {
 
       drlRuleExecutor.fireRules(objs);
 
-      System.out.println("=============================================");
-
-      //			System.out.println("ACTIONS:");
-      System.out.println(themisService.getActions());
       System.out.println("=============================================");
 
       // wait some time

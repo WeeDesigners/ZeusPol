@@ -9,6 +9,7 @@ import java.util.List;
 
 public class RuleStats {
   public final long ruleId;
+  public final String name;
   public int fireCount = 0;
   public int maxRetry = 4;
   public LocalDateTime lastFired = LocalDateTime.MIN;
@@ -16,10 +17,12 @@ public class RuleStats {
 
   public RuleStats(PolicyRule rule) {
     this.ruleId = rule.id;
+    this.name = rule.name;
     this.maxRetry = rule.maxRetry;
   }
 
   public RuleStats(SlaRule rule) {
+    this.name = null;
     this.ruleId = rule.id;
   }
 

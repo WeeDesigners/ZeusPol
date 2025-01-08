@@ -35,7 +35,9 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
     drlStringBuilder
         .append("$stats: RuleStats(ruleId == ")
         .append(this.policyRule.id)
-        .append(", Duration.between(lastFired, LocalDateTime.now()).toSeconds() >= ")
+        .append(", name == \"")
+        .append(this.policyRule.name)
+        .append("\", Duration.between(lastFired, LocalDateTime.now()).toSeconds() >= ")
         .append(this.policyRule.cooldownSec)
         .append(")")
         .append("\n");
