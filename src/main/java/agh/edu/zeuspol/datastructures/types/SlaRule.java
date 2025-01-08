@@ -7,10 +7,10 @@ import java.util.List;
 public class SlaRule {
 
   public final long id;
-  public ValueType valueType;
+  public String valueType;
   public List<Condition> conditions;
 
-  public SlaRule(long id, ValueType valueType) {
+  public SlaRule(long id, String valueType) {
     this.id = id;
     this.valueType = valueType;
     this.conditions = new ArrayList<>();

@@ -52,7 +52,7 @@ public class DrlBuildersTest {
 
   @Test
   public void testSlaRule() {
-    SlaRule slaRule = new SlaRule(2, ValueType.CPU);
+    SlaRule slaRule = new SlaRule(2, "CPU");
     slaRule.addCondition(new Condition("TestMetric", RelationType.GT, 4));
 
     Sla sla = new Sla(4, "2", "3", SlaType.SAAS, List.of());
