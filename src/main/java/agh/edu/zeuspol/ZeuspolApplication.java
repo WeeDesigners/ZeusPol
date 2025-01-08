@@ -114,7 +114,6 @@ public class ZeuspolApplication {
 
     fetchHermesData();
 
-
     buildExecutor();
 
     // infinite loop of mainLoops
