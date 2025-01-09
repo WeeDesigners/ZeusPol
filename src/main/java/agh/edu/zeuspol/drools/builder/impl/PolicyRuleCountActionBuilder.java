@@ -34,7 +34,7 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
 
     drlStringBuilder.append("}\n");
 
-    drlStringBuilder.append("if ($stats.fireCount >= $stats.maxRetry) {\n");
+    drlStringBuilder.append("if ($stats.fireCount >= $stats.maxRetry && $stats.maxRetry != -1) {\n");
 
     drlStringBuilder.append(
         """
