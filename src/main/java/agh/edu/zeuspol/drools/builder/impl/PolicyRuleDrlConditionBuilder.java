@@ -56,9 +56,9 @@ public class PolicyRuleDrlConditionBuilder extends DrlConditionBuilder {
 
   private String valueComparisonString(RelationType actionType, double value) {
     return switch (actionType) {
-      case GT -> "value >= %s".formatted(value);
-      case LT -> "value <= %s".formatted(value);
-      case EQ -> "value == %s".formatted(value);
+      case GT -> "value >= (double) Math.round(%s * 100) / 100".formatted(value);
+      case LT -> "value <= (double) Math.round(%s * 100) / 100".formatted(value);
+      case EQ -> "value == (double) Math.round(%s * 100) / 100".formatted(value);
       case BT -> throw new IllegalArgumentException("Between relation not supported");
     };
   }

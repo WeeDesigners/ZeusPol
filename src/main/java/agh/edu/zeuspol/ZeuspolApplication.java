@@ -130,7 +130,7 @@ public class ZeuspolApplication {
       System.out.println("=============================================");
       System.out.println("METRICS:");
       for (Metric metric : metrics) {
-        System.out.println("name: " + metric.getQueryTag() + ", value: " + metric.value);
+        System.out.println("name: " + metric.getQueryTag() + ", value: "  + (double) Math.round(metric.value * 100) / 100);
         objs.add(metric);
       }
 
