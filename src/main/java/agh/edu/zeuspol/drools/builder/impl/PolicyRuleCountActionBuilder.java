@@ -10,6 +10,7 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
 
   private PolicyRule policyRule;
   private ThemisServiceActionBuilder themisServiceActionBuilder;
+  private double improveMetricDelta = 1.0;
 
   public PolicyRuleCountActionBuilder(PolicyRule policyRule) {
     this.policyRule = policyRule;
@@ -24,7 +25,7 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
 
     for (int i = 0; i < 1; i++) {
       drlStringBuilder
-          .append(valueComparisonString(i, this.policyRule.getConditions().get(i).relation))
+          .append(valueComparisonString(i, this.policyRule.getConditions().get(i).relation, improveMetricDelta))
           .append(" &&\n");
     }
     drlStringBuilder.delete(drlStringBuilder.length() - 4, drlStringBuilder.length());
@@ -72,12 +73,12 @@ public class PolicyRuleCountActionBuilder extends DrlActionBuilder {
     return importsNeeded;
   }
 
-  private String valueComparisonString(int metricIndex, RelationType actionType) {
+  private String valueComparisonString(int metricIndex, RelationType actionType, double delta) {
     return switch (actionType) {
       case GT ->
-          "$stats.prevMetrics.get(%s).value > $m%s.value".formatted(metricIndex, metricIndex);
+          "$stats.prevMetrics.get(%s).value > $m%s.value + %s".formatted(metricIndex, metricIndex, delta);
       case LT ->
-          "$stats.prevMetrics.get(%s).value < $m%s.value".formatted(metricIndex, metricIndex);
+          "$stats.prevMetrics.get(%s).value < $m%s.value - %s".formatted(metricIndex, metricIndex, delta);
       case EQ -> throw new IllegalArgumentException("Between relation not supported");
       case BT -> throw new IllegalArgumentException("Between relation not supported");
     };
