@@ -14,9 +14,11 @@ public class PolicySlaViolationCheck {
         continue;
       }
       Duration duration = Duration.between(stats.lastFired, now);
-      if ((duration.toMinutes() < 5 && duration.toMinutes() >= 1)
-          || stats.fireCount > stats.maxRetry) {
-        System.out.println("Id of policy that potentially violated the Sla: " + stats.ruleId);
+      if (duration.toMinutes() < 5 && duration.toMinutes() >= 1) {
+        System.out.println("Id of policies that potentially violated the Sla: " + stats.ruleId);
+      }
+      if (stats.fireCount > stats.maxRetry) {
+        System.out.println("Id of policies that are stale: " + stats.ruleId);
       }
     }
   }
